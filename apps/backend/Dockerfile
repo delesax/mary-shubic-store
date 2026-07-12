@@ -1,4 +1,25 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
 COPY package.json package-lock.json ./
-RUN npm ci                  # installs ALL dependencies including dev
+RUN npm ci
+
 COPY . .
-RUN npm run build           # produces .medusa/server/
+RUN npm run build
+
+# --- Runner ---
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+COPY --from=builder /app/.medusa/server ./
+
+RUN npm install --omit=dev
+
+EXPOSE 9000
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
