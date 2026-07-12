@@ -1,0 +1,18 @@
+{
+    email your-email@example.com
+}
+
+# Redirect bare domains to www
+maryshubic.com, maryshubic.co.uk {
+    redir https://www.maryshubic.com{uri} permanent
+}
+
+# Storefront — serve on both .com and .co.uk
+www.maryshubic.com, www.maryshubic.co.uk {
+    reverse_proxy storefront:8000
+}
+
+# Medusa backend API — serve on both .com and .co.uk
+api.maryshubic.com, api.maryshubic.co.uk {
+    reverse_proxy medusa:9000
+}
