@@ -5,4 +5,4 @@ echo "Running database migrations..."
 npx medusa db:migrate
 
 echo "Starting Medusa server..."
-exec node index.js
+exec npx medusa start
