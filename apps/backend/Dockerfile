@@ -16,7 +16,8 @@ WORKDIR /app
 
 COPY --from=builder /app/.medusa/server ./
 
-RUN npm install --omit=dev
+ENV NODE_OPTIONS="--max-old-space-size=3072"
+RUN npm install --omit=dev --legacy-peer-deps
 
 EXPOSE 9000
 
