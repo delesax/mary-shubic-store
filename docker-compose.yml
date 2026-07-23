@@ -26,8 +26,6 @@ services:
       context: ./apps/backend
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:9000:9000"
     environment:
       DATABASE_URL: postgres://medusa:${POSTGRES_PASSWORD}@postgres:5432/medusa
       REDIS_URL: redis://redis:6379
