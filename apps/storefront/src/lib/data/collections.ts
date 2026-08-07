@@ -1,5 +1,4 @@
 "use server"
-
 import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
 import { getCacheOptions } from "./cookies"
@@ -7,8 +6,8 @@ import { getCacheOptions } from "./cookies"
 export const retrieveCollection = async (id: string) => {
   const next = {
     ...(await getCacheOptions("collections")),
+    revalidate: 60,
   }
-
   return await sdk.client
     .fetch<{ collection: HttpTypes.StoreCollection }>(
       `/store/collections/${id}`,
@@ -25,11 +24,10 @@ export const listCollections = async (
 ): Promise<{ collections: HttpTypes.StoreCollection[]; count: number }> => {
   const next = {
     ...(await getCacheOptions("collections")),
+    revalidate: 60,
   }
-
   queryParams.limit = queryParams.limit || "100"
   queryParams.offset = queryParams.offset || "0"
-
   return await sdk.client
     .fetch<{ collections: HttpTypes.StoreCollection[]; count: number }>(
       "/store/collections",
@@ -47,8 +45,8 @@ export const getCollectionByHandle = async (
 ): Promise<HttpTypes.StoreCollection | null> => {
   const next = {
     ...(await getCacheOptions("collections")),
+    revalidate: 60,
   }
-
   return await sdk.client
     .fetch<HttpTypes.StoreCollectionListResponse>(`/store/collections`, {
       query: { handle, fields: "*products" },
