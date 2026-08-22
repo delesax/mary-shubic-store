@@ -1,0 +1,37 @@
+feat: brand storefront redesign — homepage, PLP, PDP
+
+Apply Mary Shubic brand system (Wine Rose/Mid Rose/Blush palette,
+Fraunces + Work Sans typography) across the full storefront.
+
+Foundation:
+- tailwind.config.js: brand color tokens + font families
+- layout.tsx: Fraunces/Work Sans font loaders
+
+Homepage:
+- Restyled Nav, Footer, Hero, ProductPreview, ProductRail
+- Fixed next-sitemap.js (Vercel-specific env var, array concat bug)
+- Fixed duplicated page title bug in metadata
+- Real Mary Shubic metadata (was starter placeholder copy)
+
+PLP:
+- Restyled CategoryTemplate/StoreTemplate with blush breadcrumb band
+- Fixed duplicated category title bug
+- Added filter rail UI (category/colour/size/price) — visual only,
+  not yet wired to real filtering logic
+- Grid changed to 3-up desktop (was inconsistent 3/4-up)
+- Restyled Pagination, added prev/next controls
+
+PDP:
+- Restructured ProductTemplate from 3-column to 2-column layout
+- Rebuilt ImageGallery with functional thumbnail-click interaction
+  (previously just a static vertical image stack)
+- Restyled ProductInfo, ProductActions, ProductTabs, Accordion,
+  OptionSelect
+- Renamed "Product Information" tab to "Fabric & Care"
+
+Known gaps (tracked for follow-up):
+- Filter rail not wired to real query params/backend filtering
+- Colour swatches render as text (no hex data in product options)
+- Size buttons don't show sold-out state (no per-variant inventory
+  check wired up)
+- Mobile filter drawer not built (filters hidden below `small`)

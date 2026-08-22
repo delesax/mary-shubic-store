@@ -33,6 +33,15 @@ module.exports = {
           80: "#1F2937",
           90: "#111827",
         },
+        // Mary Shubic brand tokens
+        wine: {
+          DEFAULT: "#7A3B44",
+          deep: "#5C2C33",
+        },
+        "mid-rose": "#B87B8E",
+        blush: "#F0D9D4",
+        ink: "#2A1A1D",
+        ivory: "#FAF3F0",
       },
       borderRadius: {
         none: "0px",
@@ -68,6 +77,9 @@ module.exports = {
           "Ubuntu",
           "sans-serif",
         ],
+        // Mary Shubic brand fonts
+        display: ["var(--font-fraunces)", "serif"],
+        body: ["var(--font-work-sans)", "-apple-system", "sans-serif"],
       },
       keyframes: {
         ring: {

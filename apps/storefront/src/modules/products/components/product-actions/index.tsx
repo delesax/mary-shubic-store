@@ -137,10 +137,10 @@ export default function ProductActions({
 
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-6" ref={actionsRef}>
         <div>
           {(product.variants?.length ?? 0) > 1 && (
-            <div className="flex flex-col gap-y-4">
+            <div className="flex flex-col gap-y-6">
               {(product.options || []).map((option) => {
                 return (
                   <div key={option.id}>
@@ -155,7 +155,7 @@ export default function ProductActions({
                   </div>
                 )
               })}
-              <Divider />
+              <Divider className="border-ink/10" />
             </div>
           )}
         </div>
@@ -172,7 +172,7 @@ export default function ProductActions({
             !isValidVariant
           }
           variant="primary"
-          className="w-full h-10"
+          className="w-full h-14 !bg-wine hover:!bg-wine-deep !text-ivory !text-xs !font-body !font-semibold !uppercase !tracking-widest !rounded-[2px] disabled:!bg-ink/20 disabled:!text-ink/40"
           isLoading={isAdding}
           data-testid="add-product-button"
         >
@@ -180,7 +180,7 @@ export default function ProductActions({
             ? "Select variant"
             : !inStock || !isValidVariant
             ? "Out of stock"
-            : "Add to cart"}
+            : "Add to Bag"}
         </Button>
         <MobileActions
           product={product}

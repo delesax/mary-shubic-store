@@ -8,6 +8,16 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 
+// TODO: replace with real collection/category slugs once confirmed —
+// placeholders for now so the nav renders correctly.
+const NAV_LINKS = [
+  { label: "New In", href: "/collections/new-in" },
+  { label: "Apparel", href: "/categories/apparel" },
+  { label: "Footwear", href: "/categories/footwear" },
+  { label: "Hair", href: "/categories/hair" },
+  { label: "Makeup", href: "/categories/makeup" },
+]
+
 export default async function Nav() {
   const [regions, locales, currentLocale] = await Promise.all([
     listRegions().then((regions: StoreRegion[]) => regions),
@@ -17,42 +27,64 @@ export default async function Nav() {
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
+      <header className="relative h-20 mx-auto border-b duration-200 bg-ivory border-ink/10">
+        <nav className="content-container flex items-center justify-between w-full h-full">
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
               <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
             </div>
           </div>
 
-          <div className="flex items-center h-full">
+          <div className="hidden small:flex items-center gap-x-8 h-full">
+            {NAV_LINKS.map((link) => (
+              <LocalizedClientLink
+                key={link.href}
+                href={link.href}
+                className="text-xs font-body font-medium uppercase tracking-widest text-ink pb-1 border-b border-transparent hover:border-wine hover:text-wine transition-colors duration-200"
+              >
+                {link.label}
+              </LocalizedClientLink>
+            ))}
+          </div>
+
+          <div className="flex items-center h-full flex-1 basis-0 justify-center small:justify-start">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="font-display italic text-2xl text-wine tracking-wide"
               data-testid="nav-store-link"
             >
-              Medusa Store
+              Mary Shubic
             </LocalizedClientLink>
           </div>
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
+                className="text-ink hover:text-wine transition-colors duration-200"
                 href="/account"
                 data-testid="nav-account-link"
               >
-                Account
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+                </svg>
               </LocalizedClientLink>
             </div>
             <Suspense
               fallback={
                 <LocalizedClientLink
-                  className="hover:text-ui-fg-base flex gap-2"
+                  className="text-ink hover:text-wine flex gap-2 transition-colors duration-200"
                   href="/cart"
                   data-testid="nav-cart-link"
                 >
-                  Cart (0)
+                  Bag (0)
                 </LocalizedClientLink>
               }
             >

@@ -6,11 +6,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 export function Pagination({
   page,
   totalPages,
-  'data-testid': dataTestid
+  "data-testid": dataTestid,
 }: {
   page: number
   totalPages: number
-  'data-testid'?: string
+  "data-testid"?: string
 }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -35,9 +35,12 @@ export function Pagination({
   ) => (
     <button
       key={p}
-      className={clx("txt-xlarge-plus text-ui-fg-muted", {
-        "text-ui-fg-base hover:text-ui-fg-subtle": isCurrent,
-      })}
+      className={clx(
+        "w-9 h-9 rounded-full flex items-center justify-center text-sm font-body text-ink/60 hover:bg-blush transition-colors duration-200",
+        {
+          "bg-wine text-ivory font-semibold hover:bg-wine": isCurrent,
+        }
+      )}
       disabled={isCurrent}
       onClick={() => handlePageChange(p)}
     >
@@ -49,7 +52,7 @@ export function Pagination({
   const renderEllipsis = (key: string) => (
     <span
       key={key}
-      className="txt-xlarge-plus text-ui-fg-muted items-center cursor-default"
+      className="w-9 h-9 flex items-center justify-center text-ink/40 cursor-default"
     >
       ...
     </span>
@@ -107,8 +110,38 @@ export function Pagination({
 
   // Render the component
   return (
-    <div className="flex justify-center w-full mt-12">
-      <div className="flex gap-3 items-end" data-testid={dataTestid}>{renderPageButtons()}</div>
+    <div className="flex justify-center w-full mt-16">
+      <div
+        className="flex gap-2 items-center"
+        data-testid={dataTestid}
+      >
+        <button
+          className={clx(
+            "w-9 h-9 rounded-full flex items-center justify-center text-ink/60 hover:bg-blush transition-colors duration-200",
+            { "opacity-30 cursor-not-allowed hover:bg-transparent": page <= 1 }
+          )}
+          disabled={page <= 1}
+          onClick={() => handlePageChange(page - 1)}
+          aria-label="Previous page"
+        >
+          ‹
+        </button>
+        {renderPageButtons()}
+        <button
+          className={clx(
+            "w-9 h-9 rounded-full flex items-center justify-center text-ink/60 hover:bg-blush transition-colors duration-200",
+            {
+              "opacity-30 cursor-not-allowed hover:bg-transparent":
+                page >= totalPages,
+            }
+          )}
+          disabled={page >= totalPages}
+          onClick={() => handlePageChange(page + 1)}
+          aria-label="Next page"
+        >
+          ›
+        </button>
+      </div>
     </div>
   )
 }
