@@ -6,9 +6,9 @@ import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
 export const metadata: Metadata = {
-  title: "Mary Shubic — Apparel, Footwear & Beauty",
+  title: "Mary Shubic | Women's Fashion, Beauty & Footwear",
   description:
-    "Discover Mary Shubic — vibrant, statement apparel, footwear, hair and makeup for women aged 18–35. New arrivals dropping regularly, free UK shipping over £50.",
+    "Apparel, footwear, hair and makeup for women who don't dress to blend in. Shop new arrivals across bold colours and prints, made to move with you.",
 }
 
 export default async function Home(props: {
