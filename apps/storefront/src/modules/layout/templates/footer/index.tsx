@@ -12,22 +12,27 @@ export default async function Footer() {
   const productCategories = await listCategories();
 
   return (
-    <footer className="border-t border-ui-border-base w-full">
+    <footer className="border-t border-ink/10 w-full bg-ivory">
       <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
-          <div>
+        <div className="flex flex-col gap-y-10 small:flex-row items-start justify-between py-24 small:py-32 gap-x-16">
+          <div className="max-w-xs">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="font-display italic text-2xl text-wine"
             >
-              Medusa Store
+              Mary Shubic
             </LocalizedClientLink>
+            <p className="text-sm text-ink/60 mt-3 leading-relaxed font-body">
+              Women&apos;s fashion, hair, makeup, apparel and footwear —
+              made for the way you actually live.
+            </p>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
+
+          <div className="text-sm gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-4 w-full small:w-auto">
             {productCategories && productCategories?.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Categories
+              <div className="flex flex-col gap-y-4">
+                <span className="text-xs font-body font-semibold uppercase tracking-widest text-wine">
+                  Shop
                 </span>
                 <ul
                   className="grid grid-cols-1 gap-2"
@@ -47,13 +52,13 @@ export default async function Footer() {
 
                     return (
                       <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
+                        className="flex flex-col gap-2 text-ink/70 text-sm font-body"
                         key={c.id}
                       >
                         <LocalizedClientLink
                           className={clx(
-                            "hover:text-ui-fg-base",
-                            children && "txt-small-plus"
+                            "hover:text-wine transition-colors duration-200",
+                            children && "font-medium"
                           )}
                           href={`/categories/${c.handle}`}
                           data-testid="category-link"
@@ -66,7 +71,7 @@ export default async function Footer() {
                               children.map((child) => (
                                 <li key={child.id}>
                                   <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
+                                    className="hover:text-wine transition-colors duration-200"
                                     href={`/categories/${child.handle}`}
                                     data-testid="category-link"
                                   >
@@ -83,13 +88,13 @@ export default async function Footer() {
               </div>
             )}
             {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
+              <div className="flex flex-col gap-y-4">
+                <span className="text-xs font-body font-semibold uppercase tracking-widest text-wine">
                   Collections
                 </span>
                 <ul
                   className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
+                    "grid grid-cols-1 gap-2 text-ink/70 text-sm font-body",
                     {
                       "grid-cols-2": (collections?.length || 0) > 3,
                     }
@@ -98,7 +103,7 @@ export default async function Footer() {
                   {collections?.slice(0, 6).map((c) => (
                     <li key={c.id}>
                       <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
+                        className="hover:text-wine transition-colors duration-200"
                         href={`/collections/${c.handle}`}
                       >
                         {c.title}
@@ -108,46 +113,74 @@ export default async function Footer() {
                 </ul>
               </div>
             )}
-            <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
+            <div className="flex flex-col gap-y-4">
+              <span className="text-xs font-body font-semibold uppercase tracking-widest text-wine">
+                Help
+              </span>
+              {/* TODO: point these at real pages once built */}
+              <ul className="grid grid-cols-1 gap-y-2 text-ink/70 text-sm font-body">
                 <li>
-                  <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
+                  <LocalizedClientLink
+                    href="/shipping"
+                    className="hover:text-wine transition-colors duration-200"
                   >
-                    GitHub
-                  </a>
+                    Shipping
+                  </LocalizedClientLink>
                 </li>
                 <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
+                  <LocalizedClientLink
+                    href="/returns"
+                    className="hover:text-wine transition-colors duration-200"
                   >
-                    Documentation
-                  </a>
+                    Returns
+                  </LocalizedClientLink>
                 </li>
                 <li>
-                  <a
-                    href="https://github.com/medusajs/dtc-starter"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
+                  <LocalizedClientLink
+                    href="/size-guide"
+                    className="hover:text-wine transition-colors duration-200"
                   >
-                    Source code
-                  </a>
+                    Size Guide
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink
+                    href="/contact"
+                    className="hover:text-wine transition-colors duration-200"
+                  >
+                    Contact
+                  </LocalizedClientLink>
                 </li>
               </ul>
             </div>
+
+            <div className="flex flex-col gap-y-4 col-span-2 sm:col-span-1">
+              <span className="text-xs font-body font-semibold uppercase tracking-widest text-wine">
+                Stay in the loop
+              </span>
+              <p className="text-sm text-ink/60 font-body">
+                Get first access to new drops and edits.
+              </p>
+              {/* TODO: wire up to real email capture (Klaviyo/Mailchimp/etc.) */}
+              <form className="flex border-b border-ink max-w-[240px]">
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="bg-transparent py-2 text-sm font-body flex-1 outline-none placeholder:text-ink/40"
+                />
+                <button
+                  type="submit"
+                  className="text-xs font-body font-semibold uppercase tracking-wider text-wine hover:text-wine-deep transition-colors duration-200"
+                >
+                  Join
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
-          <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Medusa Store. All rights reserved.
+        <div className="flex w-full mb-16 justify-between items-center text-ink/50">
+          <Text className="text-xs font-body">
+            © {new Date().getFullYear()} Mary Shubic. All rights reserved.
           </Text>
           <MedusaCTA />
         </div>
