@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import Image from "next/image"
 
 import { listLocales } from "@lib/data/locales"
 import { getLocale } from "@lib/data/locale-actions"
@@ -7,16 +8,7 @@ import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
-
-// TODO: replace with real collection/category slugs once confirmed —
-// placeholders for now so the nav renders correctly.
-const NAV_LINKS = [
-  { label: "New In", href: "/collections/new-in" },
-  { label: "Apparel", href: "/categories/apparel" },
-  { label: "Footwear", href: "/categories/footwear" },
-  { label: "Hair", href: "/categories/hair" },
-  { label: "Makeup", href: "/categories/makeup" },
-]
+import { NAV_LINKS } from "@lib/constants/nav-links"
 
 export default async function Nav() {
   const [regions, locales, currentLocale] = await Promise.all([
@@ -47,13 +39,21 @@ export default async function Nav() {
             ))}
           </div>
 
-          <div className="flex items-center h-full flex-1 basis-0 justify-center small:justify-start">
+          <div className="flex items-center h-full flex-1 basis-0 justify-center small:justify-start small:ml-10">
             <LocalizedClientLink
               href="/"
-              className="font-display italic text-2xl text-wine tracking-wide"
+              className="flex items-center h-full"
               data-testid="nav-store-link"
             >
-              Mary Shubic
+              <Image
+                src="/logo/mary-shubic-logo5-wine-rose.svg"
+                alt="Mary Shubic"
+                width={175}
+                height={48}
+                priority
+                unoptimized
+                className="h-8 w-auto small:h-9"
+              />
             </LocalizedClientLink>
           </div>
 
