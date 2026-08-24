@@ -21,25 +21,26 @@ export default async function Nav() {
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-20 mx-auto border-b duration-200 bg-ivory border-ink/10">
         <nav className="content-container flex items-center justify-between w-full h-full">
-          <div className="flex-1 basis-0 h-full flex items-center">
+          {/* Left column: menu trigger + desktop nav links */}
+          <div className="flex-1 basis-0 h-full flex items-center gap-x-8">
             <div className="h-full">
               <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
             </div>
+            <div className="hidden small:flex items-center gap-x-8 h-full">
+              {NAV_LINKS.map((link) => (
+                <LocalizedClientLink
+                  key={link.href}
+                  href={link.href}
+                  className="text-xs font-body font-medium uppercase tracking-widest text-ink pb-1 border-b border-transparent hover:border-wine hover:text-wine transition-colors duration-200"
+                >
+                  {link.label}
+                </LocalizedClientLink>
+              ))}
+            </div>
           </div>
 
-          <div className="hidden small:flex items-center gap-x-8 h-full">
-            {NAV_LINKS.map((link) => (
-              <LocalizedClientLink
-                key={link.href}
-                href={link.href}
-                className="text-xs font-body font-medium uppercase tracking-widest text-ink pb-1 border-b border-transparent hover:border-wine hover:text-wine transition-colors duration-200"
-              >
-                {link.label}
-              </LocalizedClientLink>
-            ))}
-          </div>
-
-          <div className="flex items-center h-full flex-1 basis-0 justify-center small:justify-start small:ml-10">
+          {/* Center column: logo, true center */}
+          <div className="flex items-center justify-center h-full flex-1 basis-0">
             <LocalizedClientLink
               href="/"
               className="flex items-center h-full"
@@ -52,11 +53,12 @@ export default async function Nav() {
                 height={48}
                 priority
                 unoptimized
-                className="h-8 w-auto small:h-9 mt-1.5"
+                className="h-8 w-auto small:h-9"
               />
             </LocalizedClientLink>
           </div>
 
+          {/* Right column: account + bag */}
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
