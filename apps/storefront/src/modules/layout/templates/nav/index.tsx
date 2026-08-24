@@ -52,7 +52,7 @@ export default async function Nav() {
                 height={48}
                 priority
                 unoptimized
-                className="h-8 w-auto small:h-9"
+                className="h-8 w-auto small:h-9 mt-1.5"
               />
             </LocalizedClientLink>
           </div>
