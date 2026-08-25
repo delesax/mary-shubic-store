@@ -8,6 +8,7 @@ import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
+import LocaleNavControl from "@modules/layout/components/locale-nav-control"
 import { NAV_LINKS } from "@lib/constants/nav-links"
 
 export default async function Nav() {
@@ -21,9 +22,9 @@ export default async function Nav() {
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-20 mx-auto border-b duration-200 bg-ivory border-ink/10">
         <nav className="content-container flex items-center justify-between w-full h-full">
-          {/* Left column: menu trigger + desktop nav links */}
+          {/* Left column: menu trigger (mobile only) + desktop nav links */}
           <div className="flex-1 basis-0 h-full flex items-center gap-x-6">
-            <div className="h-full flex-shrink-0">
+            <div className="h-full flex-shrink-0 small:hidden">
               <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
             </div>
             <div className="hidden small:flex items-center gap-x-6 h-full flex-shrink-0">
@@ -58,8 +59,13 @@ export default async function Nav() {
             </LocalizedClientLink>
           </div>
 
-          {/* Right column: account + bag */}
+          {/* Right column: locale control + account + bag */}
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
+            <LocaleNavControl
+              regions={regions}
+              locales={locales}
+              currentLocale={currentLocale}
+            />
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
                 className="text-ink hover:text-wine transition-colors duration-200"
