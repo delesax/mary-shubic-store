@@ -10,8 +10,6 @@ import {
   ThHTMLAttributes,
 } from "react"
 
-// TODO: Add Toaster component back when needed for notifications
-
 // Re-export clsx as clx for compatibility
 export { clsx as clx }
 
@@ -23,7 +21,11 @@ type TextProps = HTMLAttributes<HTMLParagraphElement> & {
 export const Text = forwardRef<HTMLParagraphElement, TextProps>(
   ({ className, as: Component = "p", children, ...props }, ref) => {
     return (
-      <Component ref={ref} className={clsx("text-base", className)} {...props}>
+      <Component
+        ref={ref}
+        className={clsx("text-base font-body text-ink", className)}
+        {...props}
+      >
         {children}
       </Component>
     )
@@ -42,7 +44,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
       <Component
         ref={ref}
         className={clsx(
-          "font-semibold",
+          "font-display italic text-ink",
           Component === "h1" && "text-3xl",
           Component === "h2" && "text-2xl",
           Component === "h3" && "text-xl",
@@ -82,14 +84,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={clsx(
-          "inline-flex gap-2 items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          variant === "primary" && "bg-black text-white hover:bg-gray-800",
+          "inline-flex gap-2 items-center justify-center rounded-md font-body text-xs uppercase tracking-widest font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wine/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          variant === "primary" && "bg-wine text-ivory hover:bg-wine/90",
           variant === "secondary" &&
-            "bg-white text-black border border-gray-200 hover:bg-gray-50",
-          variant === "transparent" && "bg-transparent hover:bg-gray-100",
-          size === "small" && "h-8 px-3 text-sm",
+            "bg-ivory text-ink border border-ink/20 hover:bg-blush/30",
+          variant === "transparent" && "bg-transparent text-ink hover:bg-blush/20",
+          size === "small" && "h-8 px-3 text-xs",
           size === "medium" && "h-10 px-4",
-          size === "large" && "h-12 px-6 text-lg",
+          size === "large" && "h-12 px-6 text-sm",
           className
         )}
         {...props}
@@ -109,7 +111,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
     return (
       <div
         ref={ref}
-        className={clsx("bg-white rounded-lg p-4", className)}
+        className={clsx("bg-ivory border border-ink/10 rounded-lg p-4", className)}
         {...props}
       >
         {children}
@@ -130,12 +132,12 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         className={clsx(
-          "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
+          "inline-flex items-center rounded-full px-2 py-1 text-xs font-body font-medium",
           color === "green" && "bg-green-100 text-green-700",
           color === "red" && "bg-red-100 text-red-700",
           color === "blue" && "bg-blue-100 text-blue-700",
           color === "orange" && "bg-orange-100 text-orange-700",
-          color === "grey" && "bg-gray-100 text-gray-700",
+          color === "grey" && "bg-blush/30 text-ink",
           color === "purple" && "bg-purple-100 text-purple-700",
           className
         )}
@@ -157,7 +159,7 @@ export const IconBadge = forwardRef<HTMLSpanElement, IconBadgeProps>(
       <span
         ref={ref}
         className={clsx(
-          "inline-flex items-center justify-center rounded-full bg-gray-100 p-1",
+          "inline-flex items-center justify-center rounded-full bg-blush/30 p-1",
           className
         )}
         {...props}
@@ -178,7 +180,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       <button
         ref={ref}
         className={clsx(
-          "inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2",
+          "inline-flex items-center justify-center rounded-md p-2 text-ink hover:bg-blush/30 hover:text-wine transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wine/40",
           className
         )}
         {...props}
@@ -198,7 +200,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
     return (
       <label
         ref={ref}
-        className={clsx("text-sm font-medium", className)}
+        className={clsx("text-sm font-body font-medium text-ink", className)}
         {...props}
       >
         {children}
@@ -221,7 +223,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={clsx(
-            "flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-md border border-ink/15 bg-ivory px-3 py-2 text-sm font-body text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-wine/40 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           {...props}
@@ -240,7 +242,7 @@ const TableRoot = forwardRef<HTMLTableElement, TableProps>(
     return (
       <table
         ref={ref}
-        className={clsx("w-full caption-bottom text-sm", className)}
+        className={clsx("w-full caption-bottom text-sm font-body text-ink", className)}
         {...props}
       >
         {children}
@@ -257,7 +259,7 @@ const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
     return (
       <thead
         ref={ref}
-        className={clsx("[&_tr]:border-b", className)}
+        className={clsx("[&_tr]:border-b [&_tr]:border-ink/10", className)}
         {...props}
       >
         {children}
@@ -292,7 +294,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
       <tr
         ref={ref}
         className={clsx(
-          "border-b transition-colors hover:bg-gray-50",
+          "border-b border-ink/10 transition-colors hover:bg-blush/20",
           className
         )}
         {...props}
@@ -312,7 +314,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       <th
         ref={ref}
         className={clsx(
-          "h-12 px-4 text-left align-middle font-medium text-gray-500 [&:has([role=checkbox])]:pr-0",
+          "h-12 px-4 text-left align-middle font-body font-medium text-ink/50 [&:has([role=checkbox])]:pr-0",
           className
         )}
         {...props}
@@ -384,7 +386,7 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
           type="radio"
           id={id}
           className={clsx(
-            "h-4 w-4 border-gray-300 text-gray-900 focus:ring-gray-900",
+            "h-4 w-4 border-ink/30 text-wine focus:ring-wine/40",
             className
           )}
           {...props}
@@ -414,7 +416,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           type="checkbox"
           id={id}
           className={clsx(
-            "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900",
+            "h-4 w-4 rounded border-ink/30 text-wine focus:ring-wine/40",
             className
           )}
           {...props}
