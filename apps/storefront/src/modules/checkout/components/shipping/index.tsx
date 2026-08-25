@@ -55,7 +55,7 @@ const Shipping: React.FC<ShippingProps> = ({
 
   const [showPickupOptions, setShowPickupOptions] =
     useState<string>(PICKUP_OPTION_OFF)
-  const [calculatedPricesMap, setCalculatedPricesMap] = useState
+  const [calculatedPricesMap, setCalculatedPricesMap] = useState<
     Record<string, number>
   >({})
   const [error, setError] = useState<string | null>(null)
