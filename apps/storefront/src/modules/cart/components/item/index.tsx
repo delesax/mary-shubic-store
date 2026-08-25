@@ -49,7 +49,7 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
       <Table.Cell className="!pl-0 p-4 w-24">
         <LocalizedClientLink
           href={`/products/${item.product_handle}`}
-          className={clx("flex", {
+          className={clx("flex bg-blush/20", {
             "w-16": type === "preview",
             "small:w-24 w-12": type === "full",
           })}
@@ -64,7 +64,7 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
 
       <Table.Cell className="text-left">
         <Text
-          className="txt-medium-plus text-ui-fg-base"
+          className="text-sm font-medium text-ink"
           data-testid="product-title"
         >
           {item.product_title}
@@ -121,8 +121,8 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
           })}
         >
           {type === "preview" && (
-            <span className="flex gap-x-1 ">
-              <Text className="text-ui-fg-muted">{item.quantity}x </Text>
+            <span className="flex gap-x-1">
+              <Text className="text-ink/50">{item.quantity}x </Text>
               <LineItemUnitPrice
                 item={item}
                 style="tight"
