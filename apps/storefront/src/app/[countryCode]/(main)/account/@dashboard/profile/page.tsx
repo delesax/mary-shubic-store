@@ -10,7 +10,11 @@ import { retrieveCustomer } from "@lib/data/customer"
 
 export const metadata: Metadata = {
   title: "Profile",
-  description: "View and edit your Medusa Store profile.",
+  description: "View and edit your Mary Shubic profile.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default async function Profile() {

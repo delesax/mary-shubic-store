@@ -3,11 +3,6 @@ import { Metadata } from "next"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import StoreTemplate from "@modules/store/templates"
 
-export const metadata: Metadata = {
-  title: "Store",
-  description: "Explore all of our products.",
-}
-
 type Params = {
   searchParams: Promise<{
     sortBy?: SortOptions
@@ -16,6 +11,22 @@ type Params = {
   params: Promise<{
     countryCode: string
   }>
+}
+
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params
+
+  return {
+    title: "Store | Mary Shubic",
+    description: "Explore all of our products.",
+    alternates: {
+      canonical: `/${params.countryCode}/store`,
+    },
+    openGraph: {
+      title: "Store | Mary Shubic",
+      description: "Explore all of our products.",
+    },
+  }
 }
 
 export default async function StorePage(props: Params) {

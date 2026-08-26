@@ -97,10 +97,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: `/${params.countryCode}/products/${handle}`,
+    },
     openGraph: {
       title,
       description,
       images: product.thumbnail ? [product.thumbnail] : [],
+      type: "website",
     },
   }
 }

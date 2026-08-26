@@ -4,6 +4,10 @@ import { Metadata } from "next"
 export const metadata: Metadata = {
   title: "404",
   description: "Something went wrong",
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default async function NotFound() {

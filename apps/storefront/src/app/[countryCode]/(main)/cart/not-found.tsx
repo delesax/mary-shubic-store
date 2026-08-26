@@ -5,6 +5,10 @@ import InteractiveLink from "@modules/common/components/interactive-link"
 export const metadata: Metadata = {
   title: "404",
   description: "Something went wrong",
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function NotFound() {

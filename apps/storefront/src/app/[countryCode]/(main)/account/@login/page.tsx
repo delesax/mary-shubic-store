@@ -4,7 +4,11 @@ import LoginTemplate from "@modules/account/templates/login-template"
 
 export const metadata: Metadata = {
   title: "Sign in",
-  description: "Sign in to your Medusa Store account.",
+  description: "Sign in to your Mary Shubic account.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function Login() {

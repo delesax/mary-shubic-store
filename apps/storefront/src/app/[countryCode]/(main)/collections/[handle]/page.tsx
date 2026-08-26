@@ -5,6 +5,7 @@ import { listRegions } from "@lib/data/regions"
 import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+
 type Props = {
   params: Promise<{ handle: string; countryCode: string }>
   searchParams: Promise<{
@@ -12,7 +13,9 @@ type Props = {
     sortBy?: SortOptions
   }>
 }
+
 export const PRODUCT_LIMIT = 12
+
 export async function generateStaticParams() {
   try {
     const { collections } = await listCollections({
@@ -49,18 +52,31 @@ export async function generateStaticParams() {
     return []
   }
 }
+
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const collection = await getCollectionByHandle(params.handle)
   if (!collection) {
     notFound()
   }
+
+  const title = `${collection.title} | Mary Shubic`
+  const description = `Shop the ${collection.title} collection at Mary Shubic.`
+
   const metadata = {
-    title: `${collection.title} | Medusa Store`,
-    description: `${collection.title} collection`,
+    title,
+    description,
+    alternates: {
+      canonical: `/${params.countryCode}/collections/${params.handle}`,
+    },
+    openGraph: {
+      title,
+      description,
+    },
   } as Metadata
   return metadata
 }
+
 export default async function CollectionPage(props: Props) {
   const searchParams = await props.searchParams
   const params = await props.params
