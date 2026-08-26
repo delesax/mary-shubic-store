@@ -5,29 +5,19 @@ import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
-type Props = {
-  params: Promise<{ countryCode: string }>
-}
-
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params
-
-  const title = "Mary Shubic | Women's Fashion, Beauty & Footwear"
-  const description =
-    "Apparel, footwear, hair and makeup for women who don't dress to blend in. Shop new arrivals across bold colours and prints, made to move with you."
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: `/${params.countryCode}/`,
-    },
-    openGraph: {
-      title,
-      description,
-      type: "website",
-    },
-  }
+export const metadata: Metadata = {
+  title: "Mary Shubic | Women's Fashion, Beauty & Footwear",
+  description:
+    "Apparel, footwear, hair and makeup for women who don't dress to blend in. Shop new arrivals across bold colours and prints, made to move with you.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Mary Shubic | Women's Fashion, Beauty & Footwear",
+    description:
+      "Apparel, footwear, hair and makeup for women who don't dress to blend in.",
+    type: "website",
+  },
 }
 
 export default async function Home(props: {
