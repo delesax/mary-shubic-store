@@ -63,29 +63,29 @@ const EditAddress: React.FC<EditAddressProps> = ({
     <>
       <div
         className={clx(
-          "border rounded-rounded p-5 min-h-[220px] h-full w-full flex flex-col justify-between transition-colors",
+          "border border-blush rounded-rounded p-5 min-h-[220px] h-full w-full flex flex-col justify-between transition-colors",
           {
-            "border-gray-900": isActive,
+            "border-wine": isActive,
           }
         )}
         data-testid="address-container"
       >
         <div className="flex flex-col">
           <Heading
-            className="text-left text-base-semi"
+            className="text-left font-display italic text-lg text-ink"
             data-testid="address-name"
           >
             {address.first_name} {address.last_name}
           </Heading>
           {address.company && (
             <Text
-              className="txt-compact-small text-ui-fg-base"
+              className="txt-compact-small text-ink/70"
               data-testid="address-company"
             >
               {address.company}
             </Text>
           )}
-          <Text className="flex flex-col text-left text-base-regular mt-2">
+          <Text className="flex flex-col text-left text-base-regular text-ink/80 mt-2">
             <span data-testid="address-address">
               {address.address_1}
               {address.address_2 && <span>, {address.address_2}</span>}
@@ -101,7 +101,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
         </div>
         <div className="flex items-center gap-x-4">
           <button
-            className="text-small-regular text-ui-fg-base flex items-center gap-x-2"
+            className="text-small-regular text-ink/60 hover:text-wine transition-colors flex items-center gap-x-2"
             onClick={open}
             data-testid="address-edit-button"
           >
@@ -109,7 +109,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
             Edit
           </button>
           <button
-            className="text-small-regular text-ui-fg-base flex items-center gap-x-2"
+            className="text-small-regular text-ink/60 hover:text-wine transition-colors flex items-center gap-x-2"
             onClick={removeAddress}
             data-testid="address-delete-button"
           >
@@ -209,7 +209,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
               />
             </div>
             {formState.error && (
-              <div className="text-rose-500 text-small-regular py-2">
+              <div className="text-red-600 text-small-regular py-2">
                 {formState.error}
               </div>
             )}

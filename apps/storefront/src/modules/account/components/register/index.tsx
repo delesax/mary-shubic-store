@@ -20,11 +20,11 @@ const Register = ({ setCurrentView }: Props) => {
       className="max-w-sm flex flex-col items-center"
       data-testid="register-page"
     >
-      <h1 className="text-large-semi uppercase mb-6">
-        Become a Medusa Store Member
+      <h1 className="font-display italic text-3xl text-ink mb-6 text-center">
+        Become a Mary Shubic Member
       </h1>
-      <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Create your Medusa Store Member profile, and get access to an enhanced
+      <p className="text-center text-base-regular text-ink/60 mb-4">
+        Create your Mary Shubic member profile, and get access to an enhanced
         shopping experience.
       </p>
       <form className="w-full flex flex-col" action={formAction}>
@@ -68,18 +68,18 @@ const Register = ({ setCurrentView }: Props) => {
           />
         </div>
         <ErrorMessage error={message} data-testid="register-error" />
-        <span className="text-center text-ui-fg-base text-small-regular mt-6">
-          By creating an account, you agree to Medusa Store&apos;s{" "}
+        <span className="text-center text-ink/60 text-small-regular mt-6">
+          By creating an account, you agree to Mary Shubic&apos;s{" "}
           <LocalizedClientLink
             href="/content/privacy-policy"
-            className="underline"
+            className="text-wine underline hover:text-wine/80 transition-colors"
           >
             Privacy Policy
           </LocalizedClientLink>{" "}
           and{" "}
           <LocalizedClientLink
             href="/content/terms-of-use"
-            className="underline"
+            className="text-wine underline hover:text-wine/80 transition-colors"
           >
             Terms of Use
           </LocalizedClientLink>
@@ -89,11 +89,11 @@ const Register = ({ setCurrentView }: Props) => {
           Join
         </SubmitButton>
       </form>
-      <span className="text-center text-ui-fg-base text-small-regular mt-6">
+      <span className="text-center text-ink/60 text-small-regular mt-6">
         Already a member?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
-          className="underline"
+          className="text-wine underline hover:text-wine/80 transition-colors"
         >
           Sign in
         </button>

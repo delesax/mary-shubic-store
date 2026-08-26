@@ -48,12 +48,12 @@ const AddAddress = ({
   return (
     <>
       <button
-        className="border border-ui-border-base rounded-rounded p-5 min-h-[220px] h-full w-full flex flex-col justify-between"
+        className="border border-blush hover:border-wine transition-colors rounded-rounded p-5 min-h-[220px] h-full w-full flex flex-col justify-between"
         onClick={open}
         data-testid="add-address-button"
       >
-        <span className="text-base-semi">New address</span>
-        <Plus />
+        <span className="font-display italic text-lg text-ink">New address</span>
+        <Plus className="text-wine" />
       </button>
 
       <Modal isOpen={state} close={close} data-testid="add-address-modal">
@@ -136,7 +136,7 @@ const AddAddress = ({
             </div>
             {formState.error && (
               <div
-                className="text-rose-500 text-small-regular py-2"
+                className="text-red-600 text-small-regular py-2"
                 data-testid="address-error"
               >
                 {formState.error}
