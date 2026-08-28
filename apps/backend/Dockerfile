@@ -2,6 +2,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --legacy-peer-deps
+ARG CACHEBUST=1
 COPY . .
 ENV NODE_OPTIONS="--max-old-space-size=3072"
 RUN npm run build
