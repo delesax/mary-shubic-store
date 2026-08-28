@@ -8,6 +8,7 @@ export default async function testColourSwatchLink({ container }: ExecArgs) {
   const colourSwatchModuleService = container.resolve(COLOUR_SWATCH_MODULE)
   const remoteLink = container.resolve(ContainerRegistrationKeys.REMOTE_LINK)
 
+  // 1. Create a throwaway test product with a Colour option
   const product = await productModuleService.createProducts({
     title: "Colour Swatch Test Product",
     status: "draft",
@@ -21,6 +22,7 @@ export default async function testColourSwatchLink({ container }: ExecArgs) {
 
   logger.info(`Created test product: ${product.id}`)
 
+  // 2. Fetch the option value that was just generated
   const [productWithOptions] = await productModuleService.listProducts(
     { id: [product.id] },
     { relations: ["options", "options.values"] }
@@ -29,6 +31,7 @@ export default async function testColourSwatchLink({ container }: ExecArgs) {
   const optionValue = productWithOptions.options[0].values[0]
   logger.info(`Product option value id: ${optionValue.id}`)
 
+  // 3. Create a ColourSwatch record
   const swatch = await colourSwatchModuleService.createColourSwatches({
     name: "Wine Rose",
     hex: "#7A3B44",
@@ -36,6 +39,7 @@ export default async function testColourSwatchLink({ container }: ExecArgs) {
 
   logger.info(`Created colour swatch: ${swatch.id}`)
 
+  // 4. Link the swatch to the option value
   await remoteLink.create({
     [COLOUR_SWATCH_MODULE]: {
       colour_swatch_id: swatch.id,
