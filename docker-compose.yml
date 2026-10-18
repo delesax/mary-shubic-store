@@ -31,6 +31,8 @@ services:
       COOKIE_SECRET: ${COOKIE_SECRET}
       STRIPE_API_KEY: ${STRIPE_API_KEY}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL}
       STORE_CORS: https://www.maryshubic.com,https://www.maryshubic.co.uk
       ADMIN_CORS: https://api.maryshubic.com,https://api.maryshubic.co.uk
       AUTH_CORS: https://api.maryshubic.com,https://api.maryshubic.co.uk
