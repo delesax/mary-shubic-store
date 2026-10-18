@@ -6,6 +6,8 @@ import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
+export const dynamic = "force-dynamic"
+
 type Props = {
   params: Promise<{ handle: string; countryCode: string }>
   searchParams: Promise<{
