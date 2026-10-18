@@ -30,6 +30,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_SECRET: ${COOKIE_SECRET}
       STRIPE_API_KEY: ${STRIPE_API_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
       STORE_CORS: https://www.maryshubic.com,https://www.maryshubic.co.uk
       ADMIN_CORS: https://api.maryshubic.com,https://api.maryshubic.co.uk
       AUTH_CORS: https://api.maryshubic.com,https://api.maryshubic.co.uk
