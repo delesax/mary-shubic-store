@@ -2,18 +2,22 @@
 // and React 18 (Medusa admin) side by side, so rendering email with React in the
 // backend risks mixing two React copies. A string template avoids that entirely.
 
-// TODO: replace these with the Mary Shubic design-system values.
-// Use plain hex colours: email clients ignore CSS variables and most web fonts.
+// Colours come from the Mary Shubic design system, as plain hex
+// (email clients ignore CSS variables and most web fonts).
 const BRAND = {
   name: "Mary Shubic",
-  ink: "#1a1a1a",
-  muted: "#6b6b6b",
-  paper: "#ffffff",
-  background: "#f6f3ee",
-  rule: "#e6e1d8",
+  ink: "#2A1A1D", // Ink: body text
+  muted: "#685B5C", // Ink at ~70% on Ivory (a touch darker than the site for small-text legibility)
+  accent: "#7A3B44", // Wine Rose: wordmark fallback, links and the order total
+  paper: "#FAF3F0", // Ivory: the card
+  background: "#F0D9D4", // Soft Blush: the area around the card
+  rule: "#E3C7C2", // slightly deeper blush so dividers stay visible on the card
   siteUrl: "https://www.maryshubic.com",
   supportEmail: "support@maryshubic.com", // TODO: confirm the real support address
-  fontStack: "Helvetica, Arial, sans-serif",
+  // Public https URL of the wine-rose wordmark as a PNG (email clients don't show SVG).
+  // Leave empty to fall back to the brand name in Wine Rose text.
+  logoUrl: "https://www.maryshubic.com/images/email/3-wordmark-signature-wine-rose-web.png",  
+  fontStack: "'Work Sans', Helvetica, Arial, sans-serif",
 }
 
 type Money = number | string | null | undefined
@@ -89,11 +93,16 @@ function addressLines(address?: Address | null): string[] {
   ].filter((line): line is string => Boolean(line && String(line).trim()))
 }
 
-function summaryRow(label: string, value: string, bold = false): string {
+function summaryRow(
+  label: string,
+  value: string,
+  bold = false,
+  color: string = BRAND.ink
+): string {
   const weight = bold ? 700 : 400
   return `<tr>
-  <td style="padding:4px 0;font-size:14px;font-weight:${weight};color:${BRAND.ink};">${esc(label)}</td>
-  <td align="right" style="padding:4px 0;font-size:14px;font-weight:${weight};color:${BRAND.ink};">${esc(value)}</td>
+  <td style="padding:4px 0;font-size:14px;font-weight:${weight};color:${color};">${esc(label)}</td>
+  <td align="right" style="padding:4px 0;font-size:14px;font-weight:${weight};color:${color};">${esc(value)}</td>
 </tr>`
 }
 
@@ -105,6 +114,10 @@ export function renderOrderPlacedEmail({ order }: OrderPlacedEmailProps): Render
   const items = order.items ?? []
   const shippingMethods = order.shipping_methods ?? []
   const lines = addressLines(address)
+
+  const logo = BRAND.logoUrl
+    ? `<img src="${esc(BRAND.logoUrl)}" width="160" alt="${esc(BRAND.name)}" style="display:block;margin:0 auto;border:0;height:auto;">`
+    : `<span style="color:${BRAND.accent};">${esc(BRAND.name)}</span>`
 
   const heading = firstName ? `Thank you, ${firstName}` : "Thank you for your order"
   const intro = `We've received order #${order.display_id} and will email you again when it ships.`
@@ -155,7 +168,7 @@ export function renderOrderPlacedEmail({ order }: OrderPlacedEmailProps): Render
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:${BRAND.paper};">
 <tr><td style="padding:32px 28px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tr><td align="center" style="font-size:20px;letter-spacing:0.18em;text-transform:uppercase;padding-bottom:24px;border-bottom:1px solid ${BRAND.rule};">${esc(BRAND.name)}</td></tr>
+    <tr><td align="center" style="font-size:20px;letter-spacing:0.18em;text-transform:uppercase;padding-bottom:24px;border-bottom:1px solid ${BRAND.rule};">${logo}</td></tr>
     <tr><td style="padding-top:24px;">
       <h1 style="margin:0 0 8px;font-size:22px;font-weight:600;">${esc(heading)}</h1>
       <p style="margin:0 0 24px;font-size:15px;color:${BRAND.muted};">${esc(intro)}</p>
@@ -170,14 +183,14 @@ export function renderOrderPlacedEmail({ order }: OrderPlacedEmailProps): Render
         ${summaryRow("Subtotal", money(order.item_total, currency))}
         ${shippingRows}
         ${showTax ? summaryRow("Tax", money(order.tax_total, currency)) : ""}
-        ${summaryRow("Total", money(order.total, currency), true)}
+        ${summaryRow("Total", money(order.total, currency), true, BRAND.accent)}
       </table>
     </td></tr>
     ${addressBlock}
     <tr><td style="padding-top:24px;border-top:1px solid ${BRAND.rule};margin-top:24px;">
       <p style="margin:24px 0 0;font-size:12px;color:${BRAND.muted};text-align:center;">
         Questions about your order? Reply to this email or write to
-        <a href="mailto:${esc(BRAND.supportEmail)}" style="color:${BRAND.ink};">${esc(BRAND.supportEmail)}</a>.
+        <a href="mailto:${esc(BRAND.supportEmail)}" style="color:${BRAND.accent};">${esc(BRAND.supportEmail)}</a>.
       </p>
       <p style="margin:8px 0 0;font-size:12px;text-align:center;">
         <a href="${esc(BRAND.siteUrl)}" style="color:${BRAND.muted};">${esc(BRAND.name)}</a>
