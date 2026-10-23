@@ -5,6 +5,7 @@ import { useIntersection } from "@lib/hooks/use-in-view"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@modules/common/components/ui"
 import Divider from "@modules/common/components/divider"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import OptionSelect from "@modules/products/components/product-actions/option-select"
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
@@ -38,6 +39,7 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [added, setAdded] = useState(false)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
@@ -92,6 +94,13 @@ export default function ProductActions({
     router.replace(pathname + "?" + params.toString())
   }, [selectedVariant, isValidVariant])
 
+  // hide the "added" confirmation after a few seconds
+  useEffect(() => {
+    if (!added) return
+    const timer = setTimeout(() => setAdded(false), 4000)
+    return () => clearTimeout(timer)
+  }, [added])
+
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
     // If we don't manage inventory, we can always add to cart
@@ -126,17 +135,39 @@ export default function ProductActions({
 
     setIsAdding(true)
 
-    await addToCart({
-      variantId: selectedVariant.id,
-      quantity: 1,
-      countryCode,
-    })
-
-    setIsAdding(false)
+    try {
+      await addToCart({
+        variantId: selectedVariant.id,
+        quantity: 1,
+        countryCode,
+      })
+      setAdded(true)
+      router.refresh() // make sure the nav bag count updates
+    } finally {
+      setIsAdding(false)
+    }
   }
 
   return (
     <>
+      {added && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-x-4 top-4 z-[100] flex items-center justify-between gap-4 rounded-[2px] bg-ink px-4 py-3 text-ivory shadow-lg small:left-auto small:right-6 small:w-80"
+        >
+          <span className="text-xs font-semibold uppercase tracking-widest">
+            Added to bag ✓
+          </span>
+          <LocalizedClientLink
+            href="/cart"
+            className="text-xs font-semibold uppercase tracking-widest underline"
+          >
+            View bag
+          </LocalizedClientLink>
+        </div>
+      )}
+
       <div className="flex flex-col gap-y-6" ref={actionsRef}>
         <div>
           {(product.variants?.length ?? 0) > 1 && (
@@ -180,6 +211,8 @@ export default function ProductActions({
             ? "Select variant"
             : !inStock || !isValidVariant
             ? "Out of stock"
+            : added
+            ? "Added ✓"
             : "Add to Bag"}
         </Button>
         <MobileActions
