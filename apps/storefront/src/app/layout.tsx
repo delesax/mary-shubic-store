@@ -1,21 +1,37 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
-import { Fraunces, Work_Sans } from "next/font/google"
+import localFont from "next/font/local"
 import "styles/globals.css"
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
+const fraunces = localFont({
+  src: [
+    {
+      path: "../fonts/fraunces-latin-wght-normal.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../fonts/fraunces-latin-wght-italic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-fraunces",
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
   display: "swap",
+  fallback: ["Georgia", "serif"],
 })
 
-const workSans = Work_Sans({
-  subsets: ["latin"],
+const workSans = localFont({
+  src: [
+    {
+      path: "../fonts/work-sans-latin-wght-normal.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
   variable: "--font-work-sans",
-  weight: ["400", "500", "600"],
   display: "swap",
+  fallback: ["system-ui", "Arial", "sans-serif"],
 })
 
 export const metadata: Metadata = {
