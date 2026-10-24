@@ -1,3 +1,4 @@
+import Image from "next/image"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ChevronDown from "@modules/common/icons/chevron-down"
 import MedusaCTA from "@modules/layout/components/medusa-cta"
@@ -26,10 +27,18 @@ export default function CheckoutLayout({
           </LocalizedClientLink>
           <LocalizedClientLink
             href="/"
-            className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+            className="flex items-center h-full"
             data-testid="store-link"
           >
-            Medusa Store
+            <Image
+              src="/logo/mary-shubic-logo5-wine-rose.svg"
+              alt="Mary Shubic"
+              width={220}
+              height={60}
+              priority
+              unoptimized
+              className="h-8 w-auto"
+            />
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>
