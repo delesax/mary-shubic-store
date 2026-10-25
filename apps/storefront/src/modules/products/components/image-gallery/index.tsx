@@ -27,7 +27,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             type="button"
             onClick={() => setActiveIndex(index)}
             aria-label={`View product image ${index + 1}`}
-            className={`relative shrink-0 w-16 h-20 small:w-full small:h-24 rounded-soft overflow-hidden border transition-colors duration-200 ${
+            className={`relative shrink-0 w-16 h-20 small:w-full small:h-24 rounded-soft overflow-hidden bg-blush/10 border transition-colors duration-200 ${
               index === activeIndex
                 ? "border-wine border-2"
                 : "border-ink/10 hover:border-mid-rose"
@@ -36,7 +36,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             {!!image.url && (
               <Image
                 src={image.url}
-                className="object-cover"
+                className="object-contain"
                 alt={`Product thumbnail ${index + 1}`}
                 fill
                 sizes="80px"
@@ -47,7 +47,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
       </div>
 
       <Container
-        className="relative aspect-[3/4] w-full overflow-hidden bg-blush rounded-soft"
+        className="relative aspect-[3/4] w-full overflow-hidden bg-blush/10 rounded-soft"
         id={activeImage.id}
       >
         {!!activeImage.url && (
@@ -59,7 +59,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             fill
             sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
             style={{
-              objectFit: "cover",
+              objectFit: "contain",
             }}
           />
         )}
