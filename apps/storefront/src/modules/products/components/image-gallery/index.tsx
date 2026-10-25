@@ -27,7 +27,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             type="button"
             onClick={() => setActiveIndex(index)}
             aria-label={`View product image ${index + 1}`}
-            className={`relative shrink-0 w-16 h-20 small:w-full small:h-24 rounded-soft overflow-hidden bg-blush/10 border transition-colors duration-200 ${
+            className={`relative shrink-0 w-16 aspect-[2/3] small:w-full rounded-soft overflow-hidden bg-blush/10 border transition-colors duration-200 ${
               index === activeIndex
                 ? "border-wine border-2"
                 : "border-ink/10 hover:border-mid-rose"
@@ -47,7 +47,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
       </div>
 
       <Container
-        className="relative aspect-[3/4] w-full overflow-hidden bg-blush/10 rounded-soft"
+        className="relative aspect-[2/3] w-full overflow-hidden bg-blush/10 rounded-soft"
         id={activeImage.id}
       >
         {!!activeImage.url && (
