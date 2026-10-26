@@ -44,7 +44,14 @@ export default function ProductActions({
 
   // Preselect: one variant -> all options; otherwise the first in-stock colour
   // (size is left for the customer to choose)
+  // Runs once per product. Without the ref guard, the v_id URL update below
+  // re-renders the page with fresh product objects, this effect re-fires and
+  // wipes the size the customer just chose.
+  const preselectedFor = useRef<string | null>(null)
   useEffect(() => {
+    if (preselectedFor.current === product.id) return
+    preselectedFor.current = product.id
+
     const variants = product.variants ?? []
 
     if (variants.length === 1) {
@@ -66,7 +73,7 @@ export default function ProductActions({
     )?.value
 
     if (value) setOptions({ [colourOption.id]: value })
-  }, [product.variants, product.options])
+  }, [product.id, product.variants, product.options])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
