@@ -9,6 +9,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import OptionSelect from "@modules/products/components/product-actions/option-select"
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
+import { getCondition } from "@lib/conditions"
 import { useEffect, useMemo, useRef, useState } from "react"
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
@@ -41,6 +42,7 @@ export default function ProductActions({
   const [isAdding, setIsAdding] = useState(false)
   const [added, setAdded] = useState(false)
   const countryCode = useParams().countryCode as string
+  const condition = getCondition(product.metadata?.condition)
 
   // Preselect: one variant -> all options; otherwise the first in-stock colour
   // (size is left for the customer to choose)
@@ -201,22 +203,38 @@ export default function ProductActions({
 
       <div className="flex flex-col gap-y-6" ref={actionsRef}>
         <div>
-          {(product.variants?.length ?? 0) > 1 && (
+          {((product.variants?.length ?? 0) > 1 || condition) && (
             <div className="flex flex-col gap-y-6">
-              {(product.options || []).map((option) => {
-                return (
-                  <div key={option.id}>
-                    <OptionSelect
-                      option={option}
-                      current={options[option.id]}
-                      updateOption={setOptionValue}
-                      title={option.title ?? ""}
-                      data-testid="product-options"
-                      disabled={!!disabled || isAdding}
-                    />
+              {(product.variants?.length ?? 0) > 1 &&
+                (product.options || []).map((option) => {
+                  return (
+                    <div key={option.id}>
+                      <OptionSelect
+                        option={option}
+                        current={options[option.id]}
+                        updateOption={setOptionValue}
+                        title={option.title ?? ""}
+                        data-testid="product-options"
+                        disabled={!!disabled || isAdding}
+                      />
+                    </div>
+                  )
+                })}
+              {condition && (
+                <div className="flex flex-col gap-y-2" data-testid="product-condition">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-ink">
+                      Condition
+                    </span>
+                    <span className="text-sm text-ink/60">{condition.label}</span>
                   </div>
-                )
-              })}
+                  {condition.definition && (
+                    <p className="max-w-md text-xs leading-relaxed text-ink/60">
+                      {condition.definition}
+                    </p>
+                  )}
+                </div>
+              )}
               <Divider className="border-ink/10" />
             </div>
           )}
