@@ -42,13 +42,31 @@ export default function ProductActions({
   const [added, setAdded] = useState(false)
   const countryCode = useParams().countryCode as string
 
-  // If there is only 1 variant, preselect the options
+  // Preselect: one variant -> all options; otherwise the first in-stock colour
+  // (size is left for the customer to choose)
   useEffect(() => {
-    if (product.variants?.length === 1) {
-      const variantOptions = optionsAsKeymap(product.variants[0].options)
-      setOptions(variantOptions ?? {})
+    const variants = product.variants ?? []
+
+    if (variants.length === 1) {
+      setOptions(optionsAsKeymap(variants[0].options) ?? {})
+      return
     }
-  }, [product.variants])
+
+    const colourOption = product.options?.find((o) =>
+      ["colour", "color"].includes((o.title ?? "").toLowerCase())
+    )
+    if (!colourOption) return
+
+    const hasStock = (v: HttpTypes.StoreProductVariant) =>
+      !v.manage_inventory || v.allow_backorder || (v.inventory_quantity ?? 0) > 0
+
+    const first = variants.find(hasStock) ?? variants[0]
+    const value = first?.options?.find(
+      (o) => o.option_id === colourOption.id
+    )?.value
+
+    if (value) setOptions({ [colourOption.id]: value })
+  }, [product.variants, product.options])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
@@ -76,6 +94,12 @@ export default function ProductActions({
       return isEqual(variantOptions, options)
     })
   }, [product.variants, options])
+
+  // the first option the customer still has to choose (e.g. Size)
+  const missingOption = useMemo(
+    () => (product.options || []).find((o) => !options[o.id]),
+    [product.options, options]
+  )
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString())
@@ -207,8 +231,8 @@ export default function ProductActions({
           isLoading={isAdding}
           data-testid="add-product-button"
         >
-          {!selectedVariant && !options
-            ? "Select variant"
+          {!selectedVariant && missingOption
+            ? `Select ${missingOption.title}`
             : !inStock || !isValidVariant
             ? "Out of stock"
             : added
