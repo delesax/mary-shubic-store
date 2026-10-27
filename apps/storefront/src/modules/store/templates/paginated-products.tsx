@@ -1,5 +1,6 @@
 import { listProductsWithSort } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
+import { ProductFilters } from "@lib/constants/product-filters"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -21,6 +22,7 @@ export default async function PaginatedProducts({
   categoryId,
   productsIds,
   countryCode,
+  filters,
 }: {
   sortBy?: SortOptions
   page: number
@@ -28,6 +30,7 @@ export default async function PaginatedProducts({
   categoryId?: string
   productsIds?: string[]
   countryCode: string
+  filters?: ProductFilters
 }) {
   const queryParams: PaginatedProductsParams = {
     limit: 12,
@@ -62,9 +65,18 @@ export default async function PaginatedProducts({
     queryParams,
     sortBy,
     countryCode,
+    filters,
   })
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
+
+  if (products.length === 0) {
+    return (
+      <p className="font-body text-sm text-ink/60 py-16 text-center">
+        No products match those filters. Try removing one or two.
+      </p>
+    )
+  }
 
   return (
     <>

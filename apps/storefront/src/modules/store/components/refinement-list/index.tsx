@@ -1,52 +1,77 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useCallback } from "react"
 
+import { PRICE_BANDS, parseList } from "@lib/constants/product-filters"
 import SortProducts, { SortOptions } from "./sort-products"
+
+export type FilterFacets = {
+  colours: { label: string; hex?: string | null }[]
+  sizes: string[]
+  conditions: string[]
+}
 
 type RefinementListProps = {
   sortBy: SortOptions
   search?: boolean
+  facets?: FilterFacets
   "data-testid"?: string
 }
 
-// TODO: these are placeholders for layout only — not wired to real query
-// params or backend filtering yet. Need to confirm how colour/size are
-// modeled on the Medusa products (variant options vs metadata) before
-// wiring this up for real.
-const CATEGORY_FILTERS = ["Dresses", "Tops", "Skirts", "Outerwear"]
-const COLOUR_FILTERS = [
-  { label: "Neon Coral", hex: "#FF6B4A" },
-  { label: "Green Leopard", hex: "#5B7A4F" },
-  { label: "Orange Floral", hex: "#E8A13D" },
-  { label: "Navy Polka Dot", hex: "#2C3E5C" },
-]
-const SIZE_FILTERS = ["XS", "S", "M", "L", "XL"]
-const PRICE_FILTERS = ["Under £25", "£25 – £50", "£50 – £100", "£100+"]
+const FILTER_PARAMS = ["colour", "size", "price", "condition"]
+
+const headingClass =
+  "text-xs font-body font-semibold uppercase tracking-widest text-wine mb-4 pb-2.5 border-b border-ink/10"
 
 const RefinementList = ({
   sortBy,
+  facets,
   "data-testid": dataTestId,
 }: RefinementListProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams)
-      params.set(name, value)
-
-      return params.toString()
-    },
-    [searchParams]
-  )
+  const push = (params: URLSearchParams) => {
+    params.delete("page")
+    const query = params.toString()
+    router.push(query ? `${pathname}?${query}` : pathname)
+  }
 
   const setQueryParams = (name: string, value: string) => {
-    const query = createQueryString(name, value)
-    router.push(`${pathname}?${query}`)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set(name, value)
+    push(params)
   }
+
+  const selected = (name: string) =>
+    parseList(searchParams.get(name) ?? undefined)
+
+  const isSelected = (name: string, value: string) =>
+    selected(name).some((v) => v.toLowerCase() === value.toLowerCase())
+
+  const toggle = (name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    const current = selected(name)
+    const next = isSelected(name, value)
+      ? current.filter((v) => v.toLowerCase() !== value.toLowerCase())
+      : [...current, value]
+
+    if (next.length) {
+      params.set(name, next.join(","))
+    } else {
+      params.delete(name)
+    }
+    push(params)
+  }
+
+  const clearAll = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    FILTER_PARAMS.forEach((p) => params.delete(p))
+    push(params)
+  }
+
+  const hasActive = FILTER_PARAMS.some((p) => searchParams.get(p))
 
   return (
     <div className="hidden small:flex flex-col gap-10 small:min-w-[220px] small:pr-4">
@@ -58,86 +83,105 @@ const RefinementList = ({
         />
       </div>
 
+      {hasActive && (
+        <button
+          type="button"
+          onClick={clearAll}
+          className="self-start text-xs font-body uppercase tracking-widest text-wine underline underline-offset-4"
+        >
+          Clear filters
+        </button>
+      )}
+
+      {facets && facets.conditions.length > 0 && (
+        <div>
+          <h5 className={headingClass}>Condition</h5>
+          <div className="flex flex-col gap-3">
+            {facets.conditions.map((label) => (
+              <label
+                key={label}
+                className="flex items-center gap-2.5 text-sm font-body text-ink/75 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 accent-wine"
+                  checked={isSelected("condition", label)}
+                  onChange={() => toggle("condition", label)}
+                />
+                {label}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {facets && facets.colours.length > 0 && (
+        <div>
+          <h5 className={headingClass}>Colour</h5>
+          <div className="flex flex-col gap-3">
+            {facets.colours.map((c) => {
+              const on = isSelected("colour", c.label)
+              return (
+                <button
+                  key={c.label}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => toggle("colour", c.label)}
+                  className={`flex items-center gap-2.5 text-sm font-body text-left ${
+                    on ? "text-wine font-medium" : "text-ink/75"
+                  }`}
+                >
+                  <span
+                    className={`w-4 h-4 rounded-full border border-ink/15 ${
+                      on ? "ring-2 ring-wine ring-offset-2 ring-offset-ivory" : ""
+                    }`}
+                    style={{ backgroundColor: c.hex || "#E9DDD9" }}
+                  />
+                  {c.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {facets && facets.sizes.length > 0 && (
+        <div>
+          <h5 className={headingClass}>Size</h5>
+          <div className="flex flex-col gap-3">
+            {facets.sizes.map((label) => (
+              <label
+                key={label}
+                className="flex items-center gap-2.5 text-sm font-body text-ink/75 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 accent-wine"
+                  checked={isSelected("size", label)}
+                  onChange={() => toggle("size", label)}
+                />
+                {label}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div>
-        <h5 className="text-xs font-body font-semibold uppercase tracking-widest text-wine mb-4 pb-2.5 border-b border-ink/10">
-          Category
-        </h5>
+        <h5 className={headingClass}>Price</h5>
         <div className="flex flex-col gap-3">
-          {CATEGORY_FILTERS.map((label) => (
+          {PRICE_BANDS.map((b) => (
             <label
-              key={label}
+              key={b.key}
               className="flex items-center gap-2.5 text-sm font-body text-ink/75 cursor-pointer"
             >
               <input
                 type="checkbox"
                 className="w-4 h-4 accent-wine"
-                disabled
+                checked={isSelected("price", b.key)}
+                onChange={() => toggle("price", b.key)}
               />
-              {label}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h5 className="text-xs font-body font-semibold uppercase tracking-widest text-wine mb-4 pb-2.5 border-b border-ink/10">
-          Colour
-        </h5>
-        <div className="flex flex-col gap-3">
-          {COLOUR_FILTERS.map((c) => (
-            <button
-              key={c.label}
-              type="button"
-              disabled
-              className="flex items-center gap-2.5 text-sm font-body text-ink/75 text-left cursor-not-allowed"
-            >
-              <span
-                className="w-4 h-4 rounded-full border border-ink/15"
-                style={{ backgroundColor: c.hex }}
-              />
-              {c.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h5 className="text-xs font-body font-semibold uppercase tracking-widest text-wine mb-4 pb-2.5 border-b border-ink/10">
-          Size
-        </h5>
-        <div className="flex flex-col gap-3">
-          {SIZE_FILTERS.map((label) => (
-            <label
-              key={label}
-              className="flex items-center gap-2.5 text-sm font-body text-ink/75 cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                className="w-4 h-4 accent-wine"
-                disabled
-              />
-              {label}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h5 className="text-xs font-body font-semibold uppercase tracking-widest text-wine mb-4 pb-2.5 border-b border-ink/10">
-          Price
-        </h5>
-        <div className="flex flex-col gap-3">
-          {PRICE_FILTERS.map((label) => (
-            <label
-              key={label}
-              className="flex items-center gap-2.5 text-sm font-body text-ink/75 cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                className="w-4 h-4 accent-wine"
-                disabled
-              />
-              {label}
+              {b.label}
             </label>
           ))}
         </div>

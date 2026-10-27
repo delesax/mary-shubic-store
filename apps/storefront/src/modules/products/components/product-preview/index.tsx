@@ -1,9 +1,13 @@
 import { Text } from "@modules/common/components/ui"
 import { getProductPrice } from "@lib/util/get-product-price"
+import { getColourSwatches } from "@lib/data/colour-swatches"
+import { swatchBackground } from "@lib/util/colour-swatch"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Thumbnail from "../thumbnail"
 import PreviewPrice from "./price"
+
+const MAX_DOTS = 5
 
 export default async function ProductPreview({
   product,
@@ -17,6 +21,17 @@ export default async function ProductPreview({
   const { cheapestPrice } = getProductPrice({
     product,
   })
+
+  const colourOption = (product.options || []).find((o) =>
+    ["colour", "color"].includes((o.title || "").toLowerCase())
+  )
+  const colours = Array.from(
+    new Set((colourOption?.values || []).map((v) => v.value))
+  )
+  const showDots = colours.length > 1
+  const swatches = showDots ? await getColourSwatches() : {}
+  const shown = colours.slice(0, MAX_DOTS)
+  const extra = colours.length - shown.length
 
   return (
     <LocalizedClientLink
@@ -46,6 +61,24 @@ export default async function ProductPreview({
               </span>
             )}
           </div>
+          {showDots && (
+            <div
+              className="flex items-center gap-1.5 mt-0.5"
+              aria-label="Available colours"
+            >
+              {shown.map((name) => (
+                <span
+                  key={name}
+                  title={name}
+                  className="w-3.5 h-3.5 rounded-full border border-ink/15"
+                  style={{ background: swatchBackground(name, swatches) }}
+                />
+              ))}
+              {extra > 0 && (
+                <span className="text-xs font-body text-ink/60">+{extra}</span>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </LocalizedClientLink>
