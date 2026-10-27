@@ -6,7 +6,7 @@ import { HttpTypes } from "@medusajs/types"
 import { Button } from "@modules/common/components/ui"
 import Divider from "@modules/common/components/divider"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import OptionSelect from "@modules/products/components/product-actions/option-select"
+import OptionSelect from "./option-select"
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
 import { getCondition } from "@lib/conditions"
@@ -158,6 +158,43 @@ export default function ProductActions({
     return false
   }, [selectedVariant])
 
+  // Per option value: is there any variant in stock that matches the other
+  // options the customer has already chosen? Used to grey out sold-out choices.
+  const availability = useMemo(() => {
+    const variantInStock = (v: HttpTypes.StoreProductVariant) =>
+      !v.manage_inventory || !!v.allow_backorder || (v.inventory_quantity ?? 0) > 0
+
+    const result: Record<string, Record<string, { inStock: boolean }>> = {}
+    for (const option of product.options ?? []) {
+      result[option.id] = {}
+      const others = Object.entries(options).filter(
+        ([id, value]) => id !== option.id && !!value
+      )
+      for (const val of option.values ?? []) {
+        const matching = (product.variants ?? []).filter((v) => {
+          const map = optionsAsKeymap(v.options) ?? {}
+          return (
+            map[option.id] === val.value &&
+            others.every(([id, value]) => map[id] === value)
+          )
+        })
+        result[option.id][val.value] = { inStock: matching.some(variantInStock) }
+      }
+    }
+    return result
+  }, [product.options, product.variants, options])
+
+  // "Only N left" for the chosen variant when stock is low
+  const LOW_STOCK_AT = 3
+  const lowStock =
+    selectedVariant &&
+    selectedVariant.manage_inventory &&
+    !selectedVariant.allow_backorder &&
+    (selectedVariant.inventory_quantity ?? 0) > 0 &&
+    (selectedVariant.inventory_quantity ?? 0) <= LOW_STOCK_AT
+      ? selectedVariant.inventory_quantity
+      : null
+
   const actionsRef = useRef<HTMLDivElement>(null)
 
   const inView = useIntersection(actionsRef, "0px")
@@ -216,6 +253,7 @@ export default function ProductActions({
                         title={option.title ?? ""}
                         data-testid="product-options"
                         disabled={!!disabled || isAdding}
+                        availability={availability[option.id]}
                       />
                     </div>
                   )
@@ -226,7 +264,7 @@ export default function ProductActions({
                     <span className="text-xs font-semibold uppercase tracking-widest text-ink">
                       Condition
                     </span>
-                    <span className="text-sm text-ink/60">{condition.label}</span>
+                    <span className="text-sm font-semibold text-wine">{condition.label}</span>
                   </div>
                   {condition.definition && (
                     <p className="max-w-md text-xs leading-relaxed text-ink/60">
@@ -241,6 +279,12 @@ export default function ProductActions({
         </div>
 
         <ProductPrice product={product} variant={selectedVariant} />
+
+        {lowStock && (
+          <p className="-mt-3 text-xs font-semibold uppercase tracking-widest text-wine">
+            Only {lowStock} left
+          </p>
+        )}
 
         <Button
           onClick={handleAddToCart}
@@ -274,6 +318,7 @@ export default function ProductActions({
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          availability={availability}
         />
       </div>
     </>

@@ -1,6 +1,7 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
 import localFont from "next/font/local"
+import CookieNotice from "@modules/layout/components/cookie-notice"
 import "styles/globals.css"
 
 const fraunces = localFont({
@@ -47,6 +48,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     >
       <body className="font-body bg-ivory text-ink">
         <main className="relative">{props.children}</main>
+        <CookieNotice />
       </body>
     </html>
   )

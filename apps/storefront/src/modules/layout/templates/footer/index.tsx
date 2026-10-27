@@ -3,7 +3,7 @@ import { listCollections } from "@lib/data/collections";
 import { Text, clx } from "@modules/common/components/ui";
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
-import MedusaCTA from "@modules/layout/components/medusa-cta";
+import NewsletterForm from "@modules/layout/components/newsletter-form";
 
 export default async function Footer() {
   const { collections } = await listCollections({
@@ -117,7 +117,6 @@ export default async function Footer() {
               <span className="text-xs font-body font-semibold uppercase tracking-widest text-wine">
                 Help
               </span>
-              {/* TODO: point these at real pages once built */}
               <ul className="grid grid-cols-1 gap-y-2 text-ink/70 text-sm font-body">
                 <li>
                   <LocalizedClientLink
@@ -161,28 +160,42 @@ export default async function Footer() {
               <p className="text-sm text-ink/60 font-body">
                 Get first access to new drops and edits.
               </p>
-              {/* TODO: wire up to real email capture (Klaviyo/Mailchimp/etc.) */}
-              <form className="flex border-b border-ink max-w-[240px]">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="bg-transparent py-2 text-sm font-body flex-1 outline-none placeholder:text-ink/40"
-                />
-                <button
-                  type="submit"
-                  className="text-xs font-body font-semibold uppercase tracking-wider text-wine hover:text-wine-deep transition-colors duration-200"
-                >
-                  Join
-                </button>
-              </form>
+              <div className="max-w-[260px]">
+                <NewsletterForm />
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between items-center text-ink/50">
+        <div className="flex flex-col gap-y-3 small:flex-row w-full mb-16 justify-between small:items-center text-ink/50">
           <Text className="text-xs font-body">
             © {new Date().getFullYear()} Mary Shubic. All rights reserved.
           </Text>
-          <MedusaCTA />
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-body">
+            <li>
+              <LocalizedClientLink
+                href="/terms"
+                className="hover:text-wine transition-colors duration-200"
+              >
+                Terms
+              </LocalizedClientLink>
+            </li>
+            <li>
+              <LocalizedClientLink
+                href="/privacy-policy"
+                className="hover:text-wine transition-colors duration-200"
+              >
+                Privacy
+              </LocalizedClientLink>
+            </li>
+            <li>
+              <LocalizedClientLink
+                href="/cookie-policy"
+                className="hover:text-wine transition-colors duration-200"
+              >
+                Cookies
+              </LocalizedClientLink>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
