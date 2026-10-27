@@ -6,7 +6,7 @@ import { PRICE_BANDS, parseList } from "@lib/constants/product-filters"
 import SortProducts, { SortOptions } from "./sort-products"
 
 export type FilterFacets = {
-  colours: { label: string; hex?: string | null }[]
+  colours: { label: string; background?: string | null }[]
   sizes: string[]
   conditions: string[]
 }
@@ -135,7 +135,7 @@ const RefinementList = ({
                     className={`w-4 h-4 rounded-full border border-ink/15 ${
                       on ? "ring-2 ring-wine ring-offset-2 ring-offset-ivory" : ""
                     }`}
-                    style={{ backgroundColor: c.hex || "#E9DDD9" }}
+                    style={{ background: c.background || "#E9DDD9" }}
                   />
                   {c.label}
                 </button>

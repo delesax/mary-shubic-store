@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
+import { ProductFilters } from "@lib/constants/product-filters"
 import InteractiveLink from "@modules/common/components/interactive-link"
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import FilterRail from "@modules/store/templates/filter-rail"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { HttpTypes } from "@medusajs/types"
@@ -14,11 +16,13 @@ export default function CategoryTemplate({
   sortBy,
   page,
   countryCode,
+  filters,
 }: {
   category: HttpTypes.StoreProductCategory
   sortBy?: SortOptions
   page?: string
   countryCode: string
+  filters?: ProductFilters
 }) {
   const pageNumber = page ? parseInt(page) : 1
   const sort = sortBy || "created_at"
@@ -87,7 +91,18 @@ export default function CategoryTemplate({
         className="flex flex-col small:flex-row small:items-start gap-12 content-container py-10"
         data-testid="category-products-container"
       >
-        <RefinementList sortBy={sort} data-testid="sort-by-container" />
+        <Suspense
+          fallback={
+            <RefinementList sortBy={sort} data-testid="sort-by-container" />
+          }
+        >
+          <FilterRail
+            sortBy={sort}
+            countryCode={countryCode}
+            categoryId={category.id}
+            data-testid="sort-by-container"
+          />
+        </Suspense>
         <div className="w-full">
           <Suspense
             fallback={
@@ -101,6 +116,7 @@ export default function CategoryTemplate({
               page={pageNumber}
               categoryId={category.id}
               countryCode={countryCode}
+              filters={filters}
             />
           </Suspense>
         </div>

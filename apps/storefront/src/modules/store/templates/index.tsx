@@ -1,19 +1,23 @@
 import { Suspense } from "react"
 
+import { ProductFilters } from "@lib/constants/product-filters"
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
+import FilterRail from "./filter-rail"
 import PaginatedProducts from "./paginated-products"
 
 const StoreTemplate = ({
   sortBy,
   page,
   countryCode,
+  filters,
 }: {
   sortBy?: SortOptions
   page?: string
   countryCode: string
+  filters?: ProductFilters
 }) => {
   const pageNumber = page ? parseInt(page) : 1
   const sort = sortBy || "created_at"
@@ -33,13 +37,16 @@ const StoreTemplate = ({
       </div>
 
       <div className="flex flex-col small:flex-row small:items-start gap-12 content-container py-10">
-        <RefinementList sortBy={sort} />
+        <Suspense fallback={<RefinementList sortBy={sort} />}>
+          <FilterRail sortBy={sort} countryCode={countryCode} />
+        </Suspense>
         <div className="w-full">
           <Suspense fallback={<SkeletonProductGrid />}>
             <PaginatedProducts
               sortBy={sort}
               page={pageNumber}
               countryCode={countryCode}
+              filters={filters}
             />
           </Suspense>
         </div>

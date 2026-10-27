@@ -5,6 +5,7 @@ import { listRegions } from "@lib/data/regions"
 import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { parseFilters } from "@lib/constants/product-filters"
 
 export const dynamic = "force-dynamic"
 
@@ -13,6 +14,10 @@ type Props = {
   searchParams: Promise<{
     page?: string
     sortBy?: SortOptions
+    colour?: string
+    size?: string
+    price?: string
+    condition?: string
   }>
 }
 
@@ -83,6 +88,7 @@ export default async function CollectionPage(props: Props) {
   const searchParams = await props.searchParams
   const params = await props.params
   const { sortBy, page } = searchParams
+  const filters = parseFilters(searchParams)
   const collection = await getCollectionByHandle(params.handle).then(
     (collection) => collection
   )
@@ -93,6 +99,7 @@ export default async function CollectionPage(props: Props) {
     <CollectionTemplate
       collection={collection}
       page={page}
+      filters={filters}
       sortBy={sortBy}
       countryCode={params.countryCode}
     />

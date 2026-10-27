@@ -1,12 +1,17 @@
 import { Metadata } from "next"
 
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { parseFilters } from "@lib/constants/product-filters"
 import StoreTemplate from "@modules/store/templates"
 
 type Params = {
   searchParams: Promise<{
     sortBy?: SortOptions
     page?: string
+    colour?: string
+    size?: string
+    price?: string
+    condition?: string
   }>
   params: Promise<{
     countryCode: string
@@ -33,11 +38,13 @@ export default async function StorePage(props: Params) {
   const params = await props.params;
   const searchParams = await props.searchParams;
   const { sortBy, page } = searchParams
+  const filters = parseFilters(searchParams)
 
   return (
     <StoreTemplate
       sortBy={sortBy}
       page={page}
+      filters={filters}
       countryCode={params.countryCode}
     />
   )
