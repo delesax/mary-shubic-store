@@ -1,4 +1,7 @@
+"use client"
+
 import { HttpTypes } from "@medusajs/types"
+import { usePathname } from "next/navigation"
 import { clx } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import React from "react"
@@ -25,6 +28,11 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
 }) => {
   const filteredOptions = (option.values ?? []).map((v) => v.value)
   const isSize = title.trim().toLowerCase() === "size"
+  const pathname = usePathname()
+  const handleMatch = pathname?.match(/\/products\/([^/?#]+)/)
+  const sizeGuideHref = handleMatch
+    ? `/size-guide?product=${handleMatch[1]}`
+    : "/size-guide"
 
   return (
     <div className="flex flex-col gap-y-3">
@@ -35,7 +43,7 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
           </span>
           {isSize && (
             <LocalizedClientLink
-              href="/size-guide"
+              href={sizeGuideHref}
               className="text-xs font-body text-ink/60 underline hover:text-wine transition-colors duration-200"
             >
               Size guide

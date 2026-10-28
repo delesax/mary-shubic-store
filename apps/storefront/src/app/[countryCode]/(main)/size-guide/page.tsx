@@ -1,5 +1,8 @@
 import { Metadata } from "next"
 
+import { listProducts } from "@lib/data/products"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+
 export const metadata: Metadata = {
   title: "Size Guide | Mary Shubic",
   description:
@@ -65,9 +68,46 @@ const Table = ({ heads, rows }: { heads: string[]; rows: string[][] }) => (
   </div>
 )
 
-export default function SizeGuidePage() {
+type Props = {
+  params: Promise<{ countryCode: string }>
+  searchParams: Promise<{ product?: string }>
+}
+
+export default async function SizeGuidePage(props: Props) {
+  const { countryCode } = await props.params
+  const { product } = await props.searchParams
+
+  let back = { href: "/store", label: "Back to shop" }
+
+  if (product && /^[a-z0-9-]+$/i.test(product)) {
+    try {
+      const { response } = await listProducts({
+        countryCode,
+        queryParams: { handle: product },
+      })
+      const found = response.products[0]
+      if (found) {
+        back = {
+          href: `/products/${found.handle}`,
+          label: `Back to ${found.title}`,
+        }
+      }
+    } catch {
+      // keep the "Back to shop" fallback
+    }
+  }
+
   return (
     <div className="content-container py-16 small:py-24">
+      <div className="mb-8">
+        <LocalizedClientLink
+          href={back.href}
+          className="inline-flex max-w-full items-center gap-x-2 text-sm font-body text-ink/60 hover:text-wine transition-colors duration-200"
+        >
+          <span aria-hidden="true">&larr;</span>
+          <span className="min-w-0 truncate">{back.label}</span>
+        </LocalizedClientLink>
+      </div>
       <h1 className="font-display italic text-4xl text-wine">Size guide</h1>
       <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink/70 font-body">
         All our sizes are UK sizes. Use the tables below to convert to EU or US
