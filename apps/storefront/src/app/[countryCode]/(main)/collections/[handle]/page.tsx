@@ -6,6 +6,7 @@ import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { parseFilters } from "@lib/constants/product-filters"
+import { robotsFor } from "@lib/util/filter-seo"
 
 export const dynamic = "force-dynamic"
 
@@ -62,6 +63,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
+  const searchParams = await props.searchParams
   const collection = await getCollectionByHandle(params.handle)
   if (!collection) {
     notFound()
@@ -73,6 +75,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const metadata = {
     title,
     description,
+    robots: robotsFor(searchParams),
     alternates: {
       canonical: `/${params.countryCode}/collections/${params.handle}`,
     },

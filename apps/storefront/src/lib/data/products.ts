@@ -158,7 +158,36 @@ export const listProducts = async ({
 }
 
 /**
- * Fetches up to 100 products (cached), filters them, sorts them, then
+ * Loads every product matching queryParams by fetching pages of 100
+ * until there are no more.
+ */
+export const listAllProducts = async ({
+  queryParams,
+  countryCode,
+}: {
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
+  countryCode: string
+}): Promise<HttpTypes.StoreProduct[]> => {
+  const all: HttpTypes.StoreProduct[] = []
+  let pageParam = 1
+
+  // Hard stop at 50 pages (5,000 products) so a bad response can't loop forever
+  while (pageParam <= 50) {
+    const { response, nextPage } = await listProducts({
+      pageParam,
+      queryParams: { ...queryParams, limit: 100 },
+      countryCode,
+    })
+    all.push(...response.products)
+    if (!nextPage || response.products.length === 0) break
+    pageParam = nextPage
+  }
+
+  return all
+}
+
+/**
+ * Fetches all products (cached, paged), filters them, sorts them, then
  * returns the requested page. `count` is the number AFTER filtering.
  */
 export const listProductsWithSort = async ({
@@ -180,16 +209,7 @@ export const listProductsWithSort = async ({
 }> => {
   const limit = queryParams?.limit || 12
 
-  const {
-    response: { products },
-  } = await listProducts({
-    pageParam: 0,
-    queryParams: {
-      ...queryParams,
-      limit: 100,
-    },
-    countryCode,
-  })
+  const products = await listAllProducts({ queryParams, countryCode })
 
   const filtered = products.filter((p) => matchesFilters(p, filters))
   const sortedProducts = sortProducts(filtered, sortBy)
@@ -224,13 +244,7 @@ export const getProductFacets = async ({
   sizes: string[]
   conditions: string[]
 }> => {
-  const {
-    response: { products },
-  } = await listProducts({
-    pageParam: 0,
-    queryParams: { ...queryParams, limit: 100 },
-    countryCode,
-  })
+  const products = await listAllProducts({ queryParams, countryCode })
 
   const colours: string[] = []
   const sizes: string[] = []

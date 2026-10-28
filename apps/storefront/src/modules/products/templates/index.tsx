@@ -5,6 +5,7 @@ import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
 import ProductJsonLd from "@modules/products/components/product-json-ld"
+import ConditionNote from "@modules/products/components/condition-note"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
@@ -43,6 +44,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
         <div className="flex flex-col w-full small:sticky small:top-24 small:max-h-[calc(100vh-6rem)] small:overflow-y-auto gap-y-8 pt-8 small:pt-0">
           <ProductInfo product={product} />
+          <ConditionNote product={product} />
 
           <ProductOnboardingCta />
           <Suspense

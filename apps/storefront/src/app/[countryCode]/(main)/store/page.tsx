@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { parseFilters } from "@lib/constants/product-filters"
 import StoreTemplate from "@modules/store/templates"
+import { robotsFor } from "@lib/util/filter-seo"
 
 type Params = {
   searchParams: Promise<{
@@ -20,10 +21,12 @@ type Params = {
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params
+  const searchParams = await props.searchParams
 
   return {
     title: "Store | Mary Shubic",
     description: "Explore all of our products.",
+    robots: robotsFor(searchParams),
     alternates: {
       canonical: `/${params.countryCode}/store`,
     },

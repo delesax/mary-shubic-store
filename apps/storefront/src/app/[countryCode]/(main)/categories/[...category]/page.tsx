@@ -7,6 +7,7 @@ import { HttpTypes, StoreRegion } from "@medusajs/types"
 import CategoryTemplate from "@modules/categories/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { parseFilters } from "@lib/constants/product-filters"
+import { robotsFor } from "@lib/util/filter-seo"
 
 type Props = {
   params: Promise<{ category: string[]; countryCode: string }>
@@ -55,6 +56,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
+  const searchParams = await props.searchParams
   try {
     const productCategory = await getCategoryByHandle(params.category)
 
@@ -66,6 +68,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     return {
       title,
       description,
+      robots: robotsFor(searchParams),
       alternates: {
         canonical: `/${params.countryCode}/categories/${params.category.join("/")}`,
       },

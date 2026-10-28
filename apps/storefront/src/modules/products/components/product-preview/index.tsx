@@ -6,6 +6,7 @@ import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Thumbnail from "../thumbnail"
 import PreviewPrice from "./price"
+import { conditionOf, shortCondition } from "@lib/util/condition"
 
 const MAX_DOTS = 5
 
@@ -21,6 +22,7 @@ export default async function ProductPreview({
   const { cheapestPrice } = getProductPrice({
     product,
   })
+  const condition = conditionOf(product)
 
   const colourOption = (product.options || []).find((o) =>
     ["colour", "color"].includes((o.title || "").toLowerCase())
@@ -54,6 +56,11 @@ export default async function ProductPreview({
           >
             {product.title}
           </Text>
+          {condition && (
+            <span className="font-body text-xs text-ink/60">
+              {shortCondition(condition)}
+            </span>
+          )}
           <div className="flex items-center gap-x-2">
             {cheapestPrice && (
               <span className="font-body text-sm font-semibold text-wine">
