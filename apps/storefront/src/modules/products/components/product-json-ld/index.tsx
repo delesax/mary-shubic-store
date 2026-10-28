@@ -4,8 +4,6 @@ import { HttpTypes } from "@medusajs/types"
 // Server component: render it once inside the product page template.
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://www.maryshubic.com"
 
-const NEW_CONDITIONS = ["new with tags (nwt)", "new without tags (nwot)"]
-
 const inStock = (v: HttpTypes.StoreProductVariant) =>
   !v.manage_inventory || !!v.allow_backorder || (v.inventory_quantity ?? 0) > 0
 
@@ -19,7 +17,7 @@ export default function ProductJsonLd({
   const url = `${BASE_URL.replace(/\/$/, "")}/${countryCode}/products/${product.handle}`
   const condition = String(product.metadata?.condition ?? "").trim().toLowerCase()
   const itemCondition = condition
-    ? NEW_CONDITIONS.includes(condition)
+    ? condition.startsWith("new ") || condition === "nwt" || condition === "nwot"
       ? "https://schema.org/NewCondition"
       : "https://schema.org/UsedCondition"
     : undefined

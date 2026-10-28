@@ -7,6 +7,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import Thumbnail from "../thumbnail"
 import PreviewPrice from "./price"
 import { conditionOf, shortCondition } from "@lib/util/condition"
+import { isLastOne, isSoldOut } from "@lib/util/stock"
 
 const MAX_DOTS = 5
 
@@ -23,6 +24,8 @@ export default async function ProductPreview({
     product,
   })
   const condition = conditionOf(product)
+  const soldOut = isSoldOut(product)
+  const lastOne = !soldOut && isLastOne(product)
 
   const colourOption = (product.options || []).find((o) =>
     ["colour", "color"].includes((o.title || "").toLowerCase())
@@ -41,13 +44,22 @@ export default async function ProductPreview({
       className="group"
     >
       <div data-testid="product-wrapper">
-        <div className="overflow-hidden rounded-soft">
+        <div className="relative overflow-hidden rounded-soft">
           <Thumbnail
             thumbnail={product.thumbnail}
             images={product.images}
             size="full"
             isFeatured={isFeatured}
           />
+          {(soldOut || lastOne) && (
+            <span
+              className={`absolute left-2 top-2 rounded-[2px] px-2 py-1 font-body text-[10px] font-semibold uppercase tracking-widest text-ivory ${
+                soldOut ? "bg-ink" : "bg-wine"
+              }`}
+            >
+              {soldOut ? "Sold out" : "Only 1 left"}
+            </span>
+          )}
         </div>
         <div className="flex flex-col mt-3.5 gap-1">
           <Text

@@ -3,6 +3,7 @@
 import { sdk } from "@lib/config"
 import { sortProducts } from "@lib/util/sort-products"
 import { getProductPrice } from "@lib/util/get-product-price"
+import { isSoldOut } from "@lib/util/stock"
 import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import {
@@ -212,7 +213,12 @@ export const listProductsWithSort = async ({
   const products = await listAllProducts({ queryParams, countryCode })
 
   const filtered = products.filter((p) => matchesFilters(p, filters))
-  const sortedProducts = sortProducts(filtered, sortBy)
+  const sorted = sortProducts(filtered, sortBy)
+  // Sold-out items stay visible but go to the end of the listing
+  const sortedProducts = [
+    ...sorted.filter((p) => !isSoldOut(p)),
+    ...sorted.filter((p) => isSoldOut(p)),
+  ]
   const count = sortedProducts.length
 
   const pageParam = (page - 1) * limit
