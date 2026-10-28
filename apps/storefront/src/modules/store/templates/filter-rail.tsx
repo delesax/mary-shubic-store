@@ -27,7 +27,12 @@ export default async function FilterRail({
 
   try {
     const [raw, swatches] = await Promise.all([
-      getProductFacets({ queryParams, countryCode }),
+      getProductFacets({
+        queryParams: queryParams as unknown as Parameters<
+          typeof getProductFacets
+        >[0]["queryParams"],
+        countryCode,
+      }),
       getColourSwatches(),
     ])
 
