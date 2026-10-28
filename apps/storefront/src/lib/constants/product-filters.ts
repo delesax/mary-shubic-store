@@ -5,6 +5,15 @@ export const PRICE_BANDS = [
   { key: "100-plus", label: "£100+", min: 100, max: Infinity },
 ]
 
+export const CONDITIONS = [
+  "New with Tags (NWT)",
+  "New without Tags (NWOT)",
+  "Like New",
+  "Excellent",
+  "Good",
+  "Fair",
+]
+
 export type ProductFilters = {
   colours: string[]
   sizes: string[]

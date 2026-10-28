@@ -5,7 +5,11 @@ import { sortProducts } from "@lib/util/sort-products"
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-import { PRICE_BANDS, ProductFilters } from "@lib/constants/product-filters"
+import {
+  CONDITIONS,
+  PRICE_BANDS,
+  ProductFilters,
+} from "@lib/constants/product-filters"
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { getRegion, retrieveRegion } from "./regions"
 
@@ -27,18 +31,6 @@ const optionValuesFor = (
 const conditionOf = (product: HttpTypes.StoreProduct): string | null => {
   const value = product.metadata?.condition
   return typeof value === "string" && value.trim() ? value.trim() : null
-}
-
-// Best to worst, so the filter list reads in a sensible order.
-const conditionRank = (label: string) => {
-  const l = label.toLowerCase()
-  if (/nwt|new with tags|brand new/.test(l)) return 0
-  if (/nwot|without tags/.test(l)) return 1
-  if (/like new|mint/.test(l)) return 2
-  if (/excellent|very good/.test(l)) return 3
-  if (/good|gently/.test(l)) return 4
-  if (/fair|acceptable/.test(l)) return 5
-  return 99
 }
 
 const sizeRank = (size: string) => {
@@ -242,7 +234,6 @@ export const getProductFacets = async ({
 
   const colours: string[] = []
   const sizes: string[] = []
-  const conditions: string[] = []
 
   for (const p of products) {
     for (const c of optionValuesFor(p, COLOUR_OPTION_NAMES)) {
@@ -251,19 +242,14 @@ export const getProductFacets = async ({
     for (const s of optionValuesFor(p, SIZE_OPTION_NAMES)) {
       if (!includesCI(sizes, s)) sizes.push(s)
     }
-    const cond = conditionOf(p)
-    if (cond && !includesCI(conditions, cond)) conditions.push(cond)
   }
 
   colours.sort((a, b) => a.localeCompare(b))
   sizes.sort((a, b) => sizeRank(a) - sizeRank(b) || a.localeCompare(b))
-  conditions.sort(
-    (a, b) => conditionRank(a) - conditionRank(b) || a.localeCompare(b)
-  )
 
   return {
     colours: colours.map((label) => ({ label, hex: null })),
     sizes,
-    conditions,
+    conditions: [...CONDITIONS],
   }
 }
