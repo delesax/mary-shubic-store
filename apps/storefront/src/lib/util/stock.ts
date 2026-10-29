@@ -2,10 +2,12 @@ import { HttpTypes } from "@medusajs/types"
 
 const available = (v: HttpTypes.StoreProductVariant): number => {
   if (!v.manage_inventory || v.allow_backorder) return Infinity
-  return Math.max(v.inventory_quantity ?? 0, 0)
+  // No stock figure fetched for this variant: unknown, so never claim sold out
+  if (typeof v.inventory_quantity !== "number") return Infinity
+  return Math.max(v.inventory_quantity, 0)
 }
 
-// Total units available across all variants (Infinity if stock isn't tracked).
+// Total units available across all variants (Infinity if stock isn't tracked or unknown).
 export const stockLeft = (product: HttpTypes.StoreProduct): number => {
   const variants = product.variants ?? []
   if (!variants.length) return Infinity
