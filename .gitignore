@@ -62,3 +62,6 @@ build.log
 
 # Catalogue import workspace (holds .env, .venv, photos)
 tools/catalogue-import/
+
+# Generated site audit reports (the 2026-10-29 baseline is already tracked)
+docs/audit-report-*
