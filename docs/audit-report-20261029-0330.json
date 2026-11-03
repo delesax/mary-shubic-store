@@ -1,0 +1,1088 @@
+[
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "Redirect http://www.maryshubic.com/",
+  "detail": "308 -> https://www.maryshubic.com/"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "Redirect http://maryshubic.com/",
+  "detail": "308 -> https://maryshubic.com/"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "Redirect https://maryshubic.com/",
+  "detail": "301 -> https://www.maryshubic.com/"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "TLS www.maryshubic.com",
+  "detail": "44 days left"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "TLS api.maryshubic.com",
+  "detail": "44 days left"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "TLS media.maryshubic.com",
+  "detail": "85 days left"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "WARN",
+  "check": "Header HSTS",
+  "detail": "missing - add in Caddyfile `header` block"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "WARN",
+  "check": "Header X-Content-Type-Options",
+  "detail": "missing - add in Caddyfile `header` block"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "WARN",
+  "check": "Header Referrer-Policy",
+  "detail": "missing - add in Caddyfile `header` block"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "WARN",
+  "check": "Clickjacking protection",
+  "detail": "no X-Frame-Options / frame-ancestors"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "INFO",
+  "check": "Content-Security-Policy",
+  "detail": "none set (optional; add after analytics/Stripe are final)"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "INFO",
+  "check": "X-Powered-By exposed",
+  "detail": "Next.js (set poweredByHeader:false in next.config)"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "PASS",
+  "check": "Compression",
+  "detail": "gzip"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "FAIL",
+  "check": "Server response (median of 3)",
+  "detail": "7211 ms to first byte"
+ },
+ {
+  "section": "1. Infrastructure, TLS and headers",
+  "status": "INFO",
+  "check": "Cache-Control on HTML",
+  "detail": "private, no-cache, no-store, max-age=0, must-revalidate"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "/gb status",
+  "detail": "200"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Title tag",
+  "detail": "48 chars: Mary Shubic | Women's Fashion, Beauty & Footwear"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Meta description",
+  "detail": "146 chars"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Canonical",
+  "detail": "https://www.maryshubic.com"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Meta og:title",
+  "detail": "Mary Shubic | Women's Fashion, Beauty & Footwear"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Meta og:description",
+  "detail": "Apparel, footwear, hair and makeup for women who don't dress to blend "
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "WARN",
+  "check": "Meta og:image",
+  "detail": "missing"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Meta twitter:card",
+  "detail": "summary_large_image"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Exactly one <h1>",
+  "detail": "found 1"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "<html lang>",
+  "detail": "en"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Viewport meta",
+  "detail": "width=device-width, initial-scale=1"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "WARN",
+  "check": "Homepage JSON-LD (Organization/WebSite)",
+  "detail": "none"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "robots.txt",
+  "detail": "200"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "robots.txt lists Sitemap",
+  "detail": ""
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "robots.txt blocks cart/checkout/account",
+  "detail": "cart, checkout, account"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "sitemap.xml",
+  "detail": "32 URLs (23 products)"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Sitemap excludes cart/account/filter URLs",
+  "detail": "clean"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Sitemap URLs use your domain",
+  "detail": "yes"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Sitemap sample URLs return 200",
+  "detail": "5/5"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "favicon.ico",
+  "detail": "200"
+ },
+ {
+  "section": "2. SEO basics and core pages",
+  "status": "PASS",
+  "check": "Unknown URL returns real 404",
+  "detail": ""
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "Discovered",
+  "detail": "23 product URLs, 6 category/collection URLs"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "FAIL",
+  "check": "Internal links checked (38)",
+  "detail": "20 broken"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/categories/apparel"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/categories/footwear"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/categories/hair"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/categories/makeup"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "0 https://www.maryshubic.com/gb/categories/sweatshirts"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "0 https://www.maryshubic.com/gb/categories/pants"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "0 https://www.maryshubic.com/gb/categories/merch"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "0 https://www.maryshubic.com/gb/categories/bathing-suits"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/shipping"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/returns"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "0 https://www.maryshubic.com/gb/size-guide"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/contact"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/privacy-policy"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/terms"
+ },
+ {
+  "section": "3. Page discovery and broken links",
+  "status": "INFO",
+  "check": "  broken",
+  "detail": "404 https://www.maryshubic.com/gb/cookie-policy"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Returns page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Terms page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Privacy page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Shipping page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Cookies page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Contact page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "WARN",
+  "check": "About page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "WARN",
+  "check": "Faq page",
+  "detail": "not found (no footer link, no common URL)"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "PASS",
+  "check": "Size Guide page",
+  "detail": "/gb/size-guide; 284 words; linked from homepage"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "FAIL",
+  "check": "Business identity (company name/number/registered address)",
+  "detail": "not found anywhere - required for UK online traders"
+ },
+ {
+  "section": "4. Legal and trust pages",
+  "status": "WARN",
+  "check": "Contact email visible",
+  "detail": ""
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "WARN",
+  "check": "Delivery cost stated on PDP .../gb/products/sweatshirt",
+  "detail": "only generic wording; show actual price/threshold"
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "PASS",
+  "check": "GBP price visible .../gb/products/sweatshirt",
+  "detail": ""
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "PASS",
+  "check": "Delivery cost stated on PDP ...roducts/hibiscus-print-crochet-panel-swimsuit",
+  "detail": "\u00a310.00 Select Options Select variant Fabric & Care Shipping"
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "PASS",
+  "check": "GBP price visible ...roducts/hibiscus-print-crochet-panel-swimsuit",
+  "detail": ""
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "PASS",
+  "check": "Delivery cost stated on PDP .../gb/products/floral-panel-halter-swimsuit",
+  "detail": "\u00a310.00 Select Options Select variant Fabric & Care Shipping"
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "PASS",
+  "check": "GBP price visible .../gb/products/floral-panel-halter-swimsuit",
+  "detail": ""
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "INFO",
+  "check": "No strike-through prices on sampled pages",
+  "detail": "fine until sales start"
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "INFO",
+  "check": "No delivery message on homepage",
+  "detail": "optional announcement bar: 'Free UK delivery over \u00a3X'"
+ },
+ {
+  "section": "5. Pricing and delivery transparency (DMCC drip-pricing)",
+  "status": "INFO",
+  "check": "Checkout total",
+  "detail": "manual: add item, go to checkout, confirm delivery + total shown before the payment step (cannot be automated safely)"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "WARN",
+  "check": "Product JSON-LD .../gb/products/sweatshirt",
+  "detail": "missing: sku, price, priceCurrency, availability, itemCondition"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "WARN",
+  "check": "Product JSON-LD ...ts/hibiscus-print-crochet-panel-swimsuit",
+  "detail": "missing: sku"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "WARN",
+  "check": "Product JSON-LD ...gb/products/floral-panel-halter-swimsuit",
+  "detail": "missing: sku"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "WARN",
+  "check": "BreadcrumbList JSON-LD",
+  "detail": ""
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "PASS",
+  "check": "PDP canonical",
+  "detail": "https://www.maryshubic.com/gb/products/sweatshirt"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "PASS",
+  "check": "PDP og:image",
+  "detail": ""
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "WARN",
+  "check": "PDP single <h1>",
+  "detail": ""
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "FAIL",
+  "check": "PDP images have alt attribute",
+  "detail": "1 missing"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "WARN",
+  "check": "Condition shown on PDP",
+  "detail": ""
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "PASS",
+  "check": "Size guide link on PDP",
+  "detail": ""
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "PASS",
+  "check": "Measurements on PDP",
+  "detail": "important for one-off/pre-owned items"
+ },
+ {
+  "section": "6. Product pages: structured data and content",
+  "status": "PASS",
+  "check": "Fabric & care info",
+  "detail": ""
+ },
+ {
+  "section": "7. Listing pages",
+  "status": "PASS",
+  "check": "Category canonical",
+  "detail": "https://www.maryshubic.com/gb/categories/shirts"
+ },
+ {
+  "section": "7. Listing pages",
+  "status": "PASS",
+  "check": "Filtered/sorted URLs are noindex",
+  "detail": "noindex, follow"
+ },
+ {
+  "section": "7. Listing pages",
+  "status": "INFO",
+  "check": "Filter UI present",
+  "detail": "not detected in server HTML (may be client-rendered)"
+ },
+ {
+  "section": "7. Listing pages",
+  "status": "WARN",
+  "check": "Category images lazy-loaded",
+  "detail": "0/2"
+ },
+ {
+  "section": "7. Listing pages",
+  "status": "WARN",
+  "check": "Category images have alt text",
+  "detail": "1 empty/missing of 2"
+ },
+ {
+  "section": "7. Listing pages",
+  "status": "INFO",
+  "check": "Images without width/height (layout shift risk)",
+  "detail": "1 of 2"
+ },
+ {
+  "section": "8. Site search",
+  "status": "FAIL",
+  "check": "Search entry point in header",
+  "detail": "no search box or icon found"
+ },
+ {
+  "section": "8. Site search",
+  "status": "FAIL",
+  "check": "Search results page",
+  "detail": "no /search route responds 200 - build search (see next step)"
+ },
+ {
+  "section": "9. Cookies, trackers and consent",
+  "status": "INFO",
+  "check": "Cookies set on first visit (before any consent)",
+  "detail": "_medusa_cache_id"
+ },
+ {
+  "section": "9. Cookies, trackers and consent",
+  "status": "PASS",
+  "check": "No non-essential cookies before consent",
+  "detail": "none set"
+ },
+ {
+  "section": "9. Cookies, trackers and consent",
+  "status": "INFO",
+  "check": "No analytics/marketing trackers in page source",
+  "detail": "good for now; consent banner needed BEFORE adding analytics, Meta Pixel, or marketing email tracking"
+ },
+ {
+  "section": "9. Cookies, trackers and consent",
+  "status": "WARN",
+  "check": "Consent banner / preference centre",
+  "detail": "not detected in server HTML"
+ },
+ {
+  "section": "9. Cookies, trackers and consent",
+  "status": "INFO",
+  "check": "Third-party script hosts",
+  "detail": "none"
+ },
+ {
+  "section": "9. Cookies, trackers and consent",
+  "status": "PASS",
+  "check": "Newsletter signup has privacy/consent wording",
+  "detail": "PECR: clear opt-in wording + link to privacy policy"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "PASS",
+  "check": "No leftover r2.dev URLs",
+  "detail": "clean"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "PASS",
+  "check": "No localhost URLs in HTML",
+  "detail": ""
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "INFO",
+  "check": "Image hosts",
+  "detail": "cdn.jsdelivr.net, media.maryshubic.com, medusa-public-images.s3.eu-west-1.amazonaws.com, www.maryshubic.com"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "WARN",
+  "check": "Images from unexpected hosts",
+  "detail": "cdn.jsdelivr.net, medusa-public-images.s3.eu-west-1.amazonaws.com"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "PASS",
+  "check": "Image weight (sampled 10)",
+  "detail": "all under 300 KB"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "WARN",
+  "check": "Modern image formats (WebP/AVIF)",
+  "detail": "10 of 10 are JPEG/PNG"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "PASS",
+  "check": "Images have long cache headers",
+  "detail": "0 without max-age"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "INFO",
+  "check": "HTML size (homepage)",
+  "detail": "82 KB uncompressed"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "INFO",
+  "check": "Script tags on homepage",
+  "detail": "18"
+ },
+ {
+  "section": "10. Images and performance",
+  "status": "INFO",
+  "check": "Homepage images not lazy-loaded",
+  "detail": "2 (hero image should be eager, the rest lazy)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "FAIL",
+  "check": "[home] images with no alt attribute",
+  "detail": "1"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "[home] buttons with no text/aria-label",
+  "detail": "0"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[home] links with no text/aria-label (icon-only)",
+  "detail": "2"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[home] form fields without a label",
+  "detail": "1 (placeholder alone is not a label)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "[home] heading order",
+  "detail": "no skipped levels"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "FAIL",
+  "check": "[/gb/products/sweatshirt] images with no alt attribute",
+  "detail": "1"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[/gb/products/sweatshirt] buttons with no text/aria-label",
+  "detail": "2"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[/gb/products/sweatshirt] links with no text/aria-label (icon-only)",
+  "detail": "2"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[/gb/products/sweatshirt] form fields without a label",
+  "detail": "1 (placeholder alone is not a label)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "[/gb/products/sweatshirt] heading order",
+  "detail": "no skipped levels"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "FAIL",
+  "check": "[category] images with no alt attribute",
+  "detail": "1"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "[category] buttons with no text/aria-label",
+  "detail": "0"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[category] links with no text/aria-label (icon-only)",
+  "detail": "2"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[category] form fields without a label",
+  "detail": "1 (placeholder alone is not a label)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "[category] heading order",
+  "detail": "1 skipped levels"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "Skip-to-content link",
+  "detail": "add a visually-hidden 'Skip to main content' link"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "Contrast ink on ivory (body)",
+  "detail": "15.15:1 (AA pass)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "Contrast ink/60 on ivory (muted text)",
+  "detail": "4.28:1 (passes only for large text/UI, fails body text)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "Contrast wine on ivory (links)",
+  "detail": "7.55:1 (AA pass)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "Contrast ivory on wine (buttons)",
+  "detail": "7.55:1 (AA pass)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "PASS",
+  "check": "Contrast wine on blush",
+  "detail": "6.14:1 (AA pass)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "Contrast ink/60 on blush",
+  "detail": "3.99:1 (passes only for large text/UI, fails body text)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "Contrast midrose on ivory",
+  "detail": "3.06:1 (passes only for large text/UI, fails body text)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "FAIL",
+  "check": "Contrast midrose on blush",
+  "detail": "2.49:1 (fails)"
+ },
+ {
+  "section": "11. Accessibility (static checks, partial - not a full WCAG audit)",
+  "status": "WARN",
+  "check": "Contrast ivory on midrose (buttons)",
+  "detail": "3.06:1 (passes only for large text/UI, fails body text)"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "API /health",
+  "detail": "200"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "INFO",
+  "check": "Admin UI /app",
+  "detail": "200 (reachable publicly: use a strong unique password + 2FA-style hygiene; consider Cloudflare Access or IP allow-list)"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Store API without publishable key is refused",
+  "detail": "400"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Admin API requires auth",
+  "detail": "401 (expected 401)"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "CORS does not allow arbitrary origins",
+  "detail": "no ACAO header"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Port Medusa 9000 from the internet",
+  "detail": "closed"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Port Storefront 8000 from the internet",
+  "detail": "closed"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Port Next 3000 from the internet",
+  "detail": "closed"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Port Postgres 5432 from the internet",
+  "detail": "closed"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "PASS",
+  "check": "Port Redis 6379 from the internet",
+  "detail": "closed"
+ },
+ {
+  "section": "12. Backend / API exposure",
+  "status": "INFO",
+  "check": "Port SSH 22 from the internet",
+  "detail": "open (expected); use key-only auth, disable password login"
+ },
+ {
+  "section": "13. Email DNS (deliverability)",
+  "status": "PASS",
+  "check": "SPF on maryshubic.com",
+  "detail": "v=spf1 include:spf.stackmail.com a mx -all"
+ },
+ {
+  "section": "13. Email DNS (deliverability)",
+  "status": "WARN",
+  "check": "SPF on mail.maryshubic.com",
+  "detail": "none (Resend sending subdomain usually has its own SPF on send.<sub>)"
+ },
+ {
+  "section": "13. Email DNS (deliverability)",
+  "status": "WARN",
+  "check": "DMARC policy",
+  "detail": "p=none (ok to start; move to quarantine after a few weeks of clean reports)"
+ },
+ {
+  "section": "13. Email DNS (deliverability)",
+  "status": "PASS",
+  "check": "Resend DKIM resend._domainkey.mail.maryshubic.com",
+  "detail": "found"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "FAIL",
+  "check": "Checkout uses card-only CardElement",
+  "detail": "modules/checkout/components/payment-container/index.tsx:9 - Apple Pay, Google Pay and Klarna will NOT appear in live mode until this is switched to PaymentElement"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "WARN",
+  "check": "Backend Stripe provider payment-method options",
+  "detail": "none set in medusa-config; wallets/BNPL need automaticPaymentMethods:true or explicit types"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "INFO",
+  "check": "Stripe keys detected (values not printed)",
+  "detail": "STRIPE_API_KEY=TEST, NEXT_PUBLIC_STRIPE_KEY=TEST"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "PASS",
+  "check": "Stripe key modes consistent",
+  "detail": "all TEST"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "PASS",
+  "check": "Stripe webhook secret configured locally",
+  "detail": "STRIPE_WEBHOOK_SECRET"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "INFO",
+  "check": "Go-live Stripe switch",
+  "detail": "needs: live pk/sk, new LIVE webhook endpoint + secret, storefront REBUILD (NEXT_PUBLIC_* is baked in at build), register domain for Apple Pay in Stripe dashboard, enable Klarna/Clearpay in Dashboard > Payment methods"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "PASS",
+  "check": "JSON-LD structured data in storefront",
+  "detail": "modules/products/components/product-json-ld/index.tsx"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "FAIL",
+  "check": "Search route/module in storefront",
+  "detail": "none"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "FAIL",
+  "check": "Cookie consent component",
+  "detail": "none in source"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "INFO",
+  "check": "Analytics code in storefront",
+  "detail": "none yet"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "FAIL",
+  "check": "Legal/content routes in storefront",
+  "detail": "none"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "INFO",
+  "check": "Storefront top-level routes",
+  "detail": "(checkout), (main), [countryCode], account, cart, categories, checkout, collections, order, products, size-guide, store"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "INFO",
+  "check": "Backend events handled",
+  "detail": "order.placed"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "PASS",
+  "check": "Transactional email: order confirmation",
+  "detail": ""
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "FAIL",
+  "check": "Transactional email: dispatch/tracking email",
+  "detail": ""
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "WARN",
+  "check": "Transactional email: cancellation email",
+  "detail": ""
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "FAIL",
+  "check": "Transactional email: password reset email",
+  "detail": ""
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "WARN",
+  "check": "Transactional email: return/refund email",
+  "detail": ""
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "PASS",
+  "check": "Newsletter signup wired to a backend/Resend audience",
+  "detail": "lib/data/newsletter.ts"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "INFO",
+  "check": "next.config image/header settings",
+  "detail": "unoptimized: true,; remotePatterns: ["
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "PASS",
+  "check": "docker-compose restart policy",
+  "detail": "set"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "WARN",
+  "check": "docker-compose healthchecks",
+  "detail": "none"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "WARN",
+  "check": "Caddy compression (encode)",
+  "detail": "not set"
+ },
+ {
+  "section": "14. Source code checks (--repo)",
+  "status": "WARN",
+  "check": "Caddy security headers",
+  "detail": "none set"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "WARN",
+  "check": "Backup cron job",
+  "detail": "no pg_dump in crontab"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "FAIL",
+  "check": "OFF-VM backup copy",
+  "detail": "none - backups sit on the same VM they protect; copy them to R2 (rclone)"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "PASS",
+  "check": "Newest backup age",
+  "detail": "0.5 h, 119 KB"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "INFO",
+  "check": "Memory (MB) total/used/free",
+  "detail": "954/753/66"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "PASS",
+  "check": "Swap",
+  "detail": "4095 MB"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "INFO",
+  "check": "Disk /",
+  "detail": "/dev/sda1        45G   28G   17G  63% /"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "PASS",
+  "check": "Containers running",
+  "detail": "5 up"
+ },
+ {
+  "section": "15. VM health via SSH (--vm)",
+  "status": "PASS",
+  "check": "Container restart policy",
+  "detail": "all set"
+ }
+]

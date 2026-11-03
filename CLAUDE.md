@@ -1,0 +1,13 @@
+# Mary Shubic store (Medusa v2 + Next.js 15 monorepo)
+- apps/backend = Medusa v2, apps/storefront = Next.js. The Mac repo is the source of truth. Server working copy is ~/store.
+- Servers: ms-prod = new DigitalOcean droplet (London). oracle-store = old Oracle VM being retired; never delete anything on it.
+- The Mac path contains a space ("Mary Shubic"): quote all paths, including ones with [countryCode] or (checkout).
+- NEVER read, print, cat, log or commit .env files, keys, tokens or database dumps, in this repo or elsewhere on the Mac (parent folder and catalogue-import may hold secrets). Move secrets only with piped commands that do not echo.
+- After every file edit, verify with wc -l or grep for a known string. Check TypeScript generics (useState<, Omit<) are intact with sed -n 'Np'.
+- NEXT_PUBLIC_* needs all three layers: .env, docker-compose build.args, Dockerfile ARG+ENV.
+- Prefer static `export const metadata`; async generateMetadata has caused DYNAMIC_SERVER_USAGE errors.
+- Medusa: compose service is `medusa`; Postgres user and db are both `medusa`. medusa exec scripts do not work in the production container; use src/api routes for one-off checks. Verify custom migrations by checking the table exists.
+- Any storefront query that sets its own `fields` must include +variants.inventory_quantity.
+- Deploy: commit and push, then on the server inside a named tmux session: git pull, docker compose build (with --build-arg CACHEBUST=$(date +%s)), docker compose up -d --force-recreate, verify with curl --compressed. One command at a time; never run long server commands outside tmux.
+- Brand tokens: text-ink, text-wine, bg-ivory, bg-blush; Fraunces (display) and Work Sans (body).
+- Run tools/site_audit.py after each change and report new FAILs. Baseline: docs/audit-report-20261029-0330.md.

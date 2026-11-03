@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Read(*.sql)",
+      "Read(*.dump)",
+      "Read(tools/catalogue-import/.venv/**)"
+    ]
+  }
+}

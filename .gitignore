@@ -56,3 +56,9 @@ Thumbs.db
 **/.DS_Store.medusa/
 .medusa/
 build.log
+
+# Claude Code machine-specific settings
+.claude/settings.local.json
+
+# Catalogue import workspace (holds .env, .venv, photos)
+tools/catalogue-import/
