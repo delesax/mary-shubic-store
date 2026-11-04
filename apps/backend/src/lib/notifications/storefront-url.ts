@@ -36,7 +36,7 @@ export function buildPasswordResetUrl(input: {
     ? (input.countryCode as string).toLowerCase()
     : DEFAULT_COUNTRY_CODE
 
-  const url = new URL(`/${country}/account/reset-password`, input.baseUrl)
+  const url = new URL(`/${country}/reset-password`, input.baseUrl)
   url.searchParams.set("token", input.token)
   url.searchParams.set("email", input.email)
 
