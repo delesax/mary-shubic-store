@@ -9,7 +9,7 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Stripe test checkout works end to end (order, payment, webhook 200, order-placed email via Resend).
 - Nightly backups: cron 03:00 Europe/London runs `~/bin/backup-db.sh` (dump, validate, upload to R2, verify size, prune local copies older than 14 days, ping healthchecks.io). First automatic run (04 Nov 03:00) succeeded.
 - Restore test passed on 2026-11-03.
-- Git: everything is pushed to `origin/main` (latest code commit `913ed38`). Working tree clean (new audit reports are git-ignored).
+- Git: everything is pushed to `origin/main` (latest code commit `913ed38`, deployed; the docs commits `d179830` and `dcb570c` are pushed too). ms-prod `~/store` is at `913ed38`; pulling the later docs-only commits there needs no rebuild or reload. Working tree clean (new audit reports are git-ignored).
 - **Deployed 2026-11-04 ~07:26 GMT:** `913ed38` (security headers, report-only CSP, JSON-LD) is live on ms-prod (`~/store` at `913ed38`). Caddy was reloaded (not restarted) and only the storefront container was recreated. See the deployment section below.
 - Latest audit (docs/audit-report-20261104-0727.md): PASS 86, WARN 34, FAIL 21, INFO 36 (previous run 77/42/21/36). Every change was WARN to PASS; no new FAILs. The 21 FAILs are pre-existing and deliberately left alone.
 
@@ -105,7 +105,7 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - **Still to do from this deploy:** review the CSP report-only output in the browser console during a full checkout (see Still open item 9).
 
 ## Commit history for this work (oldest first)
-`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files; `d6244ce`, `f6b41a3`, `d11023a` this log; `913ed38` security headers and JSON-LD. All of these are pushed to `origin/main`.
+`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files; `d6244ce`, `f6b41a3`, `d11023a` this log; `913ed38` security headers and JSON-LD (deployed 2026-11-04); `d179830`, `dcb570c` this log and the deployment record. All of these are pushed to `origin/main`.
 
 ## Still open
 1. Cloudflare: add a 30-day lifecycle rule on the `medusa/` prefix, and confirm the R2 token is scoped to this one bucket with Object Read & Write only.
