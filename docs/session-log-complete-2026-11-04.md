@@ -9,7 +9,8 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Stripe test checkout works end to end (order, payment, webhook 200, order-placed email via Resend).
 - Nightly backups: cron 03:00 Europe/London runs `~/bin/backup-db.sh` (dump, validate, upload to R2, verify size, prune local copies older than 14 days, ping healthchecks.io). First automatic run (04 Nov 03:00) succeeded.
 - Restore test passed on 2026-11-03.
-- Git: everything is pushed to `origin/main`; the log itself landed in `d6244ce` and `f6b41a3`, plus a final commit fixing this line. Working tree clean (new audit reports are git-ignored).
+- Git: everything is pushed to `origin/main` (latest code commit `913ed38`). Working tree clean (new audit reports are git-ignored).
+- **Not yet deployed:** the security headers, report-only CSP and JSON-LD work (`913ed38`) is in the repo only. ms-prod still runs the previous Caddyfile and storefront image, so the audit's header and structured-data findings stay until it is deployed.
 - Latest audit (docs/audit-report-20261104-0516.md): PASS 77, WARN 42, FAIL 21, INFO 36. The 21 FAILs are pre-existing and deliberately left alone.
 
 ## Standing rules followed throughout
@@ -82,8 +83,19 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Verified with `git check-ignore`: tsbuildinfo and `apps/storefront/.env.production` are now ignored; `apps/backend/.env.template` is still tracked and not ignored. No env file contents were read.
 - Commit `3bee9e1`, pushed.
 
+## Security headers and JSON-LD (2026-11-04, repo only, not deployed)
+- **Where:** headers are set in the `Caddyfile` (covers storefront, API and admin `/app`, redirects and static files, and needs no storefront rebuild). Two snippets: `security_headers` and `csp_report_only`.
+- **All five site blocks:** `Strict-Transport-Security: max-age=300` (no `includeSubDomains`, no `preload`; raise later once every subdomain is confirmed on HTTPS), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `X-Frame-Options: SAMEORIGIN`.
+- **Storefront blocks only:** `Content-Security-Policy-Report-Only` (not enforced) allowing Stripe (js.stripe.com, `*.js.stripe.com`, api.stripe.com, hooks.stripe.com, per Stripe's CSP docs), Stripe Link (`link.com`), `media.maryshubic.com`, `*.amazonaws.com` (demo images) and both API hosts, with `unsafe-inline` for Next.js inline scripts and styles. No `report-uri`, so violations only appear in the browser console. Do not enforce before checkout has been tested with it in place.
+- **Admin and API:** get the five headers but no CSP. Nothing in the repo embeds the admin in an iframe. Not tested live (the task excluded the server).
+- **Checks run:** `caddy validate` (local Docker) passed; the adapted config shows header handlers run before the proxy and the redirect, and the CSP only on `www`.
+- **JSON-LD:** the existing `ProductJsonLd` gained `BreadcrumbList` (Home, Shop, collection if present, product), a product-level `sku` (single-variant products only; multi-variant products keep `sku` per offer) and stock-aware availability via the new `variantInStock` helper in `stock.ts` (a missing stock figure counts as in stock, not sold out). `itemCondition` is `NewCondition` unless `metadata.condition` says otherwise. New site-wide `Organization` and `WebSite` component in the root layout; legal name, address and company number are `TODO_*` constants and are not emitted while they still start with `TODO`. No `SearchAction` (no search route).
+- **og:image:** homepage metadata points at a new `public/images/og-default.png` (1200x630, wordmark on ivory), a stand-in until model photography exists.
+- **Validation:** strict typecheck of the touched files and a render test of both components with four sample products (single variant, multi-variant with one out of stock, unknown stock figure, pre-owned metadata); all output parsed as JSON and a `</script>` in a product title stayed escaped. A full `next build` and a fetch of built pages were not possible locally (no storefront `node_modules`, pages need a Medusa backend). Not checked: real `metadata.condition` values on products.
+- **Commit:** `913ed38`, pushed.
+
 ## Commit history for this work (oldest first)
-`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files. `d6244ce` and `f6b41a3` (this log) followed. All of these are pushed to `origin/main`.
+`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files; `d6244ce`, `f6b41a3`, `d11023a` this log; `913ed38` security headers and JSON-LD. All of these are pushed to `origin/main`.
 
 ## Still open
 1. Cloudflare: add a 30-day lifecycle rule on the `medusa/` prefix, and confirm the R2 token is scoped to this one bucket with Object Read & Write only.
@@ -94,3 +106,6 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 6. 21 pre-existing audit FAILs (deliberately not fixed). Internet scanners probe `/webhook` paths (404, harmless).
 7. Re-measure TTFB: `/gb` took about 7 s on a cold first render inside the Docker network; compare warm public timings with oracle-store.
 8. Old VM (oracle-store) containers are still running by design. Retire it later, only when the user decides.
+9. Deploy `913ed38` on ms-prod (in tmux, one command at a time): `git pull`; `docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile` (headers, no downtime); rebuild and recreate the storefront per `CLAUDE.md` (JSON-LD). Then verify with `curl --compressed -sI` and the JSON-LD on a product page, and open checkout once with the browser console open to look for CSP report-only messages (add any missing hosts before ever enforcing). Re-run the audit afterwards.
+10. Supply the legal name, registered address and company number in `site-json-ld/index.tsx`. Replace `og-default.png` with real model photography when available.
+11. Later: raise HSTS above `max-age=300` after checking every subdomain over HTTPS; consider enforcing the CSP only after a clean report-only period; check real `metadata.condition` values on products.
