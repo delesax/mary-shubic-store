@@ -4,6 +4,7 @@ import { Text, clx } from "@modules/common/components/ui";
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import NewsletterForm from "@modules/layout/components/newsletter-form";
+import CookieSettingsButton from "@modules/layout/components/cookie-consent/cookie-settings-button";
 
 export default async function Footer() {
   const { collections } = await listCollections({
@@ -194,6 +195,9 @@ export default async function Footer() {
               >
                 Cookies
               </LocalizedClientLink>
+            </li>
+            <li>
+              <CookieSettingsButton className="hover:text-wine transition-colors duration-200" />
             </li>
           </ul>
         </div>
