@@ -32,7 +32,7 @@ const SideMenu = ({ regions, locales, currentLocale, navLinks }: SideMenuProps) 
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center text-xs font-body font-medium uppercase tracking-widest text-ink transition-colors duration-200 ease-out focus:outline-none hover:text-wine"
+                  className="relative h-full min-w-[44px] flex items-center text-xs font-body font-medium uppercase tracking-widest text-ink transition-colors duration-200 ease-out hover:text-wine"
                 >
                   Menu
                 </Popover.Button>
@@ -93,7 +93,7 @@ const SideMenu = ({ regions, locales, currentLocale, navLinks }: SideMenuProps) 
                         <li>
                           <LocalizedClientLink
                             href="/account"
-                            className="font-body text-xs uppercase tracking-widest text-ink/60 hover:text-wine transition-colors duration-200"
+                            className="font-body text-xs uppercase tracking-widest text-ink/65 hover:text-wine transition-colors duration-200"
                             onClick={close}
                             data-testid="account-link"
                           >
@@ -141,7 +141,7 @@ const SideMenu = ({ regions, locales, currentLocale, navLinks }: SideMenuProps) 
                           )}
                         />
                       </div>
-                      <span className="flex justify-between font-body text-xs text-ink/50">
+                      <span className="flex justify-between font-body text-xs text-ink/65">
                         © {new Date().getFullYear()} Mary Shubic. All rights
                         reserved.
                       </span>

@@ -191,7 +191,7 @@ const Shipping: React.FC<ShippingProps> = ({
               <span className="font-body font-medium text-sm text-ink">
                 Shipping method
               </span>
-              <span className="mb-4 text-ink/50 font-body text-sm">
+              <span className="mb-4 text-ink/65 font-body text-sm">
                 How would you like you order delivered
               </span>
             </div>
@@ -304,7 +304,7 @@ const Shipping: React.FC<ShippingProps> = ({
                 <span className="font-body font-medium text-sm text-ink">
                   Store
                 </span>
-                <span className="mb-4 text-ink/50 font-body text-sm">
+                <span className="mb-4 text-ink/65 font-body text-sm">
                   Choose a store near you
                 </span>
               </div>
@@ -343,7 +343,7 @@ const Shipping: React.FC<ShippingProps> = ({
                               <span className="text-sm text-ink">
                                 {option.name}
                               </span>
-                              <span className="text-sm text-ink/50">
+                              <span className="text-sm text-ink/65">
                                 {formatAddress(
                                   (option as unknown as { service_zone?: { fulfillment_set?: { location?: { address: HttpTypes.StoreCartAddress } } } }).service_zone?.fulfillment_set?.location
                                     ?.address as HttpTypes.StoreCartAddress
@@ -391,7 +391,7 @@ const Shipping: React.FC<ShippingProps> = ({
                 <Text className="text-sm font-medium text-ink mb-1">
                   Method
                 </Text>
-                <Text className="text-sm text-ink/60">
+                <Text className="text-sm text-ink/65">
                   {cart.shipping_methods!.at(-1)!.name}{" "}
                   {convertToLocale({
                     amount: cart.shipping_methods!.at(-1)!.amount!,

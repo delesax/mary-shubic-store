@@ -190,7 +190,7 @@ const SearchBox = () => {
                 maxLength={100}
                 placeholder="Search products"
                 data-testid="nav-search-input"
-                className="w-full border-b border-ink bg-transparent py-3 pr-24 text-base text-ink placeholder:text-ink/65 focus:outline-none focus-visible:border-wine"
+                className="w-full border-b border-ink bg-transparent py-3 pr-24 text-base text-ink placeholder:text-ink/65 focus:outline-none focus-visible:border-wine focus-visible:border-b-2"
               />
               <button
                 type="submit"

@@ -137,7 +137,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                     </Text>
                     {!promotion.is_automatic && (
                       <button
-                        className="flex items-center text-ink/50 hover:text-wine transition-colors duration-200"
+                        className="flex items-center text-ink/65 hover:text-wine transition-colors duration-200"
                         onClick={() => {
                           if (!promotion.code) {
                             return

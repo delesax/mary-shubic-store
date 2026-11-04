@@ -129,7 +129,7 @@ const LanguageSelect = ({
       >
         <ListboxButton className="py-1 w-full">
           <div className="flex items-start gap-x-2 font-body">
-            <span className="text-xs uppercase tracking-widest text-ink/50">
+            <span className="text-xs uppercase tracking-widest text-ink/65">
               Language:
             </span>
             {current && (
@@ -139,6 +139,7 @@ const LanguageSelect = ({
                   <ReactCountryFlag
                     svg
                     cdnUrl={FLAG_BASE_URL}
+                    alt=""
                     style={{
                       width: "16px",
                       height: "16px",
@@ -174,6 +175,7 @@ const LanguageSelect = ({
                     <ReactCountryFlag
                       svg
                       cdnUrl={FLAG_BASE_URL}
+                      alt=""
                       style={{
                         width: "16px",
                         height: "16px",

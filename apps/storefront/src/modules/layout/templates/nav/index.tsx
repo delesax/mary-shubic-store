@@ -34,7 +34,10 @@ export default async function Nav() {
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-20 mx-auto border-b duration-200 bg-ivory border-ink/10">
-        <nav className="content-container flex items-center justify-between w-full h-full">
+        <nav
+          aria-label="Main"
+          className="content-container flex items-center justify-between w-full h-full"
+        >
           {/* Left column: menu trigger (mobile only) + desktop nav links */}
           <div className="flex-1 basis-0 h-full flex items-center gap-x-6">
             <div className="h-full flex-shrink-0 small:hidden">
@@ -63,6 +66,7 @@ export default async function Nav() {
             <LocalizedClientLink
               href="/"
               className="flex items-center h-full"
+              aria-label="Mary Shubic, home"
               data-testid="nav-store-link"
             >
               <Image
@@ -87,8 +91,9 @@ export default async function Nav() {
             />
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
-                className="text-ink hover:text-wine transition-colors duration-200"
+                className="inline-flex h-11 w-11 items-center justify-center text-ink hover:text-wine transition-colors duration-200"
                 href="/account"
+                aria-label="Account"
                 data-testid="nav-account-link"
               >
                 <svg
@@ -98,6 +103,7 @@ export default async function Nav() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
+                  aria-hidden="true"
                 >
                   <circle cx="12" cy="8" r="4" />
                   <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />

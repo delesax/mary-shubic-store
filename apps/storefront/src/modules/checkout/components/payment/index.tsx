@@ -187,7 +187,7 @@ const Payment = ({
                 Payment method
               </Text>
               <Text
-                className="text-sm text-ink/60"
+                className="text-sm text-ink/65"
                 data-testid="payment-method-summary"
               >
                 Gift card
@@ -225,7 +225,7 @@ const Payment = ({
                   Payment method
                 </Text>
                 <Text
-                  className="text-sm text-ink/60"
+                  className="text-sm text-ink/65"
                   data-testid="payment-method-summary"
                 >
                   {paymentInfoMap[activeSession?.provider_id]?.title ||
@@ -237,7 +237,7 @@ const Payment = ({
                   Payment details
                 </Text>
                 <div
-                  className="flex gap-2 text-sm text-ink/60 items-center"
+                  className="flex gap-2 text-sm text-ink/65 items-center"
                   data-testid="payment-details-summary"
                 >
                   <Container className="flex items-center h-7 w-fit p-2 bg-blush/20">
@@ -259,7 +259,7 @@ const Payment = ({
                 Payment method
               </Text>
               <Text
-                className="text-sm text-ink/60"
+                className="text-sm text-ink/65"
                 data-testid="payment-method-summary"
               >
                 Gift card

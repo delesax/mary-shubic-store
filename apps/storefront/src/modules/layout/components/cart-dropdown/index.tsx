@@ -94,7 +94,7 @@ const CartDropdown = ({
         href="/cart"
         data-testid="nav-cart-link-mobile"
         aria-label={`Bag, ${totalItems} ${totalItems === 1 ? "item" : "items"}`}
-        className="small:hidden flex h-full items-center px-2 text-ink"
+        className="small:hidden flex h-full min-w-[44px] items-center justify-center px-2 text-ink"
       >
         <span className="relative">
           <BagIcon />
@@ -181,7 +181,7 @@ const CartDropdown = ({
                                       {item.title}
                                     </LocalizedClientLink>
                                   </h3>
-                                  <div className="text-xs text-ink/60 font-body mt-1">
+                                  <div className="text-xs text-ink/65 font-body mt-1">
                                     <LineItemOptions
                                       variant={item.variant}
                                       data-testid="cart-item-variant"
@@ -206,7 +206,7 @@ const CartDropdown = ({
                             </div>
                             <DeleteButton
                               id={item.id}
-                              className="mt-2 text-xs font-body uppercase tracking-wide text-ink/50 hover:text-wine transition-colors duration-200 w-fit"
+                              className="mt-2 text-xs font-body uppercase tracking-wide text-ink/65 hover:text-wine transition-colors duration-200 w-fit"
                               data-testid="cart-item-remove-button"
                             >
                               Remove
@@ -219,7 +219,7 @@ const CartDropdown = ({
                     <div className="flex items-center justify-between">
                       <span className="font-body text-sm text-ink">
                         Subtotal{" "}
-                        <span className="text-ink/50">(excl. taxes)</span>
+                        <span className="text-ink/65">(excl. taxes)</span>
                       </span>
                       <span
                         className="font-display italic text-xl text-wine"

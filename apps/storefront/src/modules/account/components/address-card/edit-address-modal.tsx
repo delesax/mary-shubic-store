@@ -101,7 +101,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
         </div>
         <div className="flex items-center gap-x-4">
           <button
-            className="text-small-regular text-ink/60 hover:text-wine transition-colors flex items-center gap-x-2"
+            className="text-small-regular text-ink/65 hover:text-wine transition-colors flex items-center gap-x-2"
             onClick={open}
             data-testid="address-edit-button"
           >
@@ -109,7 +109,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
             Edit
           </button>
           <button
-            className="text-small-regular text-ink/60 hover:text-wine transition-colors flex items-center gap-x-2"
+            className="text-small-regular text-ink/65 hover:text-wine transition-colors flex items-center gap-x-2"
             onClick={removeAddress}
             data-testid="address-delete-button"
           >

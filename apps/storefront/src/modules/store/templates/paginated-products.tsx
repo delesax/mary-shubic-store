@@ -79,7 +79,7 @@ export default async function PaginatedProducts({
 
   if (products.length === 0) {
     return (
-      <p className="font-body text-sm text-ink/60 py-16 text-center">
+      <p className="font-body text-sm text-ink/65 py-16 text-center">
         {query
           ? `No products found for “${query}”. Check the spelling or try a more general word.`
           : "No products match those filters. Try removing one or two."}

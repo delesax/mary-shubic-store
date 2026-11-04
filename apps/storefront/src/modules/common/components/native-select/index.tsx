@@ -45,7 +45,7 @@ const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
             "relative flex items-center font-body text-sm text-ink border border-ink/15 bg-ivory rounded-md hover:bg-blush/10 focus-within:border-wine transition-colors duration-200",
             className,
             {
-              "text-ink/40": isPlaceholder,
+              "text-ink/65": isPlaceholder,
             }
           )}
         >
@@ -60,7 +60,7 @@ const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
             </option>
             {children}
           </select>
-          <span className="absolute right-4 inset-y-0 flex items-center pointer-events-none text-ink/50">
+          <span className="absolute right-4 inset-y-0 flex items-center pointer-events-none text-ink/65">
             <ChevronUpDown />
           </span>
         </div>

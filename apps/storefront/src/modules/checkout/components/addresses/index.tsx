@@ -102,19 +102,19 @@ const Addresses = ({
                     <Text className="text-sm font-medium text-ink mb-1">
                       Shipping Address
                     </Text>
-                    <Text className="text-sm text-ink/60">
+                    <Text className="text-sm text-ink/65">
                       {cart.shipping_address.first_name}{" "}
                       {cart.shipping_address.last_name}
                     </Text>
-                    <Text className="text-sm text-ink/60">
+                    <Text className="text-sm text-ink/65">
                       {cart.shipping_address.address_1}{" "}
                       {cart.shipping_address.address_2}
                     </Text>
-                    <Text className="text-sm text-ink/60">
+                    <Text className="text-sm text-ink/65">
                       {cart.shipping_address.postal_code},{" "}
                       {cart.shipping_address.city}
                     </Text>
-                    <Text className="text-sm text-ink/60">
+                    <Text className="text-sm text-ink/65">
                       {cart.shipping_address.country_code?.toUpperCase()}
                     </Text>
                   </div>
@@ -126,10 +126,10 @@ const Addresses = ({
                     <Text className="text-sm font-medium text-ink mb-1">
                       Contact
                     </Text>
-                    <Text className="text-sm text-ink/60">
+                    <Text className="text-sm text-ink/65">
                       {cart.shipping_address.phone}
                     </Text>
-                    <Text className="text-sm text-ink/60">
+                    <Text className="text-sm text-ink/65">
                       {cart.email}
                     </Text>
                   </div>
@@ -143,24 +143,24 @@ const Addresses = ({
                     </Text>
 
                     {sameAsBilling ? (
-                      <Text className="text-sm text-ink/60">
+                      <Text className="text-sm text-ink/65">
                         Billing and delivery address are the same.
                       </Text>
                     ) : (
                       <>
-                        <Text className="text-sm text-ink/60">
+                        <Text className="text-sm text-ink/65">
                           {cart.billing_address?.first_name}{" "}
                           {cart.billing_address?.last_name}
                         </Text>
-                        <Text className="text-sm text-ink/60">
+                        <Text className="text-sm text-ink/65">
                           {cart.billing_address?.address_1}{" "}
                           {cart.billing_address?.address_2}
                         </Text>
-                        <Text className="text-sm text-ink/60">
+                        <Text className="text-sm text-ink/65">
                           {cart.billing_address?.postal_code},{" "}
                           {cart.billing_address?.city}
                         </Text>
-                        <Text className="text-sm text-ink/60">
+                        <Text className="text-sm text-ink/65">
                           {cart.billing_address?.country_code?.toUpperCase()}
                         </Text>
                       </>

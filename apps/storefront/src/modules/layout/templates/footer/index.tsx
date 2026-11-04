@@ -23,7 +23,7 @@ export default async function Footer() {
             >
               Mary Shubic
             </LocalizedClientLink>
-            <p className="text-sm text-ink/60 mt-3 leading-relaxed font-body">
+            <p className="text-sm text-ink/65 mt-3 leading-relaxed font-body">
               Women&apos;s fashion, hair, makeup, apparel and footwear —
               made for the way you actually live.
             </p>
@@ -158,7 +158,7 @@ export default async function Footer() {
               <span className="text-xs font-body font-semibold uppercase tracking-widest text-wine">
                 Stay in the loop
               </span>
-              <p className="text-sm text-ink/60 font-body">
+              <p className="text-sm text-ink/65 font-body">
                 Get first access to new drops and edits.
               </p>
               <div className="max-w-[260px]">
@@ -167,7 +167,7 @@ export default async function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-y-3 small:flex-row w-full mb-16 justify-between small:items-center text-ink/50">
+        <div className="flex flex-col gap-y-3 small:flex-row w-full mb-16 justify-between small:items-center text-ink/65">
           <Text className="text-xs font-body">
             © {new Date().getFullYear()} Mary Shubic. All rights reserved.
           </Text>

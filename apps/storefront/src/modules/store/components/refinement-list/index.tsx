@@ -185,7 +185,7 @@ const MobileFilters = ({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close"
-                className="text-2xl leading-none text-ink/60"
+                className="text-2xl leading-none text-ink/65"
               >
                 &times;
               </button>
@@ -193,7 +193,7 @@ const MobileFilters = ({
 
             <div className="flex-1 overflow-y-auto px-5 py-5 flex flex-col gap-8">
               <div>
-                <h5 className={sheetHeadingClass}>Sort by</h5>
+                <h2 className={sheetHeadingClass}>Sort by</h2>
                 <div className="flex flex-wrap gap-2">
                   {SORT_CHOICES.map((s) => (
                     <Chip
@@ -211,7 +211,7 @@ const MobileFilters = ({
 
               {facets && facets.conditions.length > 0 && (
                 <div>
-                  <h5 className={sheetHeadingClass}>Condition</h5>
+                  <h2 className={sheetHeadingClass}>Condition</h2>
                   <div className="flex flex-wrap gap-2">
                     {facets.conditions.map((label) => (
                       <Chip
@@ -228,7 +228,7 @@ const MobileFilters = ({
 
               {facets && facets.colours.length > 0 && (
                 <div>
-                  <h5 className={sheetHeadingClass}>Colour</h5>
+                  <h2 className={sheetHeadingClass}>Colour</h2>
                   <div className="flex flex-wrap gap-2">
                     {facets.colours.map((c) => (
                       <Chip
@@ -249,7 +249,7 @@ const MobileFilters = ({
 
               {facets && facets.sizes.length > 0 && (
                 <div>
-                  <h5 className={sheetHeadingClass}>Size</h5>
+                  <h2 className={sheetHeadingClass}>Size</h2>
                   <div className="flex flex-wrap gap-2">
                     {facets.sizes.map((label) => (
                       <Chip
@@ -265,7 +265,7 @@ const MobileFilters = ({
               )}
 
               <div>
-                <h5 className={sheetHeadingClass}>Price</h5>
+                <h2 className={sheetHeadingClass}>Price</h2>
                 <div className="flex flex-wrap gap-2">
                   {PRICE_BANDS.map((b) => (
                     <Chip
@@ -378,7 +378,7 @@ const RefinementList = ({
 
         {facets && facets.conditions.length > 0 && (
           <div>
-            <h5 className={headingClass}>Condition</h5>
+            <h2 className={headingClass}>Condition</h2>
             <div className="flex flex-col gap-3">
               {facets.conditions.map((label) => (
                 <label
@@ -400,7 +400,7 @@ const RefinementList = ({
 
         {facets && facets.colours.length > 0 && (
           <div>
-            <h5 className={headingClass}>Colour</h5>
+            <h2 className={headingClass}>Colour</h2>
             <div className="flex flex-col gap-3">
               {facets.colours.map((c) => {
                 const on = isSelected("colour", c.label)
@@ -432,7 +432,7 @@ const RefinementList = ({
 
         {facets && facets.sizes.length > 0 && (
           <div>
-            <h5 className={headingClass}>Size</h5>
+            <h2 className={headingClass}>Size</h2>
             <div className="flex flex-col gap-3">
               {facets.sizes.map((label) => (
                 <label
@@ -453,7 +453,7 @@ const RefinementList = ({
         )}
 
         <div>
-          <h5 className={headingClass}>Price</h5>
+          <h2 className={headingClass}>Price</h2>
           <div className="flex flex-col gap-3">
             {PRICE_BANDS.map((b) => (
               <label

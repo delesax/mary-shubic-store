@@ -6,7 +6,7 @@ const Hero = () => {
     <div className="w-full border-b border-ink/10 bg-ivory">
       <div className="grid small:grid-cols-[1.1fr_0.9fr] w-full min-h-[70vh] small:min-h-[640px]">
         <div className="flex flex-col justify-center px-6 small:px-16 py-16 small:py-0 order-2 small:order-1">
-          <span className="text-xs font-body font-semibold uppercase tracking-widest text-mid-rose mb-5">
+          <span className="text-xs font-body font-semibold uppercase tracking-widest text-mid-rose-deep mb-5">
             New Season
           </span>
           <Heading

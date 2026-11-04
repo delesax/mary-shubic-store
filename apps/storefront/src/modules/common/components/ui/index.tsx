@@ -223,7 +223,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={clsx(
-            "flex h-10 w-full rounded-md border border-ink/15 bg-ivory px-3 py-2 text-sm font-body text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-wine/40 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-md border border-ink/15 bg-ivory px-3 py-2 text-sm font-body text-ink placeholder:text-ink/65 focus:outline-none focus:ring-2 focus:ring-wine/40 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           {...props}
@@ -314,7 +314,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       <th
         ref={ref}
         className={clsx(
-          "h-12 px-4 text-left align-middle font-body font-medium text-ink/50 [&:has([role=checkbox])]:pr-0",
+          "h-12 px-4 text-left align-middle font-body font-medium text-ink/65 [&:has([role=checkbox])]:pr-0",
           className
         )}
         {...props}

@@ -22,12 +22,12 @@ const LineItemUnitPrice = ({
   )
 
   return (
-    <div className="flex flex-col text-ink/40 justify-center h-full">
+    <div className="flex flex-col text-ink/65 justify-center h-full">
       {hasReducedPrice && (
         <>
           <p>
             {style === "default" && (
-              <span className="text-ink/40">Original: </span>
+              <span className="text-ink/65">Original: </span>
             )}
             <span
               className="line-through"

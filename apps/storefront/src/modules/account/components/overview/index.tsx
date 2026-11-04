@@ -18,7 +18,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
           <span data-testid="welcome-message" data-value={customer?.first_name}>
             Hello {customer?.first_name}
           </span>
-          <span className="font-body text-small-regular text-ink/60">
+          <span className="font-body text-small-regular text-ink/65">
             Signed in as:{" "}
             <span
               className="font-semibold text-ink"
@@ -42,7 +42,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   >
                     {getProfileCompletion(customer)}%
                   </span>
-                  <span className="uppercase text-xs tracking-wide text-ink/50">
+                  <span className="uppercase text-xs tracking-wide text-ink/65">
                     Completed
                   </span>
                 </div>
@@ -58,7 +58,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   >
                     {customer?.addresses?.length || 0}
                   </span>
-                  <span className="uppercase text-xs tracking-wide text-ink/50">
+                  <span className="uppercase text-xs tracking-wide text-ink/65">
                     Saved
                   </span>
                 </div>
@@ -86,11 +86,11 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                         >
                           <Container className="bg-blush/10 hover:bg-blush/20 transition-colors flex justify-between items-center p-4">
                             <div className="grid grid-cols-3 grid-rows-2 text-small-regular gap-x-4 flex-1">
-                              <span className="font-semibold text-ink/50 uppercase text-xs tracking-wide">Date placed</span>
-                              <span className="font-semibold text-ink/50 uppercase text-xs tracking-wide">
+                              <span className="font-semibold text-ink/65 uppercase text-xs tracking-wide">Date placed</span>
+                              <span className="font-semibold text-ink/65 uppercase text-xs tracking-wide">
                                 Order number
                               </span>
-                              <span className="font-semibold text-ink/50 uppercase text-xs tracking-wide">
+                              <span className="font-semibold text-ink/65 uppercase text-xs tracking-wide">
                                 Total amount
                               </span>
                               <span className="text-ink" data-testid="order-created-date">
@@ -125,7 +125,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                     )
                   })
                 ) : (
-                  <span className="text-ink/50" data-testid="no-orders-message">No recent orders</span>
+                  <span className="text-ink/65" data-testid="no-orders-message">No recent orders</span>
                 )}
               </ul>
             </div>

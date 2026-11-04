@@ -23,7 +23,7 @@ const Register = ({ setCurrentView }: Props) => {
       <h1 className="font-display italic text-3xl text-ink mb-6 text-center">
         Become a Mary Shubic Member
       </h1>
-      <p className="text-center text-base-regular text-ink/60 mb-4">
+      <p className="text-center text-base-regular text-ink/65 mb-4">
         Create your Mary Shubic member profile, and get access to an enhanced
         shopping experience.
       </p>
@@ -68,7 +68,7 @@ const Register = ({ setCurrentView }: Props) => {
           />
         </div>
         <ErrorMessage error={message} data-testid="register-error" />
-        <span className="text-center text-ink/60 text-small-regular mt-6">
+        <span className="text-center text-ink/65 text-small-regular mt-6">
           By creating an account, you agree to Mary Shubic&apos;s{" "}
           <LocalizedClientLink
             href="/content/privacy-policy"
@@ -89,7 +89,7 @@ const Register = ({ setCurrentView }: Props) => {
           Join
         </SubmitButton>
       </form>
-      <span className="text-center text-ink/60 text-small-regular mt-6">
+      <span className="text-center text-ink/65 text-small-regular mt-6">
         Already a member?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}

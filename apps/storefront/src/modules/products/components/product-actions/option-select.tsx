@@ -44,14 +44,14 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
           {isSize && (
             <LocalizedClientLink
               href={sizeGuideHref}
-              className="text-xs font-body text-ink/60 underline hover:text-wine transition-colors duration-200"
+              className="text-xs font-body text-ink/65 underline hover:text-wine transition-colors duration-200"
             >
               Size guide
             </LocalizedClientLink>
           )}
         </div>
         {current && (
-          <span className="text-sm font-body text-ink/60">{current}</span>
+          <span className="text-sm font-body text-ink/65">{current}</span>
         )}
       </div>
       <div

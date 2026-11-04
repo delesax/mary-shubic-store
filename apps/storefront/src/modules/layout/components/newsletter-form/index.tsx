@@ -21,7 +21,7 @@ export default function NewsletterForm() {
 
   return (
     <form action={action} className="flex flex-col gap-y-2" noValidate>
-      <div className="flex items-center border-b border-ink">
+      <div className="flex items-center border-b border-ink focus-within:border-wine focus-within:border-b-2">
         <label htmlFor="newsletter-email" className="sr-only">
           Email address
         </label>
@@ -33,7 +33,7 @@ export default function NewsletterForm() {
           autoComplete="email"
           placeholder="Your email"
           required
-          className="w-full bg-transparent py-2 text-sm text-ink placeholder:text-ink/40 focus:outline-none"
+          className="w-full bg-transparent py-2 text-sm text-ink placeholder:text-ink/65 focus:outline-none"
         />
         {/* honeypot: hidden from people, filled in by bots */}
         <input
@@ -42,6 +42,7 @@ export default function NewsletterForm() {
           tabIndex={-1}
           autoComplete="off"
           aria-hidden="true"
+          aria-label="Leave this field empty"
           className="absolute -left-[9999px] h-0 w-0 opacity-0"
         />
         <button
@@ -57,7 +58,7 @@ export default function NewsletterForm() {
           {state.message}
         </p>
       )}
-      <p className="text-xs leading-relaxed text-ink/50">
+      <p className="text-xs leading-relaxed text-ink/65">
         By joining you agree to receive Mary Shubic emails. Unsubscribe any
         time. See our{" "}
         <LocalizedClientLink href="/privacy-policy" className="underline">

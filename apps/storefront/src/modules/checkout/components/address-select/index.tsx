@@ -47,7 +47,7 @@ const AddressSelect = ({
                   : "Choose an address"}
               </span>
               <ChevronUpDown
-                className={clx("transition-transform duration-200 text-ink/50", {
+                className={clx("transition-transform duration-200 text-ink/65", {
                   "transform rotate-180": open,
                 })}
               />
@@ -82,11 +82,11 @@ const AddressSelect = ({
                         {address.first_name} {address.last_name}
                       </span>
                       {address.company && (
-                        <span className="text-sm text-ink/60">
+                        <span className="text-sm text-ink/65">
                           {address.company}
                         </span>
                       )}
-                      <div className="flex flex-col text-left text-sm text-ink/60 mt-2">
+                      <div className="flex flex-col text-left text-sm text-ink/65 mt-2">
                         <span>
                           {address.address_1}
                           {address.address_2 && (

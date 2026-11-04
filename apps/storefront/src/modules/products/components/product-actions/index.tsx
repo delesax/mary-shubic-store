@@ -267,7 +267,7 @@ export default function ProductActions({
                     <span className="text-sm font-semibold text-wine">{condition.label}</span>
                   </div>
                   {condition.definition && (
-                    <p className="max-w-md text-xs leading-relaxed text-ink/60">
+                    <p className="max-w-md text-xs leading-relaxed text-ink/65">
                       {condition.definition}
                     </p>
                   )}

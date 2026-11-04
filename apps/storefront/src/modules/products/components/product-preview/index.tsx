@@ -69,7 +69,7 @@ export default async function ProductPreview({
             {product.title}
           </Text>
           {condition && (
-            <span className="font-body text-xs text-ink/60">
+            <span className="font-body text-xs text-ink/65">
               {shortCondition(condition)}
             </span>
           )}
@@ -94,7 +94,7 @@ export default async function ProductPreview({
                 />
               ))}
               {extra > 0 && (
-                <span className="text-xs font-body text-ink/60">+{extra}</span>
+                <span className="text-xs font-body text-ink/65">+{extra}</span>
               )}
             </div>
           )}

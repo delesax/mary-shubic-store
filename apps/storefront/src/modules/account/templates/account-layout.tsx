@@ -24,7 +24,7 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({
         <div className="flex flex-col small:flex-row items-end justify-between small:border-t border-blush py-12 gap-8">
           <div>
             <h3 className="font-display italic text-xl text-ink mb-4">Got questions?</h3>
-            <span className="txt-medium text-ink/60">
+            <span className="txt-medium text-ink/65">
               You can find frequently asked questions and answers on our
               customer service page.
             </span>

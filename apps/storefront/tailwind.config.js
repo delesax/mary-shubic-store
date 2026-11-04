@@ -39,6 +39,8 @@ module.exports = {
           deep: "#5C2C33",
         },
         "mid-rose": "#B87B8E",
+        // Accessible shade of mid-rose for text and UI (AA on ivory and blush)
+        "mid-rose-deep": "#904E62",
         blush: "#F0D9D4",
         ink: "#2A1A1D",
         ivory: "#FAF3F0",

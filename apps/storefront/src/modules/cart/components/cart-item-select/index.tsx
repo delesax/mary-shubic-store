@@ -45,7 +45,7 @@ const CartItemSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
             "relative flex items-center text-sm font-body border border-ink/15 text-ink group",
             className,
             {
-              "text-ink/40": isPlaceholder,
+              "text-ink/65": isPlaceholder,
             }
           )}
         >

@@ -28,7 +28,7 @@ export default function TransferRequestForm() {
           <Heading level="h3" className="!text-sm font-semibold text-ink">
             Order transfers
           </Heading>
-          <p className="text-small-regular text-ink/60">
+          <p className="text-small-regular text-ink/65">
             Can&apos;t find the order you are looking for?
             <br /> Connect an order to your account.
           </p>
@@ -62,7 +62,7 @@ export default function TransferRequestForm() {
               <Text className="text-medim-pl text-ink">
                 Transfer for order {state.order?.id} requested
               </Text>
-              <Text className="text-base-regular text-ink/60">
+              <Text className="text-base-regular text-ink/65">
                 Transfer request email sent to {state.order?.email}
               </Text>
             </div>

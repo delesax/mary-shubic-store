@@ -36,7 +36,7 @@ export function Pagination({
     <button
       key={p}
       className={clx(
-        "w-9 h-9 rounded-full flex items-center justify-center text-sm font-body text-ink/60 hover:bg-blush transition-colors duration-200",
+        "w-9 h-9 rounded-full flex items-center justify-center text-sm font-body text-ink/65 hover:bg-blush transition-colors duration-200",
         {
           "bg-wine text-ivory font-semibold hover:bg-wine": isCurrent,
         }
@@ -117,7 +117,7 @@ export function Pagination({
       >
         <button
           className={clx(
-            "w-9 h-9 rounded-full flex items-center justify-center text-ink/60 hover:bg-blush transition-colors duration-200",
+            "w-9 h-9 rounded-full flex items-center justify-center text-ink/65 hover:bg-blush transition-colors duration-200",
             { "opacity-30 cursor-not-allowed hover:bg-transparent": page <= 1 }
           )}
           disabled={page <= 1}
@@ -129,7 +129,7 @@ export function Pagination({
         {renderPageButtons()}
         <button
           className={clx(
-            "w-9 h-9 rounded-full flex items-center justify-center text-ink/60 hover:bg-blush transition-colors duration-200",
+            "w-9 h-9 rounded-full flex items-center justify-center text-ink/65 hover:bg-blush transition-colors duration-200",
             {
               "opacity-30 cursor-not-allowed hover:bg-transparent":
                 page >= totalPages,

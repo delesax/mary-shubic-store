@@ -153,7 +153,7 @@ const AccountNav = ({
               <li>
                 <button
                   type="button"
-                  className="text-ink/60 hover:text-wine transition-colors"
+                  className="text-ink/65 hover:text-wine transition-colors"
                   onClick={handleLogout}
                   data-testid="logout-button"
                 >
@@ -187,7 +187,7 @@ const AccountNavLink = ({
   return (
     <LocalizedClientLink
       href={href}
-      className={clx("text-ink/60 hover:text-wine transition-colors", {
+      className={clx("text-ink/65 hover:text-wine transition-colors", {
         "text-wine font-semibold": active,
       })}
       data-testid={dataTestId}

@@ -40,7 +40,7 @@ const SearchTemplate = ({
           >
             Search the shop
           </label>
-          <div className="flex border-b border-ink">
+          <div className="flex border-b border-ink focus-within:border-wine focus-within:border-b-2">
             <input
               id="search-page-input"
               type="search"

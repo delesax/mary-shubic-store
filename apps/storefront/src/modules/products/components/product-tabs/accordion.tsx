@@ -60,12 +60,12 @@ const Item: React.FC<AccordionItemProps> = ({
                 {title}
               </Text>
             </div>
-            <AccordionPrimitive.Trigger>
+            <AccordionPrimitive.Trigger aria-label={title}>
               {customTrigger || <MorphingTrigger />}
             </AccordionPrimitive.Trigger>
           </div>
           {subtitle && (
-            <Text as="span" className="mt-1 text-sm text-ink/60">
+            <Text as="span" className="mt-1 text-sm text-ink/65">
               {subtitle}
             </Text>
           )}

@@ -70,7 +70,7 @@ export default function CategoryTemplate({
           {category.name}
         </h1>
         {category.description && (
-          <p className="text-sm text-ink/60 font-body mt-3 max-w-lg mx-auto">
+          <p className="text-sm text-ink/65 font-body mt-3 max-w-lg mx-auto">
             {category.description}
           </p>
         )}

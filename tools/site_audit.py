@@ -776,15 +776,15 @@ def s_a11y():
     if h:
         skip = any(re.search(r"skip to", a["t"], re.I) for a in h.anchors)
         (ok if skip else warn)("Skip-to-content link", "" if skip else "add a visually-hidden 'Skip to main content' link")
-    pal = {"wine": "7A3B44", "midrose": "B87B8E", "blush": "F0D9D4", "ink": "2A1A1D", "ivory": "FAF3F0", "white": "FFFFFF"}
-    ink60 = blend(pal["ink"], pal["ivory"], 0.6)
-    pairs = [("ink on ivory (body)", "ink", "ivory"), ("ink/60 on ivory (muted text)", ink60, "ivory"), ("wine on ivory (links)", "wine", "ivory"),
-             ("ivory on wine (buttons)", "ivory", "wine"), ("wine on blush", "wine", "blush"), ("ink/60 on blush", None, "blush"),
-             ("midrose on ivory", "midrose", "ivory"), ("midrose on blush", "midrose", "blush"), ("ivory on midrose (buttons)", "ivory", "midrose")]
+    pal = {"wine": "7A3B44", "rosedeep": "904E62", "blush": "F0D9D4", "ink": "2A1A1D", "ivory": "FAF3F0", "white": "FFFFFF"}
+    ink60 = blend(pal["ink"], pal["ivory"], 0.65)  # muted text is text-ink/65 on the site
+    pairs = [("ink on ivory (body)", "ink", "ivory"), ("ink/65 on ivory (muted text)", ink60, "ivory"), ("wine on ivory (links)", "wine", "ivory"),
+             ("ivory on wine (buttons)", "ivory", "wine"), ("wine on blush", "wine", "blush"), ("ink/65 on blush", None, "blush"),
+             ("mid-rose-deep on ivory (rose text)", "rosedeep", "ivory"), ("mid-rose-deep on blush", "rosedeep", "blush"), ("ivory on mid-rose-deep (buttons)", "ivory", "rosedeep")]
     for label, fg, bg in pairs:
         f = ink60 if fg is None and "blush" in label else (fg if fg and re.fullmatch(r"[0-9A-F]{6}", fg) else pal.get(fg))
         if fg is None:
-            f = blend(pal["ink"], pal["blush"], 0.6)
+            f = blend(pal["ink"], pal["blush"], 0.65)
         c = contrast(f, pal[bg])
         st = ok if c >= 4.5 else warn if c >= 3 else fail
         st(f"Contrast {label}", f"{c:.2f}:1 " + ("(AA pass)" if c >= 4.5 else "(passes only for large text/UI, fails body text)" if c >= 3 else "(fails)"))

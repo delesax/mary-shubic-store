@@ -102,7 +102,7 @@ export default async function SizeGuidePage(props: Props) {
       <div className="mb-8">
         <LocalizedClientLink
           href={back.href}
-          className="inline-flex max-w-full items-center gap-x-2 text-sm font-body text-ink/60 hover:text-wine transition-colors duration-200"
+          className="inline-flex max-w-full items-center gap-x-2 text-sm font-body text-ink/65 hover:text-wine transition-colors duration-200"
         >
           <span aria-hidden="true">&larr;</span>
           <span className="min-w-0 truncate">{back.label}</span>
@@ -136,7 +136,7 @@ export default async function SizeGuidePage(props: Props) {
           Bra band sizes
         </h2>
         <Table heads={["UK band", "EU band", "US band"]} rows={BRA} />
-        <p className="max-w-xl text-sm text-ink/60 font-body">
+        <p className="max-w-xl text-sm text-ink/65 font-body">
           Cup sizes (A to D) are the same in UK, EU and US sizing.
         </p>
       </section>
@@ -170,7 +170,7 @@ export default async function SizeGuidePage(props: Props) {
             around your ribcage, just under the bust.
           </li>
         </ul>
-        <p className="text-sm leading-relaxed text-ink/60">
+        <p className="text-sm leading-relaxed text-ink/65">
           Between sizes? Check the product description or contact us and
           we&apos;ll help you choose.
         </p>

@@ -118,7 +118,7 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
         >
           {type === "preview" && (
             <span className="flex gap-x-1">
-              <Text className="text-ink/50">{item.quantity}x </Text>
+              <Text className="text-ink/65">{item.quantity}x </Text>
               <LineItemUnitPrice
                 item={item}
                 style="tight"

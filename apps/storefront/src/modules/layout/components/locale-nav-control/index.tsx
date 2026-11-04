@@ -37,6 +37,7 @@ const LocaleNavControl = ({
           <ReactCountryFlag
             svg
             cdnUrl={FLAG_BASE_URL}
+            alt=""
             style={{ width: "16px", height: "16px" }}
             countryCode={(countryCode as string).toUpperCase()}
           />
