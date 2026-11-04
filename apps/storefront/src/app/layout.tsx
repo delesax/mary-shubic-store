@@ -1,4 +1,5 @@
 import { getBaseURL } from "@lib/util/env"
+import { SHARE_IMAGE } from "@lib/util/share-image"
 import { Metadata } from "next"
 import localFont from "next/font/local"
 import CookieNotice from "@modules/layout/components/cookie-notice"
@@ -38,6 +39,9 @@ const workSans = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
+  openGraph: {
+    images: [SHARE_IMAGE],
+  },
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {

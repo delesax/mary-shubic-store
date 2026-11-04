@@ -4,6 +4,7 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import { parseFilters } from "@lib/constants/product-filters"
 import StoreTemplate from "@modules/store/templates"
 import { robotsFor } from "@lib/util/filter-seo"
+import { SHARE_IMAGE } from "@lib/util/share-image"
 
 type Params = {
   searchParams: Promise<{
@@ -33,6 +34,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
     openGraph: {
       title: "Store | Mary Shubic",
       description: "Explore all of our products.",
+      images: [SHARE_IMAGE],
     },
   }
 }

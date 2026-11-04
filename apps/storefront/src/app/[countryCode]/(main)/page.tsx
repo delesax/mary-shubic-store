@@ -4,6 +4,7 @@ import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
+import { SHARE_IMAGE } from "@lib/util/share-image"
 
 export const metadata: Metadata = {
   title: "Mary Shubic | Women's Fashion, Beauty & Footwear",
@@ -17,15 +18,7 @@ export const metadata: Metadata = {
     description:
       "Apparel, footwear, hair and makeup for women who don't dress to blend in.",
     type: "website",
-    // TODO: replace with model photography once available
-    images: [
-      {
-        url: "/images/og-default.png",
-        width: 1200,
-        height: 630,
-        alt: "Mary Shubic",
-      },
-    ],
+    images: [SHARE_IMAGE],
   },
 }
 

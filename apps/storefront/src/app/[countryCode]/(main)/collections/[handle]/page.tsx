@@ -7,6 +7,7 @@ import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { parseFilters } from "@lib/constants/product-filters"
 import { robotsFor } from "@lib/util/filter-seo"
+import { SHARE_IMAGE } from "@lib/util/share-image"
 
 export const dynamic = "force-dynamic"
 
@@ -82,6 +83,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
+      images: [SHARE_IMAGE],
     },
   } as Metadata
   return metadata

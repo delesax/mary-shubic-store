@@ -8,6 +8,7 @@ import CategoryTemplate from "@modules/categories/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { parseFilters } from "@lib/constants/product-filters"
 import { robotsFor } from "@lib/util/filter-seo"
+import { SHARE_IMAGE } from "@lib/util/share-image"
 
 type Props = {
   params: Promise<{ category: string[]; countryCode: string }>
@@ -75,6 +76,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       openGraph: {
         title,
         description,
+        images: [SHARE_IMAGE],
       },
     }
   } catch {
