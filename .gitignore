@@ -65,3 +65,9 @@ tools/catalogue-import/
 
 # Generated site audit reports (the 2026-10-29 baseline is already tracked)
 docs/audit-report-*
+
+# Generated build info and env variants (keep example/template files tracked)
+*.tsbuildinfo
+**/.env.*
+!**/.env.example
+!**/.env.template
