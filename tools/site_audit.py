@@ -993,7 +993,8 @@ def s_vm():
     R.sec("15. VM health via SSH (--vm)")
     script = (
         "echo '##CRON'; crontab -l 2>/dev/null; "
-        "echo '##BK'; stat -c '%Y %s %n' ~/backups/* 2>/dev/null | sort -rn | head -3; "
+        "echo '##SCRIPT'; for f in $(crontab -l 2>/dev/null | grep -v '^#' | grep -o '/[^ ]*\\.sh'); do grep -o -E 'pg_dump|rclone' \"$f\" 2>/dev/null; done | sort -u; "
+        "echo '##BK'; stat -c '%Y %s %n' ~/backups/*.dump 2>/dev/null | sort -rn | head -3; "
         "echo '##MEM'; free -m; "
         "echo '##DISK'; df -h / | tail -1; "
         "echo '##DOCKER'; docker ps --format '{{.Names}}|{{.Status}}' 2>&1; "
@@ -1009,7 +1010,7 @@ def s_vm():
         warn("SSH failed", out.stderr.strip()[:150])
         return
     parts = dict(re.findall(r"##(\w+)\n(.*?)(?=\n##|\Z)", out.stdout, re.S))
-    cron = parts.get("CRON", "")
+    cron = parts.get("CRON", "") + "\n" + parts.get("SCRIPT", "")  # crontab text plus tokens found in scripts it runs
     (ok if "pg_dump" in cron else warn)("Backup cron job", "pg_dump found in crontab" if "pg_dump" in cron else "no pg_dump in crontab")
     (ok if re.search(r"rclone|aws |s3|rsync|scp|r2|gsutil", cron) else fail)("OFF-VM backup copy", "found in cron" if re.search(r"rclone|aws |s3|rsync|scp|r2|gsutil", cron) else "none - backups sit on the same VM they protect; copy them to R2 (rclone)")
     now = int((parts.get("NOW") or "0").strip() or 0)
