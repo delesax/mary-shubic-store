@@ -10,15 +10,16 @@ import { Fragment } from "react"
 import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
 import { Locale } from "@lib/data/locales"
-import { NAV_LINKS } from "@lib/constants/nav-links"
+import type { NavLink } from "@lib/constants/nav-links"
 
 type SideMenuProps = {
   regions: HttpTypes.StoreRegion[] | null
   locales: Locale[] | null
   currentLocale: string | null
+  navLinks: NavLink[]
 }
 
-const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
+const SideMenu = ({ regions, locales, currentLocale, navLinks }: SideMenuProps) => {
   const countryToggleState = useToggleState()
   const languageToggleState = useToggleState()
 
@@ -72,7 +73,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
 
                     <div className="flex flex-col gap-8 items-start justify-start">
                       <ul className="flex flex-col gap-6 items-start justify-start">
-                        {NAV_LINKS.map((link) => (
+                        {navLinks.map((link) => (
                           <li key={link.href}>
                             <LocalizedClientLink
                               href={link.href}

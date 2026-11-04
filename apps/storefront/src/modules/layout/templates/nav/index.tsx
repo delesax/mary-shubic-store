@@ -4,19 +4,31 @@ import Image from "next/image"
 import { listLocales } from "@lib/data/locales"
 import { getLocale } from "@lib/data/locale-actions"
 import { listRegions } from "@lib/data/regions"
+import { listCategories } from "@lib/data/categories"
+import { listCollections } from "@lib/data/collections"
 import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 import LocaleNavControl from "@modules/layout/components/locale-nav-control"
-import { NAV_LINKS } from "@lib/constants/nav-links"
+import { NAV_LINKS, resolveNavLinks } from "@lib/constants/nav-links"
 
 export default async function Nav() {
-  const [regions, locales, currentLocale] = await Promise.all([
-    listRegions().then((regions: StoreRegion[]) => regions),
-    listLocales(),
-    getLocale(),
-  ])
+  const [regions, locales, currentLocale, categories, collectionsRes] =
+    await Promise.all([
+      listRegions().then((regions: StoreRegion[]) => regions),
+      listLocales(),
+      getLocale(),
+      // Same calls as the footer, so these come from the same cache entries
+      listCategories().catch(() => null),
+      listCollections({ fields: "*products" }).catch(() => null),
+    ])
+
+  // Only link to categories and collections that exist, so the header never 404s
+  const navLinks = resolveNavLinks(NAV_LINKS, {
+    categories: categories?.map((c) => c.handle) ?? null,
+    collections: collectionsRes?.collections.map((c) => c.handle) ?? null,
+  })
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
@@ -25,10 +37,15 @@ export default async function Nav() {
           {/* Left column: menu trigger (mobile only) + desktop nav links */}
           <div className="flex-1 basis-0 h-full flex items-center gap-x-6">
             <div className="h-full flex-shrink-0 small:hidden">
-              <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
+              <SideMenu
+                regions={regions}
+                locales={locales}
+                currentLocale={currentLocale}
+                navLinks={navLinks}
+              />
             </div>
             <div className="hidden small:flex items-center gap-x-6 h-full flex-shrink-0">
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <LocalizedClientLink
                   key={link.href}
                   href={link.href}
