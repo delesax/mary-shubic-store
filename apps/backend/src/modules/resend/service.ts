@@ -9,6 +9,9 @@ import type {
 } from "@medusajs/framework/types"
 import { Resend } from "resend"
 import { renderOrderPlacedEmail, type RenderedEmail } from "./emails/order-placed"
+import { renderOrderShippedEmail } from "./emails/order-shipped"
+import { renderOrderCanceledEmail } from "./emails/order-canceled"
+import { renderPasswordResetEmail } from "./emails/password-reset"
 
 type ResendOptions = {
   api_key: string
@@ -21,12 +24,17 @@ type InjectedDependencies = {
 
 export enum Templates {
   ORDER_PLACED = "order-placed",
+  ORDER_SHIPPED = "order-shipped",
+  ORDER_CANCELED = "order-canceled",
+  PASSWORD_RESET = "password-reset",
 }
 
-// One renderer per template name. Add new emails here
-// (e.g. shipment-created, password-reset) as you build them.
+// One renderer per template name. Add new emails here as you build them.
 const templates: Partial<Record<Templates, (props: any) => RenderedEmail>> = {
   [Templates.ORDER_PLACED]: renderOrderPlacedEmail,
+  [Templates.ORDER_SHIPPED]: renderOrderShippedEmail,
+  [Templates.ORDER_CANCELED]: renderOrderCanceledEmail,
+  [Templates.PASSWORD_RESET]: renderPasswordResetEmail,
 }
 
 function subjectFor(template: Templates, data: any): string {
@@ -37,6 +45,20 @@ function subjectFor(template: Templates, data: any): string {
         ? `Your Mary Shubic order #${displayId}`
         : "Your Mary Shubic order"
     }
+    case Templates.ORDER_SHIPPED: {
+      const displayId = data?.order?.display_id
+      return displayId
+        ? `Your Mary Shubic order #${displayId} has shipped`
+        : "Your Mary Shubic order has shipped"
+    }
+    case Templates.ORDER_CANCELED: {
+      const displayId = data?.order?.display_id
+      return displayId
+        ? `Your Mary Shubic order #${displayId} has been cancelled`
+        : "Your Mary Shubic order has been cancelled"
+    }
+    case Templates.PASSWORD_RESET:
+      return "Reset your Mary Shubic password"
     default:
       return "Mary Shubic"
   }

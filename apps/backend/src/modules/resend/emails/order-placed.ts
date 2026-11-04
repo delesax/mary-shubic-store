@@ -2,51 +2,21 @@
 // and React 18 (Medusa admin) side by side, so rendering email with React in the
 // backend risks mixing two React copies. A string template avoids that entirely.
 
-// Colours come from the Mary Shubic design system, as plain hex
-// (email clients ignore CSS variables and most web fonts).
-const BRAND = {
-  name: "Mary Shubic",
-  ink: "#2A1A1D", // Ink: body text
-  muted: "#685B5C", // Ink at ~70% on Ivory (a touch darker than the site for small-text legibility)
-  accent: "#7A3B44", // Wine Rose: wordmark fallback, links and the order total
-  paper: "#FAF3F0", // Ivory: the card
-  background: "#F0D9D4", // Soft Blush: the area around the card
-  rule: "#E3C7C2", // slightly deeper blush so dividers stay visible on the card
-  siteUrl: "https://www.maryshubic.com",
-  supportEmail: "support@maryshubic.com", // TODO: confirm the real support address
-  // Public https URL of the wine-rose wordmark as a PNG (email clients don't show SVG).
-  // Leave empty to fall back to the brand name in Wine Rose text.
-  logoUrl: "https://www.maryshubic.com/images/email/3-wordmark-signature-wine-rose-web.png",  
-  fontStack: "'Work Sans', Helvetica, Arial, sans-serif",
-}
+import {
+  addressLines,
+  BRAND,
+  esc,
+  money,
+  summaryRow,
+  type Address,
+  type Money,
+  type OrderItem,
+  type RenderedEmail,
+  type ShippingMethod,
+} from "./shared"
 
-type Money = number | string | null | undefined
-
-type OrderItem = {
-  id: string
-  product_title?: string | null
-  variant_title?: string | null
-  thumbnail?: string | null
-  quantity: number
-  total: Money
-}
-
-type Address = {
-  first_name?: string | null
-  last_name?: string | null
-  address_1?: string | null
-  address_2?: string | null
-  city?: string | null
-  province?: string | null
-  postal_code?: string | null
-  country_code?: string | null
-}
-
-type ShippingMethod = {
-  id: string
-  name?: string | null
-  total: Money
-}
+// Re-exported so the notification provider keeps importing it from here
+export type { RenderedEmail } from "./shared"
 
 export type OrderPlacedEmailProps = {
   order: {
@@ -60,50 +30,6 @@ export type OrderPlacedEmailProps = {
     shipping_address?: Address | null
     shipping_methods?: ShippingMethod[]
   }
-}
-
-export type RenderedEmail = { html: string; text: string }
-
-function esc(value: unknown): string {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;")
-}
-
-function money(value: Money, currency: string): string {
-  const locale = currency.toLowerCase() === "usd" ? "en-US" : "en-GB"
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currency.toUpperCase(),
-  }).format(Number(value ?? 0))
-}
-
-function addressLines(address?: Address | null): string[] {
-  if (!address) return []
-  return [
-    [address.first_name, address.last_name].filter(Boolean).join(" "),
-    address.address_1,
-    address.address_2,
-    [address.city, address.province].filter(Boolean).join(", "),
-    address.postal_code,
-    address.country_code?.toUpperCase(),
-  ].filter((line): line is string => Boolean(line && String(line).trim()))
-}
-
-function summaryRow(
-  label: string,
-  value: string,
-  bold = false,
-  color: string = BRAND.ink
-): string {
-  const weight = bold ? 700 : 400
-  return `<tr>
-  <td style="padding:4px 0;font-size:14px;font-weight:${weight};color:${color};">${esc(label)}</td>
-  <td align="right" style="padding:4px 0;font-size:14px;font-weight:${weight};color:${color};">${esc(value)}</td>
-</tr>`
 }
 
 export function renderOrderPlacedEmail({ order }: OrderPlacedEmailProps): RenderedEmail {
