@@ -112,7 +112,7 @@ const Payment = ({
   }, [isOpen])
 
   return (
-    <div className="bg-ivory">
+    <div className="bg-ivory panel-pad">
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"

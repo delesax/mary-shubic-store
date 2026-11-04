@@ -40,7 +40,7 @@ const Addresses = ({
   const [message, formAction] = useActionState(setAddresses, null)
 
   return (
-    <div className="bg-ivory">
+    <div className="bg-ivory panel-pad">
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
@@ -93,10 +93,10 @@ const Addresses = ({
         <div>
           <div className="text-sm font-body">
             {cart && cart.shipping_address ? (
-              <div className="flex items-start gap-x-8">
+              <div className="flex flex-col gap-y-6 md:flex-row md:items-start gap-x-8">
                 <div className="flex items-start gap-x-1 w-full">
                   <div
-                    className="flex flex-col w-1/3"
+                    className="flex flex-col w-full md:w-1/3"
                     data-testid="shipping-address-summary"
                   >
                     <Text className="text-sm font-medium text-ink mb-1">
@@ -120,7 +120,7 @@ const Addresses = ({
                   </div>
 
                   <div
-                    className="flex flex-col w-1/3"
+                    className="flex flex-col w-full md:w-1/3"
                     data-testid="shipping-contact-summary"
                   >
                     <Text className="text-sm font-medium text-ink mb-1">
@@ -135,7 +135,7 @@ const Addresses = ({
                   </div>
 
                   <div
-                    className="flex flex-col w-1/3"
+                    className="flex flex-col w-full md:w-1/3"
                     data-testid="billing-address-summary"
                   >
                     <Text className="text-sm font-medium text-ink mb-1">

@@ -54,6 +54,12 @@
     @apply max-w-[1440px] w-full mx-auto px-6;
   }
 
+  /* Inner padding for boxed panels and cards (checkout steps, order summary,
+     order confirmation card): the background runs edge to edge, content is inset. */
+  .panel-pad {
+    @apply px-6 py-6 small:px-8 small:py-8;
+  }
+
   .contrast-btn {
     @apply px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition-colors duration-200 ease-in;
   }

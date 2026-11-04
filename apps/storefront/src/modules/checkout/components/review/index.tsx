@@ -21,7 +21,7 @@ const Review = ({ cart }: { cart: HttpTypes.StoreCart }) => {
     (cart.payment_collection || paidByGiftcard)
 
   return (
-    <div className="bg-ivory">
+    <div className="bg-ivory panel-pad">
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
