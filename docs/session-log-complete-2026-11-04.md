@@ -9,7 +9,7 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Stripe test checkout works end to end (order, payment, webhook 200, order-placed email via Resend).
 - Nightly backups: cron 03:00 Europe/London runs `~/bin/backup-db.sh` (dump, validate, upload to R2, verify size, prune local copies older than 14 days, ping healthchecks.io). First automatic run (04 Nov 03:00) succeeded.
 - Restore test passed on 2026-11-03.
-- Git: `main` on GitHub is at `b3e6850`. Working tree clean (new audit reports are git-ignored).
+- Git: `main` on GitHub is at `3bee9e1`. This log was committed locally as `d6244ce` (and updated after that); the log commits are not pushed. Working tree clean (new audit reports are git-ignored).
 - Latest audit (docs/audit-report-20261104-0516.md): PASS 77, WARN 42, FAIL 21, INFO 36. The 21 FAILs are pre-existing and deliberately left alone.
 
 ## Standing rules followed throughout
@@ -77,14 +77,19 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Caddy certificate backoff: see DNS cutover.
 - A garbled quoting attempt at the table-count query ran as a no-op; replaced by `counts.sql`.
 
+## Ignore rules cleanup (2026-11-04)
+- `.gitignore` gained `*.tsbuildinfo`, `**/.env.*`, `!**/.env.example`, `!**/.env.template`. `apps/storefront/tsconfig.tsbuildinfo` was untracked with `git rm --cached` (525,274 bytes, still on disk; it is a build cache that regenerates, and `git pull` on ms-prod will delete the tracked copy there, which is harmless).
+- Verified with `git check-ignore`: tsbuildinfo and `apps/storefront/.env.production` are now ignored; `apps/backend/.env.template` is still tracked and not ignored. No env file contents were read.
+- Commit `3bee9e1`, pushed.
+
 ## Commit history for this work (oldest first)
-`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix. All pushed to `origin/main`.
+`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files. All of these are pushed to `origin/main`. `d6244ce` (this log) and its update are local only.
 
 ## Still open
 1. Cloudflare: add a 30-day lifecycle rule on the `medusa/` prefix, and confirm the R2 token is scoped to this one bucket with Object Read & Write only.
 2. Confirm the healthchecks.io success ping arrived, and that tonight's 03:00 run pings too.
 3. Tick "first automated run confirmed" in `docs/RESTORE_CHECKLIST.md` (the 04 Nov 03:00 run did upload). Repeat the restore test periodically.
-4. Add a `**/.env.*` ignore rule (`apps/storefront/.env.production` is not covered), and move the secret files out of the parent `Mary Shubic/` folder.
+4. Move the secret files out of the parent `Mary Shubic/` folder (the `**/.env.*` ignore rule is done, see above).
 5. Clean up the demo S3 image URLs (10 images, 4 thumbnails) before launch.
 6. 21 pre-existing audit FAILs (deliberately not fixed). Internet scanners probe `/webhook` paths (404, harmless).
 7. Re-measure TTFB: `/gb` took about 7 s on a cold first render inside the Docker network; compare warm public timings with oracle-store.
