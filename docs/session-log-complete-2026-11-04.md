@@ -9,7 +9,7 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Stripe test checkout works end to end (order, payment, webhook 200, order-placed email via Resend).
 - Nightly backups: cron 03:00 Europe/London runs `~/bin/backup-db.sh` (dump, validate, upload to R2, verify size, prune local copies older than 14 days, ping healthchecks.io). First automatic run (04 Nov 03:00) succeeded.
 - Restore test passed on 2026-11-03.
-- Git: `main` on GitHub is at `3bee9e1`. This log was committed locally as `d6244ce` (and updated after that); the log commits are not pushed. Working tree clean (new audit reports are git-ignored).
+- Git: everything is pushed to `origin/main`; the log itself landed in `d6244ce` and `f6b41a3`, plus a final commit fixing this line. Working tree clean (new audit reports are git-ignored).
 - Latest audit (docs/audit-report-20261104-0516.md): PASS 77, WARN 42, FAIL 21, INFO 36. The 21 FAILs are pre-existing and deliberately left alone.
 
 ## Standing rules followed throughout
@@ -83,7 +83,7 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Commit `3bee9e1`, pushed.
 
 ## Commit history for this work (oldest first)
-`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files. All of these are pushed to `origin/main`. `d6244ce` (this log) and its update are local only.
+`8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files. `d6244ce` and `f6b41a3` (this log) followed. All of these are pushed to `origin/main`.
 
 ## Still open
 1. Cloudflare: add a 30-day lifecycle rule on the `medusa/` prefix, and confirm the R2 token is scoped to this one bucket with Object Read & Write only.
