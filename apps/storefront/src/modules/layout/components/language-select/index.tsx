@@ -10,6 +10,7 @@ import {
 import { Fragment, useEffect, useMemo, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import ReactCountryFlag from "react-country-flag"
+import { FLAG_BASE_URL } from "@lib/constants/flags"
 
 import { StateType } from "@lib/hooks/use-toggle-state"
 import { updateLocale } from "@lib/data/locale-actions"
@@ -137,6 +138,7 @@ const LanguageSelect = ({
                   /* @ts-ignore */
                   <ReactCountryFlag
                     svg
+                    cdnUrl={FLAG_BASE_URL}
                     style={{
                       width: "16px",
                       height: "16px",
@@ -171,6 +173,7 @@ const LanguageSelect = ({
                     /* @ts-ignore */
                     <ReactCountryFlag
                       svg
+                      cdnUrl={FLAG_BASE_URL}
                       style={{
                         width: "16px",
                         height: "16px",

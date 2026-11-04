@@ -9,6 +9,7 @@ import {
 } from "@headlessui/react"
 import { Fragment, useEffect, useMemo, useState } from "react"
 import ReactCountryFlag from "react-country-flag"
+import { FLAG_BASE_URL } from "@lib/constants/flags"
 
 import { StateType } from "@lib/hooks/use-toggle-state"
 import { useParams, usePathname } from "next/navigation"
@@ -80,6 +81,7 @@ const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
               <span className="text-xs text-ink flex items-center gap-x-2">
                 <ReactCountryFlag
                   svg
+                  cdnUrl={FLAG_BASE_URL}
                   style={{
                     width: "16px",
                     height: "16px",
@@ -112,6 +114,7 @@ const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
                   >
                     <ReactCountryFlag
                       svg
+                      cdnUrl={FLAG_BASE_URL}
                       style={{
                         width: "16px",
                         height: "16px",

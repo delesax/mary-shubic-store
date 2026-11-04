@@ -6,6 +6,7 @@ import { HttpTypes } from "@medusajs/types"
 import { Locale } from "@lib/data/locales"
 import { Fragment } from "react"
 import ReactCountryFlag from "react-country-flag"
+import { FLAG_BASE_URL } from "@lib/constants/flags"
 import { useParams } from "next/navigation"
 import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
@@ -35,6 +36,7 @@ const LocaleNavControl = ({
           /* @ts-ignore */
           <ReactCountryFlag
             svg
+            cdnUrl={FLAG_BASE_URL}
             style={{ width: "16px", height: "16px" }}
             countryCode={(countryCode as string).toUpperCase()}
           />
