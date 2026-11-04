@@ -2,7 +2,7 @@
 
 No secrets appear in this log. Env files, keys, tokens, rclone config, the healthchecks URL and database dumps were never read or displayed. Only file names, sizes, permissions, table names and row counts are reported.
 
-## Current state (as of 2026-11-04 ~05:20 GMT)
+## Current state (as of 2026-11-04 ~07:30 GMT)
 - **Production is on ms-prod** (DigitalOcean London, 206.189.16.62, Ubuntu 24.04, 4 vCPU / 8 GB, 2 GB swap). Log in with `ssh -l deploy ms-prod` (the alias now also logs in as deploy).
 - **oracle-store** (old Oracle VM, 145.241.217.196) is still running and was never modified.
 - All six hostnames (maryshubic.com, www., api., and the same three on .co.uk) resolve to 206.189.16.62 with Let's Encrypt certificates (expire 2027-02-01). No AAAA records. media.maryshubic.com stays on Cloudflare R2.
@@ -10,8 +10,8 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Nightly backups: cron 03:00 Europe/London runs `~/bin/backup-db.sh` (dump, validate, upload to R2, verify size, prune local copies older than 14 days, ping healthchecks.io). First automatic run (04 Nov 03:00) succeeded.
 - Restore test passed on 2026-11-03.
 - Git: everything is pushed to `origin/main` (latest code commit `913ed38`). Working tree clean (new audit reports are git-ignored).
-- **Not yet deployed:** the security headers, report-only CSP and JSON-LD work (`913ed38`) is in the repo only. ms-prod still runs the previous Caddyfile and storefront image, so the audit's header and structured-data findings stay until it is deployed.
-- Latest audit (docs/audit-report-20261104-0516.md): PASS 77, WARN 42, FAIL 21, INFO 36. The 21 FAILs are pre-existing and deliberately left alone.
+- **Deployed 2026-11-04 ~07:26 GMT:** `913ed38` (security headers, report-only CSP, JSON-LD) is live on ms-prod (`~/store` at `913ed38`). Caddy was reloaded (not restarted) and only the storefront container was recreated. See the deployment section below.
+- Latest audit (docs/audit-report-20261104-0727.md): PASS 86, WARN 34, FAIL 21, INFO 36 (previous run 77/42/21/36). Every change was WARN to PASS; no new FAILs. The 21 FAILs are pre-existing and deliberately left alone.
 
 ## Standing rules followed throughout
 - Never read, print, cat, grep or log secrets (.env, keys, tokens, rclone config, dumps, `~/.healthchecks-url`). Secrets move only by non-echoing pipes.
@@ -83,7 +83,7 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - Verified with `git check-ignore`: tsbuildinfo and `apps/storefront/.env.production` are now ignored; `apps/backend/.env.template` is still tracked and not ignored. No env file contents were read.
 - Commit `3bee9e1`, pushed.
 
-## Security headers and JSON-LD (2026-11-04, repo only, not deployed)
+## Security headers and JSON-LD (2026-11-04, deployed 07:26 GMT, see deployment section)
 - **Where:** headers are set in the `Caddyfile` (covers storefront, API and admin `/app`, redirects and static files, and needs no storefront rebuild). Two snippets: `security_headers` and `csp_report_only`.
 - **All five site blocks:** `Strict-Transport-Security: max-age=300` (no `includeSubDomains`, no `preload`; raise later once every subdomain is confirmed on HTTPS), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `X-Frame-Options: SAMEORIGIN`.
 - **Storefront blocks only:** `Content-Security-Policy-Report-Only` (not enforced) allowing Stripe (js.stripe.com, `*.js.stripe.com`, api.stripe.com, hooks.stripe.com, per Stripe's CSP docs), Stripe Link (`link.com`), `media.maryshubic.com`, `*.amazonaws.com` (demo images) and both API hosts, with `unsafe-inline` for Next.js inline scripts and styles. No `report-uri`, so violations only appear in the browser console. Do not enforce before checkout has been tested with it in place.
@@ -94,18 +94,28 @@ No secrets appear in this log. Env files, keys, tokens, rclone config, the healt
 - **Validation:** strict typecheck of the touched files and a render test of both components with four sample products (single variant, multi-variant with one out of stock, unknown stock figure, pre-owned metadata); all output parsed as JSON and a `</script>` in a product title stayed escaped. A full `next build` and a fetch of built pages were not possible locally (no storefront `node_modules`, pages need a Medusa backend). Not checked: real `metadata.condition` values on products.
 - **Commit:** `913ed38`, pushed.
 
+### Deployment of 913ed38 (2026-11-04, ms-prod, as deploy; one command at a time with approvals)
+- **Before:** `~/store` at `f7b1a50`; five containers up (storefront 1c1b9421b2e6, medusa c4e920a658df, postgres be503df7ae80, caddy c5dcb6afc2b7, redis c8c28cd3bd98), all started at 05:12:40 GMT with `restarts=0`, about one minute after an automatic `tmux` package upgrade at 05:11:38 (probably unattended-upgrades restarting Docker; not confirmed, the journal needs sudo). The `deploy` tmux session was gone for the same reason and was recreated.
+- **Pull:** `git pull --ff-only origin main` brought `~/store` to `913ed38`, tree clean (the tracked `tsconfig.tsbuildinfo` was removed there, as expected).
+- **Caddy bind-mount gotcha:** the Caddyfile is a single-file bind mount. `git pull` replaces the file, so the caddy container kept the old inode and saw 0 matches for `security_headers` (host file had 4). Fix used with approval, no restart: `docker compose exec -T caddy sh -c "cat > /etc/caddy/Caddyfile" < Caddyfile`, then `caddy validate` (exit 0) and `caddy reload` (exit 0, only a "not formatted" warning). The caddy container kept its ID and uptime. Note for every future Caddyfile change: after `git pull`, either write it in place like this or recreate the caddy container, then reload.
+- **Headers (curl -sI, 200 unless noted):** www.maryshubic.com/gb, www.maryshubic.co.uk/gb, api.maryshubic.com/health and api.maryshubic.com/app all carry HSTS `max-age=300` (no includeSubDomains or preload), `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, the minimal `Permissions-Policy` and `X-Frame-Options: SAMEORIGIN`. The two storefront URLs also carry `Content-Security-Policy-Report-Only`; the API/admin URLs have no CSP; no URL has an enforced CSP. maryshubic.com/gb returns a 301 to www with the five headers (the CSP sits on the destination). `/app` and `/health` still return 200.
+- **Storefront build:** `docker compose build --build-arg CACHEBUST=$(date +%s) storefront` in tmux, exit 0, 0 error and 0 warning lines. Recreated with `docker compose up -d --force-recreate --no-deps storefront` (storefront only; caddy, medusa, postgres and redis untouched, same IDs and uptimes). Storefront `restarts=0`, status running.
+- **Live checks:** `/gb` returns 200 (final URL `https://www.maryshubic.com/gb`); its `og:image` is `https://www.maryshubic.com/images/og-default.png`, which returns 200; its JSON-LD blocks are `Organization` and `WebSite` (Organization is emitted without legal name, address or company number while the `TODO_` constants are unset). The sitemap lists 23 product URLs. All 23 are multi-variant (6 sizes), so no single-variant product exists to test the product-level `sku`. Product `tribal-print-halter-swimsuit` returns 200 with `Organization`, `WebSite`, `Product` and `BreadcrumbList` blocks, all parsing as JSON. Product fields: name, image, description, brand, offers and url filled; `sku` empty at product level by design for multi-variant products. Six offers, each with its own `sku`, price 8.00, `GBP`, `InStock` and `NewCondition`. Breadcrumb: Home > Shop > New In > product. Last 50 log lines of storefront and medusa: no error, exception, warning or timeout lines.
+- **Audit (docs/audit-report-20261104-0727):** PASS 86, WARN 34, FAIL 21, INFO 36 (before 77/42/21/36). Changed WARN to PASS: Caddy security headers, Clickjacking protection, Header HSTS, Referrer-Policy, X-Content-Type-Options, BreadcrumbList JSON-LD, Homepage JSON-LD (Organization/WebSite) and Meta og:image; new PASS: og:image URL loads. No new FAILs.
+- **Still to do from this deploy:** review the CSP report-only output in the browser console during a full checkout (see Still open item 9).
+
 ## Commit history for this work (oldest first)
 `8c11025` config, audit script, baseline; `f7b1a50` migration plan; `f18936f` first session log; `1996a2e` restore runbook and checklist; `0c51b15` restore test record; `655fff8` ignore generated audit reports; `b3e6850` audit backup-check fix; `3bee9e1` ignore rules for generated and env files; `d6244ce`, `f6b41a3`, `d11023a` this log; `913ed38` security headers and JSON-LD. All of these are pushed to `origin/main`.
 
 ## Still open
 1. Cloudflare: add a 30-day lifecycle rule on the `medusa/` prefix, and confirm the R2 token is scoped to this one bucket with Object Read & Write only.
 2. Confirm the healthchecks.io success ping arrived, and that tonight's 03:00 run pings too.
-3. Tick "first automated run confirmed" in `docs/RESTORE_CHECKLIST.md` (the 04 Nov 03:00 run did upload). Repeat the restore test periodically.
+3. Repeat the restore test periodically (the first automated backup run is confirmed and ticked in `docs/RESTORE_CHECKLIST.md`).
 4. Move the secret files out of the parent `Mary Shubic/` folder (the `**/.env.*` ignore rule is done, see above).
 5. Clean up the demo S3 image URLs (10 images, 4 thumbnails) before launch.
 6. 21 pre-existing audit FAILs (deliberately not fixed). Internet scanners probe `/webhook` paths (404, harmless).
 7. Re-measure TTFB: `/gb` took about 7 s on a cold first render inside the Docker network; compare warm public timings with oracle-store.
 8. Old VM (oracle-store) containers are still running by design. Retire it later, only when the user decides.
-9. Deploy `913ed38` on ms-prod (in tmux, one command at a time): `git pull`; `docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile` (headers, no downtime); rebuild and recreate the storefront per `CLAUDE.md` (JSON-LD). Then verify with `curl --compressed -sI` and the JSON-LD on a product page, and open checkout once with the browser console open to look for CSP report-only messages (add any missing hosts before ever enforcing). Re-run the audit afterwards.
+9. **CSP report-only review (open):** with `913ed38` live, go through a full test checkout (cart, shipping, Stripe card entry, 3D Secure if offered, order confirmation) with the browser console open and note every `Content-Security-Policy-Report-Only` violation. Add any missing hosts to `csp_report_only` in the Caddyfile (remember the bind-mount note above when deploying it). Do not enforce the CSP until a clean pass.
 10. Supply the legal name, registered address and company number in `site-json-ld/index.tsx`. Replace `og-default.png` with real model photography when available.
 11. Later: raise HSTS above `max-age=300` after checking every subdomain over HTTPS; consider enforcing the CSP only after a clean report-only period; check real `metadata.condition` values on products.
