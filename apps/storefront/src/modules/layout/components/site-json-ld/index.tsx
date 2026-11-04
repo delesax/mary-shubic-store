@@ -18,6 +18,9 @@ const ADDRESS = {
 
 const filled = (value: string) => !value.startsWith("TODO")
 
+// Search results live under the default store country (the /search route, noindex)
+const SEARCH_COUNTRY = (process.env.NEXT_PUBLIC_DEFAULT_REGION || "gb").toLowerCase()
+
 export default function SiteJsonLd() {
   const addressFilled = Object.entries(ADDRESS).every(
     ([key, value]) => key === "addressCountry" || filled(value)
@@ -51,6 +54,14 @@ export default function SiteJsonLd() {
     name: "Mary Shubic",
     url: BASE_URL,
     publisher: { "@id": `${BASE_URL}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${BASE_URL}/${SEARCH_COUNTRY}/search?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   }
 
   // "<" is escaped so the text can never close the script tag

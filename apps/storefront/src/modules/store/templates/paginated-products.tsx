@@ -13,6 +13,7 @@ type PaginatedProductsParams = {
   category_id?: string[]
   id?: string[]
   order?: string
+  q?: string
 }
 
 export default async function PaginatedProducts({
@@ -23,6 +24,7 @@ export default async function PaginatedProducts({
   productsIds,
   countryCode,
   filters,
+  query,
 }: {
   sortBy?: SortOptions
   page: number
@@ -31,6 +33,7 @@ export default async function PaginatedProducts({
   productsIds?: string[]
   countryCode: string
   filters?: ProductFilters
+  query?: string
 }) {
   const queryParams: PaginatedProductsParams = {
     limit: 12,
@@ -46,6 +49,10 @@ export default async function PaginatedProducts({
 
   if (productsIds) {
     queryParams["id"] = productsIds
+  }
+
+  if (query) {
+    queryParams["q"] = query
   }
 
   if (sortBy === "created_at") {
@@ -73,7 +80,9 @@ export default async function PaginatedProducts({
   if (products.length === 0) {
     return (
       <p className="font-body text-sm text-ink/60 py-16 text-center">
-        No products match those filters. Try removing one or two.
+        {query
+          ? `No products found for “${query}”. Check the spelling or try a more general word.`
+          : "No products match those filters. Try removing one or two."}
       </p>
     )
   }

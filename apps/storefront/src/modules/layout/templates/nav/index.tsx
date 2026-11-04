@@ -10,6 +10,7 @@ import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
+import SearchBox from "@modules/layout/components/search-box"
 import LocaleNavControl from "@modules/layout/components/locale-nav-control"
 import { NAV_LINKS, resolveNavLinks } from "@lib/constants/nav-links"
 
@@ -78,6 +79,7 @@ export default async function Nav() {
 
           {/* Right column: locale control + account + bag */}
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
+            <SearchBox />
             <LocaleNavControl
               regions={regions}
               locales={locales}
