@@ -2,6 +2,7 @@ import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
 import localFont from "next/font/local"
 import CookieNotice from "@modules/layout/components/cookie-notice"
+import SiteJsonLd from "@modules/layout/components/site-json-ld"
 import "styles/globals.css"
 
 const fraunces = localFont({
@@ -47,6 +48,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       className={`${fraunces.variable} ${workSans.variable}`}
     >
       <body className="font-body bg-ivory text-ink">
+        <SiteJsonLd />
         <main className="relative">{props.children}</main>
         <CookieNotice />
       </body>

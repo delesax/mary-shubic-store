@@ -17,6 +17,15 @@ export const metadata: Metadata = {
     description:
       "Apparel, footwear, hair and makeup for women who don't dress to blend in.",
     type: "website",
+    // TODO: replace with model photography once available
+    images: [
+      {
+        url: "/images/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Mary Shubic",
+      },
+    ],
   },
 }
 

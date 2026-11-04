@@ -2,17 +2,41 @@
     email contact@maryshubic.com
 }
 
+# Security headers for every site.
+# HSTS is deliberately short (5 minutes, no includeSubDomains, no preload).
+# Raise it only after every subdomain is confirmed to work over HTTPS.
+(security_headers) {
+    header {
+        Strict-Transport-Security "max-age=300"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        X-Frame-Options "SAMEORIGIN"
+    }
+}
+
+# Report-only CSP for the storefront: logs violations in the browser console and
+# blocks nothing. Do NOT switch to an enforced Content-Security-Policy until
+# checkout (Stripe) has been tested with this in place and the console is clean.
+(csp_report_only) {
+    header Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://*.js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://media.maryshubic.com https://*.amazonaws.com https://*.stripe.com https://*.link.com; font-src 'self' data:; connect-src 'self' https://api.maryshubic.com https://api.maryshubic.co.uk https://api.stripe.com https://link.com https://*.link.com; frame-src https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://link.com https://*.link.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+}
+
 # Redirect bare domains to www
 maryshubic.com, maryshubic.co.uk {
+    import security_headers
     redir https://www.maryshubic.com{uri} permanent
 }
 
 # Storefront — serve on both .com and .co.uk
 www.maryshubic.com, www.maryshubic.co.uk {
+    import security_headers
+    import csp_report_only
     reverse_proxy storefront:8000
 }
 
-# Medusa backend API — serve on both .com and .co.uk
+# Medusa backend API (and admin at /app) — serve on both .com and .co.uk
 api.maryshubic.com, api.maryshubic.co.uk {
+    import security_headers
     reverse_proxy medusa:9000
 }

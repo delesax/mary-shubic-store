@@ -1,11 +1,12 @@
 import { HttpTypes } from "@medusajs/types"
+import { variantInStock } from "@lib/util/stock"
 
 // Structured data so Google can show price, stock and condition in results.
 // Server component: render it once inside the product page template.
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://www.maryshubic.com"
 
-const inStock = (v: HttpTypes.StoreProductVariant) =>
-  !v.manage_inventory || !!v.allow_backorder || (v.inventory_quantity ?? 0) > 0
+// "<" is escaped so product text can never close the script tag
+const toJson = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c")
 
 export default function ProductJsonLd({
   product,
@@ -14,15 +15,23 @@ export default function ProductJsonLd({
   product: HttpTypes.StoreProduct
   countryCode: string
 }) {
-  const url = `${BASE_URL.replace(/\/$/, "")}/${countryCode}/products/${product.handle}`
+  const base = BASE_URL.replace(/\/$/, "")
+  const url = `${base}/${countryCode}/products/${product.handle}`
   const condition = String(product.metadata?.condition ?? "").trim().toLowerCase()
-  const itemCondition = condition
-    ? condition.startsWith("new ") || condition === "nwt" || condition === "nwot"
-      ? "https://schema.org/NewCondition"
-      : "https://schema.org/UsedCondition"
-    : undefined
+  // Items are new unless the product metadata says otherwise
+  const isNew =
+    !condition ||
+    condition === "new" ||
+    condition.startsWith("new ") ||
+    condition === "nwt" ||
+    condition === "nwot"
+  const itemCondition = isNew
+    ? "https://schema.org/NewCondition"
+    : "https://schema.org/UsedCondition"
 
-  const offers = (product.variants ?? [])
+  const variants = product.variants ?? []
+
+  const offers = variants
     .map((v) => {
       const price = v.calculated_price?.calculated_amount
       const currency = v.calculated_price?.currency_code
@@ -32,7 +41,7 @@ export default function ProductJsonLd({
         sku: v.sku ?? undefined,
         price: Number(price).toFixed(2),
         priceCurrency: currency.toUpperCase(),
-        availability: inStock(v)
+        availability: variantInStock(v)
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
         itemCondition,
@@ -49,6 +58,8 @@ export default function ProductJsonLd({
     name: product.title,
     description: product.description || undefined,
     image: images.length ? images : product.thumbnail ? [product.thumbnail] : undefined,
+    // Product-level sku only when unambiguous; multi-variant products carry it per offer
+    sku: variants.length === 1 ? variants[0].sku ?? undefined : undefined,
     brand: { "@type": "Brand", name: "Mary Shubic" },
     material: product.material || undefined,
     countryOfOrigin: product.origin_country || undefined,
@@ -56,11 +67,41 @@ export default function ProductJsonLd({
     offers: offers.length ? offers : undefined,
   }
 
+  const crumbs = [
+    { name: "Home", url: `${base}/${countryCode}` },
+    { name: "Shop", url: `${base}/${countryCode}/store` },
+    ...(product.collection
+      ? [
+          {
+            name: product.collection.title,
+            url: `${base}/${countryCode}/collections/${product.collection.handle}`,
+          },
+        ]
+      : []),
+    { name: product.title, url },
+  ]
+
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.name,
+      item: c.url,
+    })),
+  }
+
   return (
-    <script
-      type="application/ld+json"
-      // "<" is escaped so product text can never close the script tag
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJson(data) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJson(breadcrumbs) }}
+      />
+    </>
   )
 }

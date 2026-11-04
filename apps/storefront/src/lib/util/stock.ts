@@ -7,6 +7,10 @@ const available = (v: HttpTypes.StoreProductVariant): number => {
   return Math.max(v.inventory_quantity, 0)
 }
 
+// True unless the variant is tracked, has a known stock figure, and that figure is 0.
+export const variantInStock = (v: HttpTypes.StoreProductVariant): boolean =>
+  available(v) > 0
+
 // Total units available across all variants (Infinity if stock isn't tracked or unknown).
 export const stockLeft = (product: HttpTypes.StoreProduct): number => {
   const variants = product.variants ?? []
