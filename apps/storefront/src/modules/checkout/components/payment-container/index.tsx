@@ -6,8 +6,10 @@ import Radio from "@modules/common/components/radio"
 
 import { isManual } from "@lib/constants"
 import SkeletonCardDetails from "@modules/skeletons/components/skeleton-card-details"
-import { CardElement } from "@stripe/react-stripe-js"
-import { StripeCardElementOptions } from "@stripe/stripe-js"
+import { PaymentElement } from "@stripe/react-stripe-js"
+import { StripePaymentElementOptions } from "@stripe/stripe-js"
+import { HttpTypes } from "@medusajs/types"
+import { getBillingFields } from "@lib/util/stripe-billing"
 import PaymentTest from "../payment-test"
 import { StripeContext } from "../payment-wrapper/stripe-wrapper"
 
@@ -65,37 +67,63 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
 
 export default PaymentContainer
 
-export const StripeCardContainer = ({
+// Names shown in the Payment step summary, from the Payment Element's change event
+const METHOD_LABELS: Record<string, string> = {
+  card: "Card",
+  klarna: "Klarna",
+  link: "Link",
+  revolut_pay: "Revolut Pay",
+  apple_pay: "Apple Pay",
+  google_pay: "Google Pay",
+}
+
+const getMethodLabel = (type?: string | null) => {
+  if (!type) {
+    return null
+  }
+
+  return (
+    METHOD_LABELS[type] ??
+    type.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase())
+  )
+}
+
+export const StripePaymentContainer = ({
   paymentProviderId,
   selectedPaymentOptionId,
   paymentInfoMap,
   disabled = false,
-  setCardBrand,
+  cart,
+  setMethodLabel,
   setError,
-  setCardComplete,
+  setPaymentComplete,
 }: Omit<PaymentContainerProps, "children"> & {
-  setCardBrand: (brand: string) => void
+  cart: HttpTypes.StoreCart
+  setMethodLabel: (label: string | null) => void
   setError: (error: string | null) => void
-  setCardComplete: (complete: boolean) => void
+  setPaymentComplete: (complete: boolean) => void
 }) => {
   const stripeReady = useContext(StripeContext)
 
-  const useOptions: StripeCardElementOptions = useMemo(() => {
+  // Whether the phone field is hidden depends on the cart; the Payment Element cannot
+  // change its hidden fields after mounting, so remount it if that ever flips.
+  const hasPhone = !!(cart.billing_address ?? cart.shipping_address)?.phone
+
+  const options: StripePaymentElementOptions = useMemo(() => {
     return {
-      style: {
-        base: {
-          fontFamily: "Work Sans, sans-serif",
-          color: "#2A1A1D",
-          "::placeholder": {
-            color: "rgba(42, 26, 29, 0.4)",
-          },
-        },
+      layout: {
+        type: "accordion",
+        defaultCollapsed: false,
+        radios: true,
+        spacedAccordionItems: true,
       },
-      classes: {
-        base: "pt-3 pb-1 block w-full h-11 px-4 mt-0 bg-ivory border border-ink/15 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-wine hover:bg-blush/10 transition-colors duration-200 ease-in-out",
+      fields: getBillingFields(cart),
+      defaultValues: {
+        billingDetails: { email: cart.email ?? undefined },
       },
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasPhone])
 
   return (
     <PaymentContainer
@@ -107,17 +135,16 @@ export const StripeCardContainer = ({
       {selectedPaymentOptionId === paymentProviderId &&
         (stripeReady ? (
           <div className="my-4 transition-all duration-150 ease-in-out">
-            <Text className="text-sm font-medium text-ink mb-1">
-              Enter your card details:
+            <Text className="text-sm font-medium text-ink mb-2">
+              Choose how you would like to pay:
             </Text>
-            <CardElement
-              options={useOptions as StripeCardElementOptions}
+            <PaymentElement
+              key={hasPhone ? "with-phone" : "no-phone"}
+              options={options}
               onChange={(e) => {
-                setCardBrand(
-                  e.brand && e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
-                )
-                setError(e.error?.message || null)
-                setCardComplete(e.complete)
+                setMethodLabel(getMethodLabel(e.value?.type))
+                setPaymentComplete(e.complete)
+                setError(null)
               }}
             />
           </div>

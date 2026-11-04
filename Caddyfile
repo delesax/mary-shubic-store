@@ -15,11 +15,14 @@
     }
 }
 
+# Hosts follow Stripe's CSP page (Stripe.js, Link). pay.google.com and google.com/pay are
+# added for Google Pay from Google's own CSP guidance (Stripe's page does not list them).
+# Klarna and Revolut Pay are full-page redirects, so they need no CSP entries.
 # Report-only CSP for the storefront: logs violations in the browser console and
 # blocks nothing. Do NOT switch to an enforced Content-Security-Policy until
 # checkout (Stripe) has been tested with this in place and the console is clean.
 (csp_report_only) {
-    header Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://*.js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://media.maryshubic.com https://*.amazonaws.com https://*.stripe.com https://*.link.com; font-src 'self' data:; connect-src 'self' https://api.maryshubic.com https://api.maryshubic.co.uk https://api.stripe.com https://link.com https://*.link.com; frame-src https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://link.com https://*.link.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+    header Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://*.js.stripe.com https://pay.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://media.maryshubic.com https://*.amazonaws.com https://*.stripe.com https://*.link.com; font-src 'self' data:; connect-src 'self' https://api.maryshubic.com https://api.maryshubic.co.uk https://api.stripe.com https://link.com https://*.link.com https://pay.google.com https://google.com/pay; frame-src https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://link.com https://*.link.com https://pay.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
 }
 
 # Redirect bare domains to www
@@ -32,6 +35,9 @@ maryshubic.com, maryshubic.co.uk {
 www.maryshubic.com, www.maryshubic.co.uk {
     import security_headers
     import csp_report_only
+    # Stripe's Payment Element loads the Work Sans file cross-origin from its iframe
+    @fonts path /fonts/*
+    header @fonts Access-Control-Allow-Origin "*"
     reverse_proxy storefront:8000
 }
 

@@ -5,7 +5,7 @@ import { initiatePaymentSession } from "@lib/data/cart"
 import { CheckCircleSolid, CreditCard } from "@medusajs/icons"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import PaymentContainer, {
-  StripeCardContainer,
+  StripePaymentContainer,
 } from "@modules/checkout/components/payment-container"
 import Divider from "@modules/common/components/divider"
 import {
@@ -18,6 +18,11 @@ import {
 import { HttpTypes } from "@medusajs/types"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
+
+// Sent when a Stripe payment session is created: the PaymentIntent then offers whatever
+// payment methods are enabled in the Stripe dashboard for the currency and country.
+// A later "save card for off-session use" option can be added here as setup_future_usage.
+const STRIPE_SESSION_DATA = { automatic_payment_methods: { enabled: true } }
 
 const Payment = ({
   cart,
@@ -32,8 +37,8 @@ const Payment = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [cardBrand, setCardBrand] = useState<string | null>(null)
-  const [cardComplete, setCardComplete] = useState(false)
+  const [methodLabel, setMethodLabel] = useState<string | null>(null)
+  const [paymentComplete, setPaymentComplete] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     activeSession?.provider_id ?? ""
   )
@@ -50,6 +55,7 @@ const Payment = ({
     if (isStripeLike(method)) {
       await initiatePaymentSession(cart, {
         provider_id: method,
+        data: STRIPE_SESSION_DATA,
       })
     }
   }
@@ -89,6 +95,9 @@ const Payment = ({
       if (!checkActiveSession) {
         await initiatePaymentSession(cart, {
           provider_id: selectedPaymentMethod,
+          ...(isStripeLike(selectedPaymentMethod)
+            ? { data: STRIPE_SESSION_DATA }
+            : {}),
         })
       }
 
@@ -150,13 +159,14 @@ const Payment = ({
                 {availablePaymentMethods.map((paymentMethod) => (
                   <div key={paymentMethod.id}>
                     {isStripeLike(paymentMethod.id) ? (
-                      <StripeCardContainer
+                      <StripePaymentContainer
                         paymentProviderId={paymentMethod.id}
                         selectedPaymentOptionId={selectedPaymentMethod}
                         paymentInfoMap={paymentInfoMap}
-                        setCardBrand={setCardBrand}
+                        cart={cart}
+                        setMethodLabel={setMethodLabel}
                         setError={setError}
-                        setCardComplete={setCardComplete}
+                        setPaymentComplete={setPaymentComplete}
                       />
                     ) : (
                       <PaymentContainer
@@ -196,13 +206,13 @@ const Payment = ({
             onClick={handleSubmit}
             isLoading={isLoading}
             disabled={
-              (isStripeLike(selectedPaymentMethod) && !cardComplete) ||
+              (isStripeLike(selectedPaymentMethod) && !paymentComplete) ||
               (!selectedPaymentMethod && !paidByGiftcard)
             }
             data-testid="submit-payment-button"
           >
             {!activeSession && isStripeLike(selectedPaymentMethod)
-              ? " Enter card details"
+              ? " Enter payment details"
               : "Continue to review"}
           </Button>
         </div>
@@ -236,8 +246,8 @@ const Payment = ({
                     )}
                   </Container>
                   <Text>
-                    {isStripeLike(selectedPaymentMethod) && cardBrand
-                      ? cardBrand
+                    {isStripeLike(selectedPaymentMethod) && methodLabel
+                      ? methodLabel
                       : "Another step will appear"}
                   </Text>
                 </div>
