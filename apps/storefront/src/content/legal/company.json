@@ -1,0 +1,16 @@
+{
+  "_help": "Fill each value once and every legal page updates. An empty value keeps the [PLACEHOLDER] on the pages. Do not guess: enter only details you have confirmed. EFFECTIVE DATE is the date the pages go live.",
+  "LEGAL NAME": "",
+  "TRADING NAME": "",
+  "COMPANY NUMBER": "",
+  "COUNTRY OF REGISTRATION": "",
+  "REGISTERED ADDRESS": "",
+  "CONTACT EMAIL": "",
+  "CONTACT PHONE": "",
+  "OPENING HOURS": "",
+  "VAT NUMBER": "",
+  "ICO REGISTRATION NUMBER": "",
+  "RETURN ADDRESS": "",
+  "CARRIER NAMES": "",
+  "EFFECTIVE DATE": ""
+}
