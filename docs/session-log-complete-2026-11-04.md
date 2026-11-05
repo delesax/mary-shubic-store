@@ -248,7 +248,7 @@ Built before the deploy so the password reset email's link works.
 20. **Owner decisions:** confirm the cancelled-email refund wording; confirm `support@maryshubic.com`; optionally set `STOREFRONT_URL` for the backend (staging); the account-order padding and other panels are visual changes to eyeball after deploy.
 21. **Small fixes found at deploy:** the product page heading order WARN (make the accordion section titles `h2`), and the question of the unexplained Medusa script `create-super-admin-role` (confirm in the admin that nothing looks different).
 
-## Legal and policy pages (built locally, not pushed, not deployed)
+## Legal and policy pages (pushed and deployed 2026-11-05)
 
 - Routes: `/gb/terms`, `/gb/shipping` (Delivery Policy), `/gb/returns`, `/gb/privacy-policy`, `/gb/cookie-policy`, `/gb/contact`. All six footer links now have a page.
 - Source: verbatim drafts in `apps/storefront/src/content/legal/*.ts` (one file per page); company-level details go in `company.json` once (empty value = placeholder stays). Registry: `pages.ts`. Parser: `lib/util/legal-markdown.ts`. No new dependency.
@@ -259,3 +259,10 @@ Built before the deploy so the password reset email's link works.
 - JSON-LD not touched. It will need: `TODO_LEGAL_NAME` <- [LEGAL NAME]; `TODO_COMPANY_NUMBER` <- [COMPANY NUMBER]; `TODO_STREET_ADDRESS`, `TODO_TOWN_OR_CITY`, `TODO_POSTCODE` <- [REGISTERED ADDRESS]; email `BRAND.supportEmail` <- [CONTACT EMAIL].
 - Tested: 117 scratch checks pass (wording unchanged, placeholders exact, tables, TOC, links, metadata, script modes); strict typecheck of the new files with stubs (only a stub-related import error in sitemap.ts); screenshots at 375/768/1440. Not tested: a real `next build`, the prebuild hook, the live noindex tag.
 - Owner/solicitor: ICO registration, hygiene exclusions, cosmetics Responsible Person, VAT and duties points in the draft README.
+
+### Deployment of the legal pages (2026-11-05)
+
+- Pushed `main` to `5023047` (5 commits), server `git pull --ff-only`, storefront-only build (real `next build` passed; prebuild scan printed total 105) and `up -d --force-recreate storefront`. Caddy, medusa, postgres and redis were not touched.
+- Verified with curl: all six pages return 200 with `noindex, nofollow`, canonical on www.maryshubic.com/gb/..., DRAFT banner present; homepage footer links all six; sitemap lists none of them (draft).
+- Audit (`audit-report-20261105-1144.md` in the repo root, untracked): FAIL 9 -> 4. The six legal-page FAILs and the broken-links FAIL are gone; the 4 left are the placeholder text on Terms, Privacy, Cookies and Contact, which is expected until the drafts are filled. "Business identity" and "Legal/content routes" now pass.
+- Still for the owner: fill the 105 placeholders, solicitor review, then set `LEGAL_PAGES_DRAFT = false`; check by eye at 375/768/1440 on the live site.
