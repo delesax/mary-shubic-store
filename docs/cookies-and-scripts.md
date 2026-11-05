@@ -37,6 +37,6 @@ Fonts and country flags are served from our own site (no external font or flag r
 
 * No saved choice means only strictly necessary cookies run.
 * **Accept all** and **Reject non-essential** are equally prominent; **Manage preferences** opens per-category toggles (analytics and marketing, both off by default).
-* The choice can be changed any time from the footer link **Cookie settings**.
+* The choice can be changed any time from the footer link **Cookie preferences**.
 * Any future analytics or marketing script must be wrapped in `ConsentGate` (`modules/layout/components/cookie-consent/consent-gate.tsx`) so it loads only after consent.
 * The banner links to `/<country>/cookie-policy`, which does not exist yet and will 404 until the policy pages are built.

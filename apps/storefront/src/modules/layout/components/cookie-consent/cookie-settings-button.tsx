@@ -11,7 +11,7 @@ export default function CookieSettingsButton({ className }: { className?: string
       onClick={() => window.dispatchEvent(new Event(OPEN_SETTINGS_EVENT))}
       data-testid="cookie-settings-button"
     >
-      Cookie settings
+      Cookie preferences
     </button>
   )
 }

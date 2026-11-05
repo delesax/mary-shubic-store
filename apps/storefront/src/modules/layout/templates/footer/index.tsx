@@ -124,7 +124,7 @@ export default async function Footer() {
                     href="/shipping"
                     className="hover:text-wine transition-colors duration-200"
                   >
-                    Shipping
+                    Delivery
                   </LocalizedClientLink>
                 </li>
                 <li>

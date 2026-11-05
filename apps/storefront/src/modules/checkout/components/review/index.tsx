@@ -1,7 +1,8 @@
 "use client"
 
-import { Heading, Text, clx } from "@modules/common/components/ui"
+import { Heading, clx } from "@modules/common/components/ui"
 
+import LegalAgreement from "../legal-agreement"
 import PaymentButton from "../payment-button"
 import { useSearchParams } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
@@ -39,12 +40,7 @@ const Review = ({ cart }: { cart: HttpTypes.StoreCart }) => {
         <>
           <div className="flex items-start gap-x-1 w-full mb-6">
             <div className="w-full">
-              <Text className="text-sm text-ink/70">
-                By clicking the Place Order button, you confirm that you have
-                read, understand and accept our Terms of Use, Terms of Sale and
-                Returns Policy and acknowledge that you have read Mary
-                Shubic&apos;s Privacy Policy.
-              </Text>
+              <LegalAgreement />
             </div>
           </div>
           <PaymentButton cart={cart} data-testid="submit-order-button" />

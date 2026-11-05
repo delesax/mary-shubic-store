@@ -42,7 +42,7 @@ export default function CookieConsent() {
     }
   }, [])
 
-  // The footer "Cookie settings" button reopens the preferences
+  // The footer "Cookie preferences" button reopens the preferences
   useEffect(() => {
     const open = () => {
       const saved = readConsent()

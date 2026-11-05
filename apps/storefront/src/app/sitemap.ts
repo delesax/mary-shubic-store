@@ -2,6 +2,7 @@ import { MetadataRoute } from "next"
 import { listCategories } from "@lib/data/categories"
 import { listCollections } from "@lib/data/collections"
 import { listAllProducts } from "@lib/data/products"
+import { legalSitemapEntries } from "@lib/util/legal-status"
 
 // Built at request time so the build never depends on the backend being up.
 export const dynamic = "force-dynamic"
@@ -17,6 +18,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE, lastModified: now },
     { url: `${BASE}/${COUNTRY}/store`, lastModified: now },
     { url: `${BASE}/${COUNTRY}/size-guide`, lastModified: now },
+    // Empty while the legal pages are drafts (they are noindex then)
+    ...legalSitemapEntries(now),
   ]
 
   try {
