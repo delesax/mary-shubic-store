@@ -2,9 +2,14 @@ import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
 import { getCacheOptions } from "./cookies"
 
+// Re-fetch at most every 60 s (like products and collections), so Admin changes
+// (new, deleted, activated or deactivated categories) reach the site without a restart.
+const CATEGORIES_REVALIDATE_SECONDS = 60
+
 export const listCategories = async (query?: Record<string, unknown>) => {
   const next = {
     ...(await getCacheOptions("categories")),
+    revalidate: CATEGORIES_REVALIDATE_SECONDS,
   }
 
   const limit = query?.limit || 100
@@ -31,6 +36,7 @@ export const getCategoryByHandle = async (categoryHandle: string[]) => {
 
   const next = {
     ...(await getCacheOptions("categories")),
+    revalidate: CATEGORIES_REVALIDATE_SECONDS,
   }
 
   return sdk.client

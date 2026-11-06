@@ -4,9 +4,13 @@ import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
 import { getCacheOptions } from "./cookies"
 
+// Re-fetch at most every 60 s, so region changes in Admin reach the site without a restart.
+const REGIONS_REVALIDATE_SECONDS = 60
+
 export const listRegions = async () => {
   const next = {
     ...(await getCacheOptions("regions")),
+    revalidate: REGIONS_REVALIDATE_SECONDS,
   }
 
   return await sdk.client
@@ -21,6 +25,7 @@ export const listRegions = async () => {
 export const retrieveRegion = async (id: string) => {
   const next = {
     ...(await getCacheOptions(["regions", id].join("-"))),
+    revalidate: REGIONS_REVALIDATE_SECONDS,
   }
 
   return await sdk.client
