@@ -16,7 +16,12 @@ type InputProps = Omit<
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ type, name, label, touched: _touched, required, topLabel, ...props }, ref) => {
+  ({ type, name, label, touched: _touched, required, topLabel, id, ...props }, ref) => {
+    // Field names repeat on some pages (the address book renders the add form and one
+    // edit form per address), so default to a unique React id rather than the name.
+    // An id passed by the caller (forgot/reset password, discount code) is kept.
+    const generatedId = React.useId()
+    const inputId = id ?? generatedId
     const inputRef = React.useRef<HTMLInputElement>(null)
     const [showPassword, setShowPassword] = useState(false)
     const [inputType, setInputType] = useState(type)
@@ -42,6 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="flex relative z-0 w-full font-body text-sm">
           <input
+            id={inputId}
             type={inputType}
             name={name}
             placeholder=" "
@@ -51,7 +57,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={inputRef}
           />
           <label
-            htmlFor={name}
+            htmlFor={inputId}
             onClick={() => inputRef.current?.focus()}
             className="flex items-center justify-center mx-3 px-1 transition-all absolute duration-300 top-3 -z-1 origin-0 text-ink/65 font-body peer-focus:text-wine"
           >

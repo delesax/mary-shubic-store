@@ -52,24 +52,28 @@ const Item: React.FC<AccordionItemProps> = ({
         className
       )}
     >
-      <AccordionPrimitive.Header>
-        <div className="flex flex-col">
-          <div className="flex w-full items-center justify-between py-4">
-            <div className="flex items-center gap-4">
-              <Text className="text-ink text-sm font-body font-medium">
-                {title}
-              </Text>
+      {/* Radix renders an h3 by default; h2 keeps the order h1 (product title) -> h2.
+          Tailwind preflight resets heading sizes, so this does not change the look. */}
+      <AccordionPrimitive.Header asChild>
+        <h2>
+          <div className="flex flex-col">
+            <div className="flex w-full items-center justify-between py-4">
+              <div className="flex items-center gap-4">
+                <Text className="text-ink text-sm font-body font-medium">
+                  {title}
+                </Text>
+              </div>
+              <AccordionPrimitive.Trigger aria-label={title}>
+                {customTrigger || <MorphingTrigger />}
+              </AccordionPrimitive.Trigger>
             </div>
-            <AccordionPrimitive.Trigger aria-label={title}>
-              {customTrigger || <MorphingTrigger />}
-            </AccordionPrimitive.Trigger>
+            {subtitle && (
+              <Text as="span" className="mt-1 text-sm text-ink/65">
+                {subtitle}
+              </Text>
+            )}
           </div>
-          {subtitle && (
-            <Text as="span" className="mt-1 text-sm text-ink/65">
-              {subtitle}
-            </Text>
-          )}
-        </div>
+        </h2>
       </AccordionPrimitive.Header>
       <AccordionPrimitive.Content
         forceMount={forceMountContent}

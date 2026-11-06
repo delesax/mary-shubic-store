@@ -53,7 +53,7 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
-**/.DS_Store.medusa/
+**/.DS_Store
 .medusa/
 build.log
 

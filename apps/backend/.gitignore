@@ -24,3 +24,6 @@ build
 !.yarn/versions
 
 .medusa
+
+# macOS: re-ignore after the !src/** rule above (later rules win)
+**/.DS_Store
