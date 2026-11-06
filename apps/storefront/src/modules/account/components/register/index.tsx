@@ -71,17 +71,17 @@ const Register = ({ setCurrentView }: Props) => {
         <span className="text-center text-ink/65 text-small-regular mt-6">
           By creating an account, you agree to Mary Shubic&apos;s{" "}
           <LocalizedClientLink
-            href="/content/privacy-policy"
+            href="/privacy-policy"
             className="text-wine underline hover:text-wine/80 transition-colors"
           >
             Privacy Policy
           </LocalizedClientLink>{" "}
           and{" "}
           <LocalizedClientLink
-            href="/content/terms-of-use"
+            href="/terms"
             className="text-wine underline hover:text-wine/80 transition-colors"
           >
-            Terms of Use
+            Terms and Conditions
           </LocalizedClientLink>
           .
         </span>
